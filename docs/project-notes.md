@@ -3,7 +3,7 @@ ______________________________
 # FF26 Project Notes
 ______________________________
 
-## Phase 0 — Setup & Skeleton
+## Phase 0 — Setup & Skeleton - Complete 3/16/26
 
 // ====== Goal: Get a working dev environment and repo structure. =====
 
@@ -110,7 +110,7 @@ src/
    - ws (for WebSocket testing)
    - optional: @apollo/client + graphql (GraphQL client) for Phase 5
 
----
+--- 
 
 ## Phase 1 — Mock Data & Core Types
 

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "homeTeamCode": "ARG",
+    "awayTeamCode": "NED",
+    "date": "2026-06-10T15:00:00Z",
+    "status": "upcoming",
+    "score": { "home": 0, "away": 0 },
+    "events": []
+  },
+  {
+    "id": 102,
+    "homeTeamCode": "BRA",
+    "awayTeamCode": "ARG",
+    "date": "2026-06-11T18:00:00Z",
+    "status": "live",
+    "score": { "home": 1, "away": 0 },
+    "events": [
+      { "minute": 23, "type": "goal", "team": "BRA", "playerId": 3 },
+      { "minute": 45, "type": "yellow_card", "team": "ARG", "playerId": 1 }
+    ]
+  },
+  {
+    "id": 103,
+    "homeTeamCode": "NED",
+    "awayTeamCode": "BRA",
+    "date": "2026-06-12T20:00:00Z",
+    "status": "finished",
+    "score": { "home": 2, "away": 2 },
+    "events": [
+      { "minute": 10, "type": "goal", "team": "NED", "playerId": 2 },
+      { "minute": 35, "type": "goal", "team": "BRA", "playerId": 3 },
+      { "minute": 78, "type": "goal", "team": "NED", "playerId": 2 },
+      { "minute": 85, "type": "goal", "team": "BRA", "playerId": 3 },
+      { "minute": 60, "type": "substitution", "team": "NED", "playerOutId": 2, "playerInId": 4 }
+    ]
+  }
+]

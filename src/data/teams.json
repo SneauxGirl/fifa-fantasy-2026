@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "jerseyColors": ["#74ACDF", "#FFFFFF"],
+    "fifaRanking": 3,
+    "historicalPerformance": [
+      { "year": 2014, "matchesPlayed": 7, "goalsFor": 10, "goalsAgainst": 5, "penalties": 1 },
+      { "year": 2018, "matchesPlayed": 4, "goalsFor": 5, "goalsAgainst": 3, "penalties": 0 },
+      { "year": 2010, "matchesPlayed": 5, "goalsFor": 7, "goalsAgainst": 4, "penalties": 0 },
+      { "year": 2006, "matchesPlayed": 6, "goalsFor": 9, "goalsAgainst": 4, "penalties": 0 },
+      { "year": 2002, "matchesPlayed": 5, "goalsFor": 6, "goalsAgainst": 5, "penalties": 0 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Nederlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "jerseyColors": ["#FFA500", "#FFFFFF"],
+    "fifaRanking": 8,
+    "historicalPerformance": [
+      { "year": 2014, "matchesPlayed": 7, "goalsFor": 10, "goalsAgainst": 4, "penalties": 0 },
+      { "year": 2010, "matchesPlayed": 7, "goalsFor": 12, "goalsAgainst": 3, "penalties": 0 },
+      { "year": 2006, "matchesPlayed": 5, "goalsFor": 7, "goalsAgainst": 5, "penalties": 0 },
+      { "year": 2002, "matchesPlayed": 4, "goalsFor": 3, "goalsAgainst": 2, "penalties": 0 },
+      { "year": 1998, "matchesPlayed": 7, "goalsFor": 11, "goalsAgainst": 4, "penalties": 0 }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "jerseyColors": ["#FFCC00", "#00A859"],
+    "fifaRanking": 1,
+    "historicalPerformance": [
+      { "year": 2014, "matchesPlayed": 7, "goalsFor": 11, "goalsAgainst": 4, "penalties": 0 },
+      { "year": 2018, "matchesPlayed": 5, "goalsFor": 8, "goalsAgainst": 4, "penalties": 0 },
+      { "year": 2010, "matchesPlayed": 6, "goalsFor": 9, "goalsAgainst": 3, "penalties": 0 },
+      { "year": 2006, "matchesPlayed": 7, "goalsFor": 14, "goalsAgainst": 5, "penalties": 1 },
+      { "year": 2002, "matchesPlayed": 7, "goalsFor": 18, "goalsAgainst": 4, "penalties": 0 }
+    ]
+  }
+]
