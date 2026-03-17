@@ -1,20 +1,94 @@
 // ==============================
 // Fantasy Scoring
+// All point values defined in docs/rules/rules.md
 // ==============================
 
-export interface PlayerScore {
-  playerId: number;
-  totalPoints: number;
-  breakdown: {
-    minutesPoints: number;
-    goalPoints: number;
-    assistPoints: number;
-    penaltyPoints: number;
-    concededGoalPoints?: number;
-  };
+// Tournament rounds — used to enforce substitution eligibility rules:
+//   Group / R32:  SUBSTITUTE additions allowed, score at 100%
+//   R16:          SUBSTITUTE additions allowed, score at 50%
+//   QF and beyond: no new additions permitted
+export type TournamentRound =
+  | "group"
+  | "round_of_32"
+  | "round_of_16"
+  | "quarterfinal"
+  | "semifinal"
+  | "final";
+
+// Rounds in which new Champion Teams / Players may still be added to the ROSTER.
+// Used by the lineup slice to gate substitution UI.
+export const SUBSTITUTION_OPEN_ROUNDS: TournamentRound[] = [
+  "group",
+  "round_of_32",
+  "round_of_16",
+];
+
+// Rounds in which additions are flagged as SUBSTITUTES and score at 50%.
+export const SUBSTITUTE_PENALTY_ROUNDS: TournamentRound[] = ["round_of_16"];
+
+// Full per-match player score breakdown.
+// All fields are always present; 0 when not applicable for that match/position.
+export interface PlayerScoreBreakdown {
+  minutesPoints: number;          // +1 per 5 min played, rounded up (1 min = +1, 5:01 = +2)
+  goalPoints: number;             // FWD +3 | MID +4 | DEF +5 | GK +7 per goal
+  assistPoints: number;           // +2 per assist (all positions)
+  cleanSheetPoints: number;       // GK +7 | DEF +4 | MID +1 | FWD 0 — requires ≥ 45 min played
+  savePoints: number;             // GK only: +1 per save
+  penaltySavePoints: number;      // GK only: +5 per on-field penalty save (shootout saves tracked separately)
+  penaltyMissPoints: number;      // non-GK: -2 per on-field miss
+  hatTrickBonus: number;          // +21 if player scores ≥ 3 goals in one match (non-shootout goals only)
+  yellowCardPoints: number;       // -3 per yellow card
+  redCardPoints: number;          // -7 per red card (direct red or second yellow); yellow-red = -10 total
+  ownGoalPoints: number;          // -3 per own goal
+  shootoutGoalPoints: number;     // +1 per shootout goal scored
+  shootoutSavePoints: number;     // GK: +2 per shootout penalty saved
+  shootoutMissPoints: number;     // -2 per shootout penalty missed
 }
 
+// isSubstitute applies to both Players and Champion Teams equally (see rules §2):
+//   false = added at Group Stage or R32 → scores at 100%
+//   true  = added at R16 (final permitted round) → scores at 50% for remainder of tournament
+export interface PlayerScore {
+  playerId: number;
+  matchId?: number;               // omit for cumulative totals
+  totalPoints: number;
+  isSubstitute: boolean;
+  breakdown: PlayerScoreBreakdown;
+}
+
+// Per-match Champion Team score breakdown
+export interface TeamScoreBreakdown {
+  matchResultPoints: number;      // Win +10 | Draw +5 | Loss +0
+  goalsForPoints: number;         // +2 per goal scored
+  goalsConcededPoints: number;    // -1 per goal conceded
+  cleanSheetBonus: number;        // +5 if team kept clean sheet
+  advancementBonus: number;       // see advancement table in rules.md:
+                                  //   Group Winner +30 | Group Advances +20
+                                  //   R32 win +45 | R16 win +60 | QF win +75 | SF win +100 | Final win +125
+}
+
+// isSubstitute mirrors PlayerScore — 50% rule is identical for Champion Teams and Players
 export interface TeamScore {
   teamId: number;
+  matchId?: number;               // omit for cumulative totals
+  weeklyPoints?: number;
   totalPoints: number;
+  isSubstitute: boolean;          // true = added at R16; scores at 50% for remainder of tournament
+  breakdown: TeamScoreBreakdown;
+}
+
+// Weekly totals — sum of all 4 Champion teams + 11 STARTER players
+export interface WeeklyScore {
+  week: number;
+  playerPoints: number;           // sum of all STARTER player points for the week
+  teamPoints: number;             // sum of all 4 Champion team points for the week
+  totalPoints: number;            // playerPoints + teamPoints
+  mvpPlayerId?: number;           // highest-scoring STARTER player (trophy icon only, no bonus)
+}
+
+// Full tournament cumulative score per user
+export interface TournamentScore {
+  userId: string;
+  weeklyScores: WeeklyScore[];
+  cumulativeTotal: number;        // sum of all WeeklyScore.totalPoints
 }

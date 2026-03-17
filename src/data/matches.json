@@ -1,38 +1,166 @@
 [
   {
     "id": 101,
-    "homeTeamCode": "ARG",
-    "awayTeamCode": "NED",
+    "homeTeam": { "id": 1, "code": "ARG", "name": "Argentina" },
+    "awayTeam": { "id": 2, "code": "NED", "name": "Netherlands" },
     "date": "2026-06-10T15:00:00Z",
-    "status": "upcoming",
-    "score": { "home": 0, "away": 0 },
+    "status": {
+      "short": "NS",
+      "long": "Not Started",
+      "elapsed": null
+    },
+    "score": {
+      "halftime": { "home": null, "away": null },
+      "fulltime": { "home": null, "away": null },
+      "extratime": { "home": null, "away": null },
+      "penalty": { "home": null, "away": null }
+    },
     "events": []
   },
   {
     "id": 102,
-    "homeTeamCode": "BRA",
-    "awayTeamCode": "ARG",
+    "homeTeam": { "id": 3, "code": "BRA", "name": "Brazil" },
+    "awayTeam": { "id": 1, "code": "ARG", "name": "Argentina" },
     "date": "2026-06-11T18:00:00Z",
-    "status": "live",
-    "score": { "home": 1, "away": 0 },
+    "status": {
+      "short": "2H",
+      "long": "Second Half",
+      "elapsed": 72
+    },
+    "score": {
+      "halftime": { "home": 0, "away": 2 },
+      "fulltime": { "home": null, "away": null },
+      "extratime": { "home": null, "away": null },
+      "penalty": { "home": null, "away": null }
+    },
     "events": [
-      { "minute": 23, "type": "goal", "team": "BRA", "playerId": 3 },
-      { "minute": 45, "type": "yellow_card", "team": "ARG", "playerId": 1 }
+      {
+        "time": { "elapsed": 22, "extra": null },
+        "team": { "id": 1, "code": "ARG" },
+        "player": { "id": 1, "name": "L. Messi" },
+        "assist": { "id": 10, "name": "J. Alvarez" },
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 38, "extra": null },
+        "team": { "id": 1, "code": "ARG" },
+        "player": { "id": 1, "name": "L. Messi" },
+        "assist": { "id": null, "name": null },
+        "type": "Goal",
+        "detail": "Penalty",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 44, "extra": null },
+        "team": { "id": 1, "code": "ARG" },
+        "player": { "id": 10, "name": "J. Alvarez" },
+        "assist": { "id": null, "name": null },
+        "type": "Card",
+        "detail": "Yellow Card",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 58, "extra": null },
+        "team": { "id": 1, "code": "ARG" },
+        "player": { "id": 1, "name": "L. Messi" },
+        "assist": { "id": 10, "name": "J. Alvarez" },
+        "type": "Goal",
+        "detail": "Header",
+        "comments": "Hat trick!"
+      },
+      {
+        "time": { "elapsed": 63, "extra": null },
+        "team": { "id": 3, "code": "BRA" },
+        "player": { "id": 11, "name": "R. Firmino" },
+        "assist": { "id": null, "name": null },
+        "type": "Goal",
+        "detail": "Missed Penalty",
+        "comments": "Penalty saved by Alisson — counted as save in player stats"
+      },
+      {
+        "time": { "elapsed": 70, "extra": null },
+        "team": { "id": 3, "code": "BRA" },
+        "player": { "id": 11, "name": "R. Firmino" },
+        "assist": { "id": 12, "name": "G. Martinelli" },
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "comments": null
+      }
     ]
   },
   {
     "id": 103,
-    "homeTeamCode": "NED",
-    "awayTeamCode": "BRA",
+    "homeTeam": { "id": 2, "code": "NED", "name": "Netherlands" },
+    "awayTeam": { "id": 3, "code": "BRA", "name": "Brazil" },
     "date": "2026-06-12T20:00:00Z",
-    "status": "finished",
-    "score": { "home": 2, "away": 2 },
+    "status": {
+      "short": "PEN",
+      "long": "After Penalties",
+      "elapsed": null
+    },
+    "score": {
+      "halftime": { "home": 1, "away": 0 },
+      "fulltime": { "home": 1, "away": 1 },
+      "extratime": { "home": 1, "away": 1 },
+      "penalty": { "home": 4, "away": 2 }
+    },
     "events": [
-      { "minute": 10, "type": "goal", "team": "NED", "playerId": 2 },
-      { "minute": 35, "type": "goal", "team": "BRA", "playerId": 3 },
-      { "minute": 78, "type": "goal", "team": "NED", "playerId": 2 },
-      { "minute": 85, "type": "goal", "team": "BRA", "playerId": 3 },
-      { "minute": 60, "type": "substitution", "team": "NED", "playerOutId": 2, "playerInId": 4 }
+      {
+        "time": { "elapsed": 10, "extra": null },
+        "team": { "id": 2, "code": "NED" },
+        "player": { "id": 2, "name": "V. van Dijk" },
+        "assist": { "id": 4, "name": "F. de Jong" },
+        "type": "Goal",
+        "detail": "Header",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 35, "extra": null },
+        "team": { "id": 2, "code": "NED" },
+        "player": { "id": 4, "name": "F. de Jong" },
+        "assist": { "id": null, "name": null },
+        "type": "Card",
+        "detail": "Yellow Card",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 60, "extra": null },
+        "team": { "id": 2, "code": "NED" },
+        "player": { "id": 2, "name": "V. van Dijk" },
+        "assist": { "id": 13, "name": "X. Simons" },
+        "type": "subst",
+        "detail": "Substitution 1",
+        "comments": "Van Dijk off, Simons on"
+      },
+      {
+        "time": { "elapsed": 78, "extra": null },
+        "team": { "id": 3, "code": "BRA" },
+        "player": { "id": 12, "name": "G. Martinelli" },
+        "assist": { "id": null, "name": null },
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 88, "extra": null },
+        "team": { "id": 2, "code": "NED" },
+        "player": { "id": 14, "name": "D. Dumfries" },
+        "assist": { "id": null, "name": null },
+        "type": "Goal",
+        "detail": "Own Goal",
+        "comments": null
+      },
+      {
+        "time": { "elapsed": 90, "extra": 4 },
+        "team": { "id": 2, "code": "NED" },
+        "player": { "id": 15, "name": "W. Weghorst" },
+        "assist": { "id": null, "name": null },
+        "type": "Var",
+        "detail": "Goal cancelled",
+        "comments": "Offside on review"
+      }
     ]
   }
 ]

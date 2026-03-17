@@ -3,63 +3,344 @@
     "id": 1,
     "firstName": "Lionel",
     "lastName": "Messi",
+    "apiDisplayName": "L. Messi",
     "position": "FWD",
-    "teamCode": "ARG",
+    "positionFull": "Forward",
+    "nationality": "Argentina",
+    "nationalityCode": "ARG",
+    "nationalityLocal": "Argentina",
     "club": "Inter Miami",
     "status": "starting",
+    "price": 12,
     "recentPerformance": [
-      { "minutes": 90, "goals": 2, "assists": 1, "penalties": 0 },
-      { "minutes": 88, "goals": 1, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 2, "penalties": 0 },
-      { "minutes": 90, "goals": 1, "assists": 1, "penalties": 0 },
-      { "minutes": 85, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 1, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 1, "penalties": 0 },
-      { "minutes": 90, "goals": 2, "assists": 0, "penalties": 0 },
-      { "minutes": 75, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 1, "assists": 1, "penalties": 0 }
+      {
+        "minutesPlayed": 90, "goals": 3, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 88, "goals": 1, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 2,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 1, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 85, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 45, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 2, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 75, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 1, "ownGoals": 1,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 1, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      }
     ]
   },
   {
     "id": 2,
     "firstName": "Virgil",
     "lastName": "van Dijk",
+    "apiDisplayName": "V. van Dijk",
     "position": "DEF",
-    "teamCode": "NED",
+    "positionFull": "Defender",
+    "nationality": "Netherlands",
+    "nationalityCode": "NED",
+    "nationalityLocal": "Nederland",
     "club": "Liverpool",
     "status": "starting",
+    "price": 7,
     "recentPerformance": [
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 1, "penalties": 0 },
-      { "minutes": 90, "goals": 1, "assists": 0, "penalties": 0 },
-      { "minutes": 85, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 1 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 1, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 }
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 85, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 60, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 1, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": 0, "shootoutSaves": null, "shootoutMisses": 0
+      }
     ]
   },
   {
     "id": 3,
     "firstName": "Alisson",
     "lastName": "Becker",
+    "apiDisplayName": "Alisson",
     "position": "GK",
-    "teamCode": "BRA",
+    "positionFull": "Goalkeeper",
+    "nationality": "Brazil",
+    "nationalityCode": "BRA",
+    "nationalityLocal": "Brasil",
     "club": "Liverpool",
     "status": "starting",
+    "price": 6,
     "recentPerformance": [
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 },
-      { "minutes": 90, "goals": 0, "assists": 0, "penalties": 0 }
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 5, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 3, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 1,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 7, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 2, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 4, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 6, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 3, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 5, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 1,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": 2, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": 4, "penaltiesScored": 0, "penaltiesMissed": null, "penaltiesSaved": 0,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": 0, "shootoutSaves": 2, "shootoutMisses": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "firstName": "Frenkie",
+    "lastName": "de Jong",
+    "apiDisplayName": "F. de Jong",
+    "position": "MID",
+    "positionFull": "Midfielder",
+    "nationality": "Netherlands",
+    "nationalityCode": "NED",
+    "nationalityLocal": "Nederland",
+    "club": "Barcelona",
+    "status": "starting",
+    "price": 8,
+    "recentPerformance": [
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 2,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 75, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 2,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 2, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 60, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": true,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 1, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 45, "goals": 0, "assists": 0,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": false,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      }
     ]
   }
 ]

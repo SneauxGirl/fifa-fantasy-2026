@@ -116,17 +116,19 @@ src/
 
 // ====== Goal: Define the shape of data before connecting APIs. =====
 
-1. Create mock JSON:
+1. Finalize and define rules for selection and scoring
+
+2. Create mock JSON:
    - players.json
    - teams.json
    - matches.json
 
-2. Define TypeScript interfaces:
+3. Define TypeScript interfaces:
    - Player, Team, Match, FantasyScore
 
-3. Test importing mock data and rendering simple lists in a dashboard component.
+4. Test importing mock data and rendering simple lists in a dashboard component.
 
-4. Ensure Redux store is initialized to hold:
+5. Ensure Redux store is initialized to hold:
    - Selected teams & players
    - AI insights
    - Match updates (for WebSocket feed later)
