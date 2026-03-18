@@ -15,7 +15,7 @@ export type TournamentRound =
   | "semifinal"
   | "final";
 
-// Rounds in which new Champion Teams / Players may still be added to the ROSTER.
+// Rounds in which new Squads / Players may still be added to the ROSTER.
 // Used by the lineup slice to gate substitution UI.
 export const SUBSTITUTION_OPEN_ROUNDS: TournamentRound[] = [
   "group",
@@ -45,7 +45,7 @@ export interface PlayerScoreBreakdown {
   shootoutMissPoints: number;     // -2 per shootout penalty missed
 }
 
-// isSubstitute applies to both Players and Champion Teams equally (see rules §2):
+// isSubstitute applies to both Players and Squads equally (see rules §2):
 //   false = added at Group Stage or R32 → scores at 100%
 //   true  = added at R16 (final permitted round) → scores at 50% for remainder of tournament
 export interface PlayerScore {
@@ -56,34 +56,34 @@ export interface PlayerScore {
   breakdown: PlayerScoreBreakdown;
 }
 
-// Per-match Champion Team score breakdown
-export interface TeamScoreBreakdown {
-  matchResultPoints: number;      // Win +10 | Draw +5 | Loss +0
+// Per-match Squad score breakdown
+export interface SquadScoreBreakdown {
+  matchResultPoints: number;      // Win +10 | Draw +5 | Loss +0 | Partial/abandoned +0
   goalsForPoints: number;         // +2 per goal scored
   goalsConcededPoints: number;    // -1 per goal conceded
-  cleanSheetBonus: number;        // +5 if team kept clean sheet
+  cleanSheetBonus: number;        // +5 if Squad kept clean sheet
   advancementBonus: number;       // see advancement table in rules.md:
                                   //   Group Winner +30 | Group Advances +20
                                   //   R32 win +45 | R16 win +60 | QF win +75 | SF win +100 | Final win +125
 }
 
-// isSubstitute mirrors PlayerScore — 50% rule is identical for Champion Teams and Players
-export interface TeamScore {
+// isSubstitute mirrors PlayerScore — 50% rule is identical for Squads and Players
+export interface SquadScore {
   teamId: number;
   matchId?: number;               // omit for cumulative totals
   weeklyPoints?: number;
   totalPoints: number;
   isSubstitute: boolean;          // true = added at R16; scores at 50% for remainder of tournament
-  breakdown: TeamScoreBreakdown;
+  breakdown: SquadScoreBreakdown;
 }
 
-// Weekly totals — sum of all 4 Champion teams + 11 STARTER players
+// Weekly totals — sum of all 4 Squads + 11 STARTER Players
 export interface WeeklyScore {
   week: number;
-  playerPoints: number;           // sum of all STARTER player points for the week
-  teamPoints: number;             // sum of all 4 Champion team points for the week
-  totalPoints: number;            // playerPoints + teamPoints
-  mvpPlayerId?: number;           // highest-scoring STARTER player (trophy icon only, no bonus)
+  playerPoints: number;           // sum of all STARTER Player points for the week
+  squadPoints: number;            // sum of all 4 Squad points for the week
+  totalPoints: number;            // playerPoints + squadPoints
+  mvpPlayerId?: number;           // highest-scoring STARTER Player (trophy icon only, no bonus)
 }
 
 // Full tournament cumulative score per user
