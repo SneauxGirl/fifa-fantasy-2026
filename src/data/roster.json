@@ -1,0 +1,225 @@
+{
+  "squads": [
+    {
+      "type": "squad",
+      "id": 1,
+      "teamId": 1,
+      "status": "starter",
+      "name": "Argentina",
+      "code": "ARG",
+      "flag": "🇦🇷",
+      "matchPoints": {
+        "102": 12
+      }
+    },
+    {
+      "type": "squad",
+      "id": 3,
+      "teamId": 3,
+      "status": "starter",
+      "name": "Brazil",
+      "code": "BRA",
+      "flag": "🇧🇷",
+      "matchPoints": {
+        "102": 5
+      }
+    },
+    {
+      "type": "squad",
+      "id": 2,
+      "teamId": 2,
+      "status": "inactive",
+      "name": "Netherlands",
+      "code": "NED",
+      "flag": "🇳🇱",
+      "matchPoints": {
+        "103": 8
+      }
+    },
+    {
+      "type": "squad",
+      "id": 5,
+      "teamId": 5,
+      "status": "starter",
+      "name": "France",
+      "code": "FRA",
+      "flag": "🇫🇷",
+      "matchPoints": {}
+    }
+  ],
+  "players": [
+    {
+      "type": "player",
+      "id": 1,
+      "playerId": 1,
+      "status": "starter",
+      "name": "Lionel Messi",
+      "position": "FWD",
+      "number": 10,
+      "teamId": 1,
+      "code": "ARG",
+      "flag": "🇦🇷",
+      "matchPoints": {
+        "102": 27
+      }
+    },
+    {
+      "type": "player",
+      "id": 2,
+      "playerId": 2,
+      "status": "inactive",
+      "name": "Vinícius Júnior",
+      "position": "FWD",
+      "number": 7,
+      "teamId": 3,
+      "code": "BRA",
+      "flag": "🇧🇷",
+      "matchPoints": {}
+    },
+    {
+      "type": "player",
+      "id": 4,
+      "playerId": 4,
+      "status": "starter",
+      "name": "Kevin De Bruyne",
+      "position": "MID",
+      "number": 17,
+      "teamId": 2,
+      "code": "NED",
+      "flag": "🇳🇱",
+      "matchPoints": {
+        "103": 12
+      }
+    },
+    {
+      "type": "player",
+      "id": 10,
+      "playerId": 10,
+      "status": "starter",
+      "name": "Julián Álvarez",
+      "position": "FWD",
+      "number": 9,
+      "teamId": 1,
+      "code": "ARG",
+      "flag": "🇦🇷",
+      "matchPoints": {
+        "102": 6
+      }
+    },
+    {
+      "type": "player",
+      "id": 11,
+      "playerId": 11,
+      "status": "inactive",
+      "name": "Roberto Firmino",
+      "position": "FWD",
+      "number": 9,
+      "teamId": 3,
+      "code": "BRA",
+      "flag": "🇧🇷",
+      "matchPoints": {
+        "102": -2
+      }
+    },
+    {
+      "type": "player",
+      "id": 12,
+      "playerId": 12,
+      "status": "inactive",
+      "name": "Gabriel Martinelli",
+      "position": "MID",
+      "number": 11,
+      "teamId": 3,
+      "code": "BRA",
+      "flag": "🇧🇷",
+      "matchPoints": {
+        "102": 4,
+        "103": 6
+      }
+    },
+    {
+      "type": "player",
+      "id": 13,
+      "playerId": 13,
+      "status": "inactive",
+      "name": "Xavi Simons",
+      "position": "MID",
+      "number": 8,
+      "teamId": 2,
+      "code": "NED",
+      "flag": "🇳🇱",
+      "matchPoints": {
+        "103": 2
+      }
+    },
+    {
+      "type": "player",
+      "id": 14,
+      "playerId": 14,
+      "status": "inactive",
+      "name": "Denzel Dumfries",
+      "position": "DEF",
+      "number": 2,
+      "teamId": 2,
+      "code": "NED",
+      "flag": "🇳🇱",
+      "matchPoints": {
+        "103": -4
+      }
+    },
+    {
+      "type": "player",
+      "id": 15,
+      "playerId": 15,
+      "status": "inactive",
+      "name": "Wout Weghorst",
+      "position": "FWD",
+      "number": 19,
+      "teamId": 2,
+      "code": "NED",
+      "flag": "🇳🇱",
+      "matchPoints": {
+        "103": 0
+      }
+    },
+    {
+      "type": "player",
+      "id": 16,
+      "playerId": 16,
+      "status": "inactive",
+      "name": "Marcus Thuram",
+      "position": "FWD",
+      "number": 14,
+      "teamId": 5,
+      "code": "FRA",
+      "flag": "🇫🇷",
+      "matchPoints": {}
+    },
+    {
+      "type": "player",
+      "id": 17,
+      "playerId": 17,
+      "status": "inactive",
+      "name": "Aurélien Tchouaméni",
+      "position": "MID",
+      "number": 8,
+      "teamId": 5,
+      "code": "FRA",
+      "flag": "🇫🇷",
+      "matchPoints": {}
+    },
+    {
+      "type": "player",
+      "id": 18,
+      "playerId": 18,
+      "status": "inactive",
+      "name": "Dayot Upamecano",
+      "position": "DEF",
+      "number": 4,
+      "teamId": 5,
+      "code": "FRA",
+      "flag": "🇫🇷",
+      "matchPoints": {}
+    }
+  ]
+}

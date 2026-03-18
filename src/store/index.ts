@@ -9,12 +9,14 @@ import type { TypedUseSelectorHook } from "react-redux";
 import lineupReducer from "./slices/lineupSlice";
 import matchReducer  from "./slices/matchSlice";
 import aiReducer     from "./slices/aiSlice";
+import rosterReducer from "./slices/rosterSlice";
 
 export const store = configureStore({
   reducer: {
     lineup:  lineupReducer,
     matches: matchReducer,
     ai:      aiReducer,
+    roster:  rosterReducer,
   },
 });
 

@@ -83,3 +83,67 @@ export interface Match {
   score: MatchScore;
   events: MatchEvent[];
 }
+
+// ─── Roster & Fantasy ─────────────────────────────────────────────────────
+
+export type RosterMemberStatus = "starter" | "inactive" | "eliminated";
+
+/**
+ * A Squad selected in the user's roster.
+ * Tracks fantasy points per match.
+ */
+export interface RosterSquad {
+  type: "squad";
+  id: number;                          // Team ID
+  teamId: number;                      // same as id, for clarity
+  status: RosterMemberStatus;
+  name: string;
+  code: string;
+  flag: string;
+  matchPoints: Record<string, number>; // matchId → points gained in that match
+}
+
+/**
+ * A Player selected in the user's roster.
+ * Tracks fantasy points per match.
+ */
+export interface RosterPlayer {
+  type: "player";
+  id: number;                          // Player ID
+  playerId: number;                    // same as id, for clarity
+  status: RosterMemberStatus;
+  name: string;
+  position: string;                    // FWD, MID, DEF, GK
+  number: number;                      // Jersey number
+  teamId: number;                      // National team ID
+  code: string;                        // FIFA country code (e.g., "ARG", "BRA")
+  flag: string;                        // Country flag emoji
+  matchPoints: Record<string, number>; // matchId → points gained in that match
+}
+
+export type RosterMember = RosterSquad | RosterPlayer;
+
+/**
+ * User's fantasy roster.
+ * 4 squads + 18 players (11 starters, 7 inactive).
+ * Eliminated members retain historical points but don't count toward active tally.
+ */
+export interface Roster {
+  squads: RosterSquad[];  // 4 squads
+  players: RosterPlayer[]; // 18 players
+}
+
+/**
+ * Summary of fantasy impact for a specific match.
+ * Used by MatchCard to display which roster members were involved and their points.
+ */
+export interface MatchRosterImpact {
+  matchId: string;
+  activePoints: number;   // sum of starter member points only
+  inactivePoints: number; // sum of inactive member points (informational only)
+  members: Array<{
+    member: RosterMember;
+    pointsThisMatch: number;
+    events: MatchEvent[]; // events that affected this member
+  }>;
+}

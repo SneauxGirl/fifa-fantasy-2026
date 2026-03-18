@@ -4,7 +4,7 @@
 // ==============================
 // Atomic scoring constants and helper functions.
 // These are the building blocks used by calculatePlayerScore
-// and calculateChampionTeamScore.
+// and calculateSquadScore.
 // All functions are pure — no side effects, no Redux imports.
 // ==============================
 

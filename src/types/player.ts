@@ -46,7 +46,9 @@ export interface Player {
   nationalityLocal: string;       // Locally preferred name (e.g. "Nederland") — mapped via countryNames.ts
   club: string;                   // API: statistics[].team.name — professional club name
   status: PlayerStatus;
+  isMvp?: boolean;                // tournament MVP designation — toggles trophy badge on card
   price?: number;                 // Phase 8: budget constraint value
   photoUrl?: string;              // API: player.photo
-  recentPerformance: PlayerMatchStats[]; // last 10 match-level stats, most recent first
+  recentPerformance: PlayerMatchStats[]; // last 10 non-tournament match-level stats, most recent first
+  tournamentPerformance?: PlayerMatchStats[]; // tournament match-level stats (populated once tournament begins)
 }

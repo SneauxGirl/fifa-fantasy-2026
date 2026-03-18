@@ -27,7 +27,7 @@ import type { RootState } from "../index";
 //   2. Should there be a manual "refresh insight" button per Player/Squad card? ... maybe? consider cost
 //   3. Batch pre-fetch strategy: how many per session to minimise API calls? ... consider WHAT to include or it won't solve anything
 //   4. Once auth is added (Phase 7), should insights be userId-scoped or
-//      remain session-only? - cost comparison - probably user scoped and rotate through a set number of insights per team and player, similar to "tips"
+//      remain session-only? - cost comparison - probably user scoped and rotate through a set number of insights per squad and player, similar to "tips"
 //   5. Consider moving selectors below into store/selectors/ if they grow
 //      beyond a few lines in Phase 4.
 

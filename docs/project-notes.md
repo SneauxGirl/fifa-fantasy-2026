@@ -132,7 +132,7 @@ src/
    - Match updates (for WebSocket feed later)
 
 5. Test importing mock data and rendering simple lists in a dashboard component.
-   - Complete 3/17/26 ![Data Check ScreenShot](FF26-Phase1-dataCheck.png)
+   - Complete 3/17/26 ![Data Check ScreenShot](Phase1-dataCheck.png)
 
 // ===== Process Key: Use mock data first, swap in REST, then add AI / GraphQL / WebSocket. =====
 
@@ -187,6 +187,10 @@ src/
          - Per-player fantasy points
        - AIInsights
          - Optional per-match or per-player insights
+
+---------------------------------------------------------
+### COMPLETE TO THIS POINT
+_________________________________________________________
 
 4. Layout / Pages:
    - Dashboard page:

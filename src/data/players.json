@@ -11,6 +11,7 @@
     "nationalityLocal": "Argentina",
     "club": "Inter Miami",
     "status": "starting",
+    "isMvp": true,
     "price": 12,
     "recentPerformance": [
       {
@@ -82,6 +83,29 @@
         "yellowCards": 0, "redCards": 0, "ownGoals": 0,
         "cleanSheet": null,
         "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      }
+    ],
+    "tournamentPerformance": [
+      {
+        "minutesPlayed": 90, "goals": 2, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 85, "goals": 1, "assists": 2,
+        "saves": null, "penaltiesScored": 1, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 1, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": null, "shootoutSaves": null, "shootoutMisses": null
+      },
+      {
+        "minutesPlayed": 90, "goals": 0, "assists": 1,
+        "saves": null, "penaltiesScored": 0, "penaltiesMissed": 0, "penaltiesSaved": null,
+        "yellowCards": 0, "redCards": 0, "ownGoals": 0,
+        "cleanSheet": null,
+        "shootoutGoals": 1, "shootoutSaves": null, "shootoutMisses": 0
       }
     ]
   },

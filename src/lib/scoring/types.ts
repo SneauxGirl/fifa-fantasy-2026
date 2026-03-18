@@ -8,7 +8,7 @@
 //  lib/scoring/ → engine-internal types (what scoring functions work with)
 // ==============================
 
-// Roster status for a Player or Champion Team in the game engine.
+// Roster status for a Player or Squad in the game engine.
 // IMPORTANT: this is NOT the same as PlayerStatus in src/types/player.ts,
 // which is about match-day availability (starting/bench/not_expected).
 // RosterStatus is about tournament eligibility.
