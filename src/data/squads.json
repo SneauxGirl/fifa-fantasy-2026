@@ -1,0 +1,153 @@
+[
+  {
+    "teamId": 1,
+    "name": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "confederation": "CONMEBOL",
+    "coaches": [
+      { "name": "Lionel Scaloni", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 1001, "playerId": 1001, "status": "signed", "name": "Gonzalo Montiel", "position": "DEF", "number": 4, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1002, "playerId": 1002, "status": "signed", "name": "Nicolás Otamendi", "position": "DEF", "number": 6, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1003, "playerId": 1003, "status": "signed", "name": "Lisandro Martínez", "position": "DEF", "number": 5, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1004, "playerId": 1004, "status": "signed", "name": "Nahuel Molina", "position": "DEF", "number": 26, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1005, "playerId": 1005, "status": "signed", "name": "Alexis Mac Allister", "position": "MID", "number": 20, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1006, "playerId": 1006, "status": "signed", "name": "Rodrigo De Paul", "position": "MID", "number": 7, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1007, "playerId": 1007, "status": "signed", "name": "Enzo Fernández", "position": "MID", "number": 24, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1008, "playerId": 1008, "status": "signed", "name": "Lionel Messi", "position": "FWD", "number": 10, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1009, "playerId": 1009, "status": "signed", "name": "Ángel Di María", "position": "FWD", "number": 11, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1010, "playerId": 1010, "status": "signed", "name": "Julián Álvarez", "position": "FWD", "number": 9, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1011, "playerId": 1011, "status": "signed", "name": "Cristian Romero", "position": "DEF", "number": 13, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1012, "playerId": 1012, "status": "bench", "name": "Gonzalo Higuaín", "position": "FWD", "number": 9, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1013, "playerId": 1013, "status": "bench", "name": "Sergio Agüero", "position": "FWD", "number": 11, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1014, "playerId": 1014, "status": "bench", "name": "Carlos Tevez", "position": "FWD", "number": 14, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1015, "playerId": 1015, "status": "bench", "name": "Leandro Paredes", "position": "MID", "number": 19, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1016, "playerId": 1016, "status": "bench", "name": "Juan Paul Soria", "position": "GK", "number": 1, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1017, "playerId": 1017, "status": "bench", "name": "Martín Demichelis", "position": "DEF", "number": 12, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} },
+      { "type": "player", "id": 1018, "playerId": 1018, "status": "bench", "name": "Javier Mascherano", "position": "MID", "number": 8, "teamId": 1, "code": "ARG", "flag": "🇦🇷", "matchPoints": {} }
+    ]
+  },
+  {
+    "teamId": 3,
+    "name": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "confederation": "CONMEBOL",
+    "coaches": [
+      { "name": "Dorival Júnior", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 3001, "playerId": 3001, "status": "signed", "name": "Alisson Ramses", "position": "GK", "number": 1, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3002, "playerId": 3002, "status": "signed", "name": "Danilo Luiz da Silva", "position": "DEF", "number": 6, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3003, "playerId": 3003, "status": "signed", "name": "Éder Militão", "position": "DEF", "number": 4, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3004, "playerId": 3004, "status": "signed", "name": "Lucas Veríssimo", "position": "DEF", "number": 5, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3005, "playerId": 3005, "status": "signed", "name": "Vinícius Santos", "position": "DEF", "number": 15, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3006, "playerId": 3006, "status": "signed", "name": "Casemiro", "position": "MID", "number": 5, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3007, "playerId": 3007, "status": "signed", "name": "Rodrigo Hernández", "position": "MID", "number": 24, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3008, "playerId": 3008, "status": "signed", "name": "Neymar da Silva Santos Júnior", "position": "FWD", "number": 10, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3009, "playerId": 3009, "status": "signed", "name": "Vinícius Júnior", "position": "FWD", "number": 7, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3010, "playerId": 3010, "status": "signed", "name": "Endrick Felipe", "position": "FWD", "number": 21, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3011, "playerId": 3011, "status": "signed", "name": "Ricardo Gomes de Oliveira", "position": "MID", "number": 16, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3012, "playerId": 3012, "status": "bench", "name": "Ribamar Silva de Moraes", "position": "FWD", "number": 23, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3013, "playerId": 3013, "status": "bench", "name": "Bruno Guimaraes", "position": "MID", "number": 18, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3014, "playerId": 3014, "status": "bench", "name": "Lucas Paquetá", "position": "MID", "number": 20, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3015, "playerId": 3015, "status": "bench", "name": "Raphael Dias", "position": "DEF", "number": 12, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3016, "playerId": 3016, "status": "bench", "name": "Ederson Hernández García", "position": "GK", "number": 23, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3017, "playerId": 3017, "status": "bench", "name": "Gabriel de Sousa Magalhães", "position": "DEF", "number": 3, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} },
+      { "type": "player", "id": 3018, "playerId": 3018, "status": "bench", "name": "Éverton Cebolinha de Oliveira", "position": "FWD", "number": 22, "teamId": 3, "code": "BRA", "flag": "🇧🇷", "matchPoints": {} }
+    ]
+  },
+  {
+    "teamId": 2,
+    "name": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "confederation": "UEFA",
+    "coaches": [
+      { "name": "Ronald Koeman", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 2001, "playerId": 2001, "status": "signed", "name": "Justin Bijlow", "position": "GK", "number": 1, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2002, "playerId": 2002, "status": "signed", "name": "Jeremie Freuler", "position": "DEF", "number": 4, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2003, "playerId": 2003, "status": "signed", "name": "Virgil van Dijk", "position": "DEF", "number": 4, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2004, "playerId": 2004, "status": "signed", "name": "Nathan Aké", "position": "DEF", "number": 5, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2005, "playerId": 2005, "status": "signed", "name": "Tyrell Malacia", "position": "DEF", "number": 3, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2006, "playerId": 2006, "status": "signed", "name": "Kevin De Bruyne", "position": "MID", "number": 17, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2007, "playerId": 2007, "status": "signed", "name": "Daley Blind", "position": "MID", "number": 17, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2008, "playerId": 2008, "status": "signed", "name": "Steven Bergwijn", "position": "FWD", "number": 7, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2009, "playerId": 2009, "status": "signed", "name": "Cody Gakpo", "position": "FWD", "number": 18, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2010, "playerId": 2010, "status": "signed", "name": "Memphis Depay", "position": "FWD", "number": 10, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2011, "playerId": 2011, "status": "signed", "name": "Florian Wirtz", "position": "MID", "number": 19, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2012, "playerId": 2012, "status": "bench", "name": "Jurrien Timber", "position": "DEF", "number": 6, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2013, "playerId": 2013, "status": "bench", "name": "André Ramalho Silva", "position": "DEF", "number": 20, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2014, "playerId": 2014, "status": "bench", "name": "Frenkie de Jong", "position": "MID", "number": 21, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2015, "playerId": 2015, "status": "bench", "name": "Lautaro Martínez", "position": "FWD", "number": 22, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2016, "playerId": 2016, "status": "bench", "name": "Mark Flekken", "position": "GK", "number": 22, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2017, "playerId": 2017, "status": "bench", "name": "Sven Botman", "position": "DEF", "number": 12, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} },
+      { "type": "player", "id": 2018, "playerId": 2018, "status": "bench", "name": "Sergiño Dest", "position": "DEF", "number": 13, "teamId": 2, "code": "NED", "flag": "🇳🇱", "matchPoints": {} }
+    ]
+  },
+  {
+    "teamId": 5,
+    "name": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "confederation": "UEFA",
+    "coaches": [
+      { "name": "Didier Deschamps", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 5001, "playerId": 5001, "status": "signed", "name": "Mike Maignan", "position": "GK", "number": 16, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5002, "playerId": 5002, "status": "signed", "name": "Jules Koundé", "position": "DEF", "number": 5, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5003, "playerId": 5003, "status": "signed", "name": "Raphaël Varane", "position": "DEF", "number": 4, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5004, "playerId": 5004, "status": "signed", "name": "William Saliba", "position": "DEF", "number": 17, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5005, "playerId": 5005, "status": "signed", "name": "Théo Hernández", "position": "DEF", "number": 19, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5006, "playerId": 5006, "status": "signed", "name": "N'Golo Kanté", "position": "MID", "number": 13, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5007, "playerId": 5007, "status": "signed", "name": "Aurélien Tchouaméni", "position": "MID", "number": 18, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5008, "playerId": 5008, "status": "signed", "name": "Kylian Mbappé", "position": "FWD", "number": 10, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5009, "playerId": 5009, "status": "signed", "name": "Antoine Griezmann", "position": "FWD", "number": 7, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5010, "playerId": 5010, "status": "signed", "name": "Olivier Giroud", "position": "FWD", "number": 9, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5011, "playerId": 5011, "status": "signed", "name": "Eduardo Camavinga", "position": "MID", "number": 25, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5012, "playerId": 5012, "status": "bench", "name": "Moussa Diaby", "position": "FWD", "number": 14, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5013, "playerId": 5013, "status": "bench", "name": "Marcus Thuram", "position": "FWD", "number": 11, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5014, "playerId": 5014, "status": "bench", "name": "Dayot Upamecano", "position": "DEF", "number": 6, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5015, "playerId": 5015, "status": "bench", "name": "Benjamin Pavard", "position": "DEF", "number": 2, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5016, "playerId": 5016, "status": "bench", "name": "Alphonse Areola", "position": "GK", "number": 23, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5017, "playerId": 5017, "status": "bench", "name": "Lucas Hernández", "position": "DEF", "number": 3, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} },
+      { "type": "player", "id": 5018, "playerId": 5018, "status": "bench", "name": "Matteo Guendouzi", "position": "MID", "number": 24, "teamId": 5, "code": "FRA", "flag": "🇫🇷", "matchPoints": {} }
+    ]
+  },
+  {
+    "teamId": 4,
+    "name": "Germany",
+    "code": "GER",
+    "flag": "🇩🇪",
+    "confederation": "UEFA",
+    "status": "eliminated",
+    "coaches": [
+      { "name": "Julian Nagelsmann", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 4001, "playerId": 4001, "status": "eliminated", "name": "Manuel Neuer", "position": "GK", "number": 1, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4002, "playerId": 4002, "status": "eliminated", "name": "Antonio Rüdiger", "position": "DEF", "number": 2, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4003, "playerId": 4003, "status": "eliminated", "name": "Jonathan Tah", "position": "DEF", "number": 4, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4004, "playerId": 4004, "status": "eliminated", "name": "Joshua Kimmich", "position": "DEF", "number": 6, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4005, "playerId": 4005, "status": "eliminated", "name": "Ilkay Gündoğan", "position": "MID", "number": 7, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4006, "playerId": 4006, "status": "eliminated", "name": "Toni Kroos", "position": "MID", "number": 8, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4007, "playerId": 4007, "status": "eliminated", "name": "Jamal Musiala", "position": "MID", "number": 10, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4008, "playerId": 4008, "status": "eliminated", "name": "Florian Wirtz", "position": "FWD", "number": 11, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4009, "playerId": 4009, "status": "eliminated", "name": "Kai Havertz", "position": "FWD", "number": 9, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4010, "playerId": 4010, "status": "eliminated", "name": "Serge Gnabry", "position": "FWD", "number": 22, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4011, "playerId": 4011, "status": "eliminated", "name": "Robin Koch", "position": "DEF", "number": 5, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4012, "playerId": 4012, "status": "eliminated", "name": "Benjamin Henrichs", "position": "DEF", "number": 3, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4013, "playerId": 4013, "status": "eliminated", "name": "Lukas Podolski", "position": "FWD", "number": 10, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4014, "playerId": 4014, "status": "eliminated", "name": "Bastian Schweinsteiger", "position": "MID", "number": 7, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4015, "playerId": 4015, "status": "eliminated", "name": "Jerome Boateng", "position": "DEF", "number": 17, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4016, "playerId": 4016, "status": "eliminated", "name": "Marcell Jansen", "position": "DEF", "number": 20, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4017, "playerId": 4017, "status": "eliminated", "name": "Christian Günter", "position": "DEF", "number": 19, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
+      { "type": "player", "id": 4018, "playerId": 4018, "status": "eliminated", "name": "Thomas Müller", "position": "MID", "number": 13, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} }
+    ]
+  }
+]

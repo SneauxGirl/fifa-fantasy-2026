@@ -1,53 +1,56 @@
-import './App.css'
-import type { Player } from './types/player'
-import type { Team } from './types/team'
-import type { Match, Roster } from './types/match'
-import playersData from './data/players.json'
-import teamsData from './data/teams.json'
-import matchesData from './data/matches.json'
-import rosterData from './data/roster.json'
-import { PlayerCard } from './components/PlayerCard'
-import { SquadCard } from './components/SquadCard'
-import { MatchCard } from './components/MatchCard'
-
-const players = playersData as Player[];
-const teams   = teamsData as Team[];
-const matches = matchesData as Match[];
-const roster  = rosterData as Roster;
+import { useEffect } from 'react'
+import { useAppDispatch } from './store'
+import { setMatches } from './store/slices/matchesSlice'
+import { initializeRoster } from './store/slices/rosterSlice'
+import type { RosterPlayer, RosterSquad, Match } from './types/match'
+import { Router } from './router'
+import mockMatches from './data/matches.json'
+import mockSquadsData from './data/squads.json'
 
 function App() {
-  const handleMemberClick = (member: any) => {
-    console.log("Clicked roster member:", member);
-    // TODO: navigate to PlayerCard or SquadCard
-  };
+  const dispatch = useAppDispatch()
 
-  return (
-    <>
-      <section id="center">
-        <h2 style={{ marginBottom: "20px" }}>Component Library</h2>
+  useEffect(() => {
+    // Extract all players from squad official rosters
+    const rosterPlayers: RosterPlayer[] = mockSquadsData.flatMap((s: any) =>
+      (s.officialRoster || []).map((p: any) => {
+        const status: "available" | "eliminated" = p.status === "eliminated" ? "eliminated" : "available";
+        return {
+          type: "player" as const,
+          id: p.id,
+          playerId: p.id,
+          status,
+          name: p.name,
+          position: p.position,
+          number: p.number,
+          teamId: s.teamId,
+          code: s.code,
+          flag: s.flag,
+          matchPoints: {},
+        };
+      })
+    )
 
-        <h3>PlayerCard</h3>
-        <PlayerCard player={players[0]} fantasyStatus="starter" />
+    // Transform squad data to RosterSquad format
+    const rosterSquads: RosterSquad[] = mockSquadsData.map((s: any) => ({
+      type: "squad" as const,
+      id: s.teamId,
+      teamId: s.teamId,
+      status: "available" as const,
+      name: s.name,
+      code: s.code,
+      flag: s.flag,
+      matchPoints: {},
+      coaches: s.coaches,
+      officialRoster: s.officialRoster,
+    }))
 
-        <h3 style={{ marginTop: "30px" }}>SquadCard</h3>
-        <SquadCard team={teams[0]} fantasyStatus="active" />
+    // Load dummy data into Redux store
+    dispatch(setMatches(mockMatches as Match[]))
+    dispatch(initializeRoster({ players: rosterPlayers, squads: rosterSquads }))
+  }, [dispatch])
 
-        <h3 style={{ marginTop: "30px" }}>MatchCard (Brazil vs Argentina - Live)</h3>
-        <MatchCard
-          match={matches[1]}
-          roster={roster}
-          onMemberClick={handleMemberClick}
-        />
-
-        <h3 style={{ marginTop: "30px" }}>MatchCard (Netherlands vs Brazil - Finished)</h3>
-        <MatchCard
-          match={matches[2]}
-          roster={roster}
-          onMemberClick={handleMemberClick}
-        />
-      </section>
-    </>
-  )
+  return <Router />
 }
 
 export default App

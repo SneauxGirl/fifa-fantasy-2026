@@ -1,0 +1,62 @@
+.bracketDropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.select {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23333' d='M4.5 6l3.5 5 3.5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+
+  &:hover {
+    border-color: #0055a4;
+  }
+
+  &:focus {
+    outline: 2px solid #0055a4;
+    outline-offset: 2px;
+    border-color: #0055a4;
+  }
+
+  optgroup {
+    font-weight: 600;
+    color: #333;
+  }
+
+  option {
+    padding: 8px;
+    color: #333;
+    background: white;
+    font-weight: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .label {
+    font-size: 13px;
+  }
+
+  .select {
+    font-size: 13px;
+    padding: 10px;
+    padding-right: 32px;
+  }
+}

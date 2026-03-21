@@ -1,0 +1,244 @@
+.matchList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filterTabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #0055a4;
+  }
+
+  &.active {
+    color: #0055a4;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #0055a4;
+    }
+  }
+
+  &:focus {
+    outline: 2px solid #0055a4;
+    outline-offset: 2px;
+  }
+}
+
+.matchItems {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.matchItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+
+  &:hover {
+    border-color: #0055a4;
+    box-shadow: 0 2px 8px rgba(0, 85, 164, 0.1);
+  }
+
+  &:focus-within {
+    outline: 2px solid #0055a4;
+    outline-offset: 2px;
+  }
+
+  &.rosterMatch {
+    background: rgba(0, 85, 164, 0.04);
+    border-color: #0055a4;
+    border-width: 2px;
+    padding: 15px;
+  }
+
+  &.liveMatch {
+    border-color: #ff0000;
+    border-width: 2px;
+    padding: 15px;
+  }
+}
+
+.rosterBadge {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.liveBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+  padding: 4px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  animation: pulse 1s infinite;
+}
+
+.matchContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.matchHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+  min-width: 0;
+}
+
+.team {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vs {
+  color: #999;
+  font-weight: normal;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.status {
+  background: #f5f5f5;
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.matchDetails {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: #666;
+  flex-wrap: wrap;
+}
+
+.score {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.dateTime {
+  color: #999;
+}
+
+.venue {
+  color: #999;
+  font-size: 12px;
+}
+
+.loadingState,
+.emptyState,
+.errorState {
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+
+  p {
+    margin: 0;
+  }
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #d32f2f;
+  margin-top: 8px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .filterTabs {
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .matchItem {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .matchHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .teams {
+    font-size: 13px;
+  }
+
+  .status {
+    font-size: 11px;
+  }
+
+  .matchDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

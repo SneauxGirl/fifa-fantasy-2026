@@ -15,6 +15,15 @@
       "extratime": { "home": null, "away": null },
       "penalty": { "home": null, "away": null }
     },
+    "venue": {
+      "id": 1,
+      "name": "MetLife Stadium",
+      "city": "East Rutherford"
+    },
+    "stage": {
+      "id": 1,
+      "name": "Group Stage"
+    },
     "events": []
   },
   {
@@ -32,6 +41,15 @@
       "fulltime": { "home": null, "away": null },
       "extratime": { "home": null, "away": null },
       "penalty": { "home": null, "away": null }
+    },
+    "venue": {
+      "id": 2,
+      "name": "NRG Stadium",
+      "city": "Houston"
+    },
+    "stage": {
+      "id": 1,
+      "name": "Group Stage"
     },
     "events": [
       {
@@ -105,6 +123,15 @@
       "fulltime": { "home": 1, "away": 1 },
       "extratime": { "home": 1, "away": 1 },
       "penalty": { "home": 4, "away": 2 }
+    },
+    "venue": {
+      "id": 3,
+      "name": "Arrowhead Stadium",
+      "city": "Kansas City"
+    },
+    "stage": {
+      "id": 1,
+      "name": "Group Stage"
     },
     "events": [
       {

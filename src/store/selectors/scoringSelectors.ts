@@ -13,82 +13,122 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "../index";
-import type { Match } from "../../types/match";
+import type { Match, RosterPlayer, RosterSquad } from "../../types/match";
 
-// ─── Lineup selectors ─────────────────────────────────────────────────────────
+// ─── Roster selectors ──────────────────────────────────────────────────────────
 
-export const selectCurrentRound = (state: RootState) =>
-  state.lineup.currentRound;
+export const selectSignedSquads = (state: RootState) =>
+  state.roster.squads.signed;
 
-export const selectSquads = (state: RootState) =>
-  state.lineup.squads;
+export const selectSignedPlayers = (state: RootState) =>
+  state.roster.players.signed;
 
-export const selectRoster = (state: RootState) =>
-  state.lineup.roster;
+export const selectStarterPlayers = (state: RootState) =>
+  state.roster.players.starters;
 
-export const selectWeeklyStarters = (state: RootState) =>
-  state.lineup.weeklyStarters;
+export const selectUnsignedPlayers = (state: RootState) =>
+  state.roster.players.unsigned;
+
+/** Signed squad team IDs. */
+export const selectSignedSquadIds = createSelector(
+  selectSignedSquads,
+  (squads: RosterSquad[]) => squads.map((s) => s.teamId)
+);
+
+/** Signed player team IDs. */
+export const selectSignedPlayerTeamIds = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.map((p) => p.teamId)
+);
+
+/** Bench players (unsigned + signed, but not starters). */
+export const selectBenchPlayers = createSelector(
+  selectUnsignedPlayers,
+  selectSignedPlayers,
+  (unsigned: RosterPlayer[], signed: RosterPlayer[]) => [...unsigned, ...signed]
+);
+
+/** Starters grouped by position. */
+export const selectStartersGroupedByPosition = createSelector(
+  selectStarterPlayers,
+  (starters: RosterPlayer[]) => ({
+    gk: starters.filter((p) => p.position === "GK"),
+    def: starters.filter((p) => p.position === "DEF"),
+    mid: starters.filter((p) => p.position === "MID"),
+    fwd: starters.filter((p) => p.position === "FWD"),
+  })
+);
 
 /** Active (non-ELIMINATED) Squads only. */
 export const selectActiveSquads = createSelector(
-  selectSquads,
-  (squads) => squads.filter((t) => !t.isEliminated)
+  selectSignedSquads,
+  (squads: RosterSquad[]) => squads.filter((t) => t.status !== "eliminated")
 );
 
 /** Non-ELIMINATED Players on the ROSTER. */
 export const selectActiveRosterPlayers = createSelector(
-  selectRoster,
-  (roster) => roster.filter((p) => !p.isEliminated)
+  selectSignedPlayers,
+  (roster: RosterPlayer[]) => roster.filter((p) => p.status !== "eliminated")
 );
 
-/** Active ROSTER Player IDs that are currently selected as weekly STARTERS. */
+/** Active STARTER Player IDs. */
 export const selectActiveStarterIds = createSelector(
-  selectWeeklyStarters,
+  selectStarterPlayers,
   selectActiveRosterPlayers,
-  (starterIds, activeRoster) => {
+  (starters: RosterPlayer[], activeRoster: RosterPlayer[]) => {
     const activeIds = new Set(activeRoster.map((p) => p.playerId));
-    return starterIds.filter((id) => activeIds.has(id));
+    return starters.map((s) => s.playerId).filter((id) => activeIds.has(id));
   }
 );
 
-/** SUBSTITUTE-flagged Players — used by the 50% multiplier. */
+/** BENCH-flagged Players — used by the 50% multiplier (substitute role). */
 export const selectSubstitutePlayerIds = createSelector(
-  selectRoster,
-  (roster) => new Set(roster.filter((p) => p.isSubstitute).map((p) => p.playerId))
+  selectSignedPlayers,
+  (roster: RosterPlayer[]) => new Set(roster.filter((p) => p.status === "bench").map((p) => p.playerId))
 );
 
-/** SUBSTITUTE-flagged Squads — used by the 50% multiplier. */
+/** BENCH-flagged Squads — used by the 50% multiplier (substitute role). */
 export const selectSubstituteSquadIds = createSelector(
-  selectSquads,
-  (squads) => new Set(squads.filter((t) => t.isSubstitute).map((t) => t.teamId))
+  selectSignedSquads,
+  (squads: RosterSquad[]) => new Set(squads.filter((t) => t.status === "bench").map((t) => t.teamId))
+);
+
+/** Roster object with signed squads and players for match card modal. */
+export const selectMatchRoster = createSelector(
+  selectSignedSquads,
+  selectSignedPlayers,
+  (squads: RosterSquad[], players: RosterPlayer[]) => ({
+    squads,
+    players,
+  })
 );
 
 // ─── Match selectors ──────────────────────────────────────────────────────────
 
-export const selectMatches = (state: RootState) =>
-  state.matches.matches;
+export const selectAllMatches = (state: RootState) =>
+  state.matches.allMatches;
 
-export const selectMatchStatus = (state: RootState) =>
-  state.matches.status;
+export const selectRosterMatches = (state: RootState) =>
+  state.matches.rosterMatches;
 
 export const selectLiveMatches = createSelector(
-  selectMatches,
-  (matches): Match[] =>
-    matches.filter((m) =>
+  selectAllMatches,
+  (matches: Match[]): Match[] =>
+    matches.filter((m: Match) =>
       ["1H", "HT", "2H", "ET", "BT", "P"].includes(m.status.short)
     )
 );
 
 export const selectUpcomingMatches = createSelector(
-  selectMatches,
-  (matches): Match[] =>
-    matches.filter((m) => m.status.short === "NS")
+  selectAllMatches,
+  (matches: Match[]): Match[] =>
+    matches.filter((m: Match) => m.status.short === "NS")
 );
 
 export const selectFinishedMatches = createSelector(
-  selectMatches,
-  (matches): Match[] =>
-    matches.filter((m) =>
+  selectAllMatches,
+  (matches: Match[]): Match[] =>
+    matches.filter((m: Match) =>
       ["FT", "AET", "PEN"].includes(m.status.short)
     )
 );
@@ -99,11 +139,48 @@ export const selectFinishedMatches = createSelector(
  * Used by score computation selectors in Phase 3+.
  */
 export const selectScoredMatches = createSelector(
-  selectMatches,
-  (matches): Match[] =>
-    matches.filter((m) =>
+  selectAllMatches,
+  (matches: Match[]): Match[] =>
+    matches.filter((m: Match) =>
       ["FT", "AET", "PEN", "SUSP", "ABD", "INT"].includes(m.status.short)
     )
+);
+
+/** Matches grouped by tournament stage. */
+export const selectMatchesByStage = createSelector(
+  selectAllMatches,
+  (matches: Match[]) => {
+    const stages: Record<string, Match[]> = {
+      "Group Stage": [],
+      "Round of 32": [],
+      "Round of 16": [],
+      "Quarterfinals": [],
+      "Semifinals": [],
+      "Final": [],
+      "Other": [],
+    };
+
+    matches.forEach((match) => {
+      const stageName = match.stage?.name || "Other";
+      if (stageName.includes("Group")) {
+        stages["Group Stage"].push(match);
+      } else if (stageName.includes("Round of 32")) {
+        stages["Round of 32"].push(match);
+      } else if (stageName.includes("Round of 16")) {
+        stages["Round of 16"].push(match);
+      } else if (stageName.includes("Quarter")) {
+        stages["Quarterfinals"].push(match);
+      } else if (stageName.includes("Semi")) {
+        stages["Semifinals"].push(match);
+      } else if (stageName.includes("Final")) {
+        stages["Final"].push(match);
+      } else {
+        stages["Other"].push(match);
+      }
+    });
+
+    return stages;
+  }
 );
 
 // ─── Score selectors (Phase 3+) ───────────────────────────────────────────────

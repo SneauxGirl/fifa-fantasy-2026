@@ -1,28 +1,29 @@
 // src/components/PlayerCard/PlayerCard.tsx
 import React, { useState } from "react";
 import type { Player } from "../../types/player";
+import type { RosterPlayer } from "../../types/match";
 import { nationalColors, nationalFlags } from "../../lib/nationalColors";
 import styles from "./PlayerCard.module.scss";
 
 interface PlayerCardProps {
-  player: Player;
-  fantasyStatus: "starter" | "bench" | "eliminated";
+  player: Player | RosterPlayer;
+  fantasyStatus: "available" | "starter" | "bench" | "eliminated";
 }
 
 export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus }) => {
   const [showTournament, setShowTournament] = useState(false);
 
-  const {
-    firstName,
-    lastName,
-    position,
-    nationalityCode,
-    club,
-    photoUrl,
-    recentPerformance,
-    tournamentPerformance,
-    isMvp,
-  } = player;
+  const isRosterPlayer = (p: Player | RosterPlayer): p is RosterPlayer => "type" in p && p.type === "player";
+
+  const firstName = !isRosterPlayer(player) ? player.firstName : "";
+  const lastName = !isRosterPlayer(player) ? player.lastName : "";
+  const position = player.position;
+  const nationalityCode = !isRosterPlayer(player) ? player.nationalityCode : player.code;
+  const club = !isRosterPlayer(player) ? player.club : "—";
+  const photoUrl = !isRosterPlayer(player) ? player.photoUrl : undefined;
+  const recentPerformance = !isRosterPlayer(player) ? player.recentPerformance : [];
+  const tournamentPerformance = !isRosterPlayer(player) ? player.tournamentPerformance : undefined;
+  const isMvp = !isRosterPlayer(player) ? player.isMvp : false;
 
   const flagColors = nationalColors[nationalityCode] ?? ["#888", "#ccc", "#888"];
   const flagEmoji  = nationalFlags[nationalityCode] ?? "";
@@ -52,6 +53,7 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus })
   const badgeClass =
     fantasyStatus === "starter"   ? styles.playerCardBadgeStarter   :
     fantasyStatus === "eliminated" ? styles.playerCardBadgeEliminated :
+    fantasyStatus === "available"  ? styles.playerCardBadgeAvailable  :
     styles.playerCardBadge;
 
   return (

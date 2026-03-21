@@ -82,11 +82,50 @@ export interface Match {
   };
   score: MatchScore;
   events: MatchEvent[];
+  venue?: {
+    id: number;
+    name: string;
+    city: string;
+  };
+  stage?: {
+    id: number;
+    name: string;
+  };
+  pollMetadata?: {
+    lastFetched: number;          // Unix timestamp of last API call
+    nextFetchAt: number;          // Unix timestamp for next scheduled poll
+    pollInterval: number;         // Milliseconds between polls
+  };
 }
 
 // ─── Roster & Fantasy ─────────────────────────────────────────────────────
 
-export type RosterMemberStatus = "starter" | "inactive" | "eliminated";
+export type RosterMemberStatus = "available" | "unsigned" | "signed" | "starter" | "bench" | "eliminated";
+
+/**
+ * Player injury status
+ * "none" - no injury
+ * "minor" - day-to-day, may be available
+ * "major" - unlikely to play
+ */
+export interface PlayerInjury {
+  status: "none" | "minor" | "major";
+  likelyUnavailable: boolean;
+  details?: string;
+}
+
+/**
+ * Reason a player was eliminated from roster
+ */
+export type PlayerEliminationReason = "ejection" | "injury" | "teamEliminated" | "removed";
+
+/**
+ * Coach information for a squad
+ */
+export interface Coach {
+  name: string;
+  role: string;
+}
 
 /**
  * A Squad selected in the user's roster.
@@ -101,6 +140,8 @@ export interface RosterSquad {
   code: string;
   flag: string;
   matchPoints: Record<string, number>; // matchId → points gained in that match
+  coaches?: Coach[];                   // Head coach(es) info
+  officialRoster?: RosterPlayer[];     // Full squad roster from official source
 }
 
 /**
@@ -113,12 +154,14 @@ export interface RosterPlayer {
   playerId: number;                    // same as id, for clarity
   status: RosterMemberStatus;
   name: string;
-  position: string;                    // FWD, MID, DEF, GK
+  position: "FWD" | "MID" | "DEF" | "GK"; // Standardized position
   number: number;                      // Jersey number
   teamId: number;                      // National team ID
   code: string;                        // FIFA country code (e.g., "ARG", "BRA")
   flag: string;                        // Country flag emoji
   matchPoints: Record<string, number>; // matchId → points gained in that match
+  injury?: PlayerInjury;               // Injury status and availability
+  eliminatedReason?: PlayerEliminationReason; // Why player was eliminated (if status === "eliminated")
 }
 
 export type RosterMember = RosterSquad | RosterPlayer;

@@ -1,0 +1,232 @@
+.insightsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.placeholder {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.matchHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #0055a4;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    flex: 1;
+  }
+}
+
+.date {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.insightsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insightItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid;
+
+  &.warning {
+    background: rgba(211, 47, 47, 0.08);
+    border-left-color: #d32f2f;
+  }
+
+  &.info {
+    background: rgba(0, 85, 164, 0.08);
+    border-left-color: #0055a4;
+  }
+}
+
+.insightHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insightTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.insightDescription {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.matchDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+
+  h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+}
+
+.recommendation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: linear-gradient(90deg, rgba(255, 237, 74, 0.1) 0%, rgba(0, 85, 164, 0.05) 100%);
+  border-radius: 6px;
+  border-left: 4px solid #ffed4e;
+
+  h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .insightsPanel {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .matchHeader {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h3 {
+      font-size: 14px;
+    }
+  }
+
+  .date {
+    font-size: 11px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .insightItem {
+    padding: 10px;
+  }
+
+  .insightDescription {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .insightsPanel {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .matchHeader {
+    gap: 8px;
+
+    h3 {
+      font-size: 13px;
+    }
+  }
+
+  .date {
+    font-size: 10px;
+  }
+
+  .insightItem {
+    padding: 8px;
+  }
+
+  .insightTitle {
+    font-size: 12px;
+  }
+
+  .insightDescription {
+    font-size: 11px;
+  }
+
+  .matchDetails {
+    padding: 10px;
+  }
+
+  .matchDetails h4,
+  .recommendation h4 {
+    font-size: 12px;
+  }
+
+  .recommendation {
+    padding: 10px;
+  }
+
+  .recommendation p {
+    font-size: 11px;
+  }
+}

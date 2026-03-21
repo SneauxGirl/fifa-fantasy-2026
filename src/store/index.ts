@@ -6,17 +6,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 
-import lineupReducer from "./slices/lineupSlice";
-import matchReducer  from "./slices/matchSlice";
-import aiReducer     from "./slices/aiSlice";
 import rosterReducer from "./slices/rosterSlice";
+import matchesReducer from "./slices/matchesSlice";
+import uiReducer from "./slices/uiSlice";
 
 export const store = configureStore({
   reducer: {
-    lineup:  lineupReducer,
-    matches: matchReducer,
-    ai:      aiReducer,
-    roster:  rosterReducer,
+    roster: rosterReducer,
+    matches: matchesReducer,
+    ui: uiReducer,
   },
 });
 

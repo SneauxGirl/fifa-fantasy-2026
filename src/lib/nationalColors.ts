@@ -178,3 +178,111 @@ export const nationalFlags: Record<string, string> = {
   UKR: "🇺🇦",  // Ukraine
   WAL: "🏴󠁧󠁢󠁷󠁬󠁳󠁿",  // Wales (Unicode subdivision flag)
 };
+
+// FIFA confederation by country code.
+export const nationalConfederations: Record<string, string> = {
+  // Africa (CAF)
+  ALG: "CAF", ANG: "CAF", CMR: "CAF", COD: "CAF", EGY: "CAF", GHA: "CAF", CIV: "CAF", KEN: "CAF",
+  MLI: "CAF", MAR: "CAF", NGA: "CAF", SEN: "CAF", RSA: "CAF", TUN: "CAF", ZIM: "CAF",
+  // Asia / Oceania (AFC)
+  AUS: "AFC", CHN: "AFC", IDN: "AFC", IRN: "AFC", IRQ: "AFC", JPN: "AFC", JOR: "AFC", NZL: "AFC",
+  QAT: "AFC", KSA: "AFC", KOR: "AFC", UZB: "AFC",
+  // CONCACAF
+  CAN: "CONCACAF", CRC: "CONCACAF", CUB: "CONCACAF", HON: "CONCACAF", JAM: "CONCACAF", MEX: "CONCACAF",
+  PAN: "CONCACAF", USA: "CONCACAF",
+  // CONMEBOL
+  ARG: "CONMEBOL", BOL: "CONMEBOL", BRA: "CONMEBOL", CHI: "CONMEBOL", COL: "CONMEBOL", ECU: "CONMEBOL",
+  PAR: "CONMEBOL", PER: "CONMEBOL", URU: "CONMEBOL", VEN: "CONMEBOL",
+  // Europe (UEFA)
+  ALB: "UEFA", AUT: "UEFA", BEL: "UEFA", BIH: "UEFA", CRO: "UEFA", CZE: "UEFA", DEN: "UEFA", ENG: "UEFA",
+  FIN: "UEFA", FRA: "UEFA", GEO: "UEFA", GER: "UEFA", GRE: "UEFA", HUN: "UEFA", IRL: "UEFA", ITA: "UEFA",
+  NED: "UEFA", MKD: "UEFA", NOR: "UEFA", POL: "UEFA", POR: "UEFA", ROU: "UEFA", SCO: "UEFA", SRB: "UEFA",
+  SVK: "UEFA", SVN: "UEFA", ESP: "UEFA", SWE: "UEFA", SUI: "UEFA", TUR: "UEFA", UKR: "UEFA", WAL: "UEFA",
+};
+
+// Official FIFA Store merch links by country code.
+// Format: https://store.fifa.com/en-us/nations/{confederation}/{country-slug}
+export const nationalMerchUrls: Record<string, string> = {
+  // Africa (CAF)
+  ALG: "https://store.fifa.com/en-us/nations/caf/algeria",
+  ANG: "https://store.fifa.com/en-us/nations/caf/angola",
+  CMR: "https://store.fifa.com/en-us/nations/caf/cameroon",
+  COD: "https://store.fifa.com/en-us/nations/caf/congo",
+  EGY: "https://store.fifa.com/en-us/nations/caf/egypt",
+  GHA: "https://store.fifa.com/en-us/nations/caf/ghana",
+  CIV: "https://store.fifa.com/en-us/nations/caf/ivory-coast",
+  KEN: "https://store.fifa.com/en-us/nations/caf/kenya",
+  MLI: "https://store.fifa.com/en-us/nations/caf/mali",
+  MAR: "https://store.fifa.com/en-us/nations/caf/morocco",
+  NGA: "https://store.fifa.com/en-us/nations/caf/nigeria",
+  SEN: "https://store.fifa.com/en-us/nations/caf/senegal",
+  RSA: "https://store.fifa.com/en-us/nations/caf/south-africa",
+  TUN: "https://store.fifa.com/en-us/nations/caf/tunisia",
+  ZIM: "https://store.fifa.com/en-us/nations/caf/zimbabwe",
+  // Asia / Oceania (AFC)
+  AUS: "https://store.fifa.com/en-us/nations/afc/australia",
+  CHN: "https://store.fifa.com/en-us/nations/afc/china",
+  IDN: "https://store.fifa.com/en-us/nations/afc/indonesia",
+  IRN: "https://store.fifa.com/en-us/nations/afc/iran",
+  IRQ: "https://store.fifa.com/en-us/nations/afc/iraq",
+  JPN: "https://store.fifa.com/en-us/nations/afc/japan",
+  JOR: "https://store.fifa.com/en-us/nations/afc/jordan",
+  NZL: "https://store.fifa.com/en-us/nations/afc/new-zealand",
+  QAT: "https://store.fifa.com/en-us/nations/afc/qatar",
+  KSA: "https://store.fifa.com/en-us/nations/afc/saudi-arabia",
+  KOR: "https://store.fifa.com/en-us/nations/afc/south-korea",
+  UZB: "https://store.fifa.com/en-us/nations/afc/uzbekistan",
+  // CONCACAF
+  CAN: "https://store.fifa.com/en-us/nations/concacaf/canada",
+  CRC: "https://store.fifa.com/en-us/nations/concacaf/costa-rica",
+  CUB: "https://store.fifa.com/en-us/nations/concacaf/cuba",
+  HON: "https://store.fifa.com/en-us/nations/concacaf/honduras",
+  JAM: "https://store.fifa.com/en-us/nations/concacaf/jamaica",
+  MEX: "https://store.fifa.com/en-us/nations/concacaf/mexico",
+  PAN: "https://store.fifa.com/en-us/nations/concacaf/panama",
+  USA: "https://store.fifa.com/en-us/nations/concacaf/usa",
+  // CONMEBOL
+  ARG: "https://store.fifa.com/en-us/nations/conmebol/argentina",
+  BOL: "https://store.fifa.com/en-us/nations/conmebol/bolivia",
+  BRA: "https://store.fifa.com/en-us/nations/conmebol/brazil",
+  CHI: "https://store.fifa.com/en-us/nations/conmebol/chile",
+  COL: "https://store.fifa.com/en-us/nations/conmebol/colombia",
+  ECU: "https://store.fifa.com/en-us/nations/conmebol/ecuador",
+  PAR: "https://store.fifa.com/en-us/nations/conmebol/paraguay",
+  PER: "https://store.fifa.com/en-us/nations/conmebol/peru",
+  URU: "https://store.fifa.com/en-us/nations/conmebol/uruguay",
+  VEN: "https://store.fifa.com/en-us/nations/conmebol/venezuela",
+  // Europe (UEFA)
+  ALB: "https://store.fifa.com/en-us/nations/uefa/albania",
+  AUT: "https://store.fifa.com/en-us/nations/uefa/austria",
+  BEL: "https://store.fifa.com/en-us/nations/uefa/belgium",
+  BIH: "https://store.fifa.com/en-us/nations/uefa/bosnia-herzegovina",
+  CRO: "https://store.fifa.com/en-us/nations/uefa/croatia",
+  CZE: "https://store.fifa.com/en-us/nations/uefa/czech-republic",
+  DEN: "https://store.fifa.com/en-us/nations/uefa/denmark",
+  ENG: "https://store.fifa.com/en-us/nations/uefa/england",
+  FIN: "https://store.fifa.com/en-us/nations/uefa/finland",
+  FRA: "https://store.fifa.com/en-us/nations/uefa/france",
+  GEO: "https://store.fifa.com/en-us/nations/uefa/georgia",
+  GER: "https://store.fifa.com/en-us/nations/uefa/germany",
+  GRE: "https://store.fifa.com/en-us/nations/uefa/greece",
+  HUN: "https://store.fifa.com/en-us/nations/uefa/hungary",
+  IRL: "https://store.fifa.com/en-us/nations/uefa/ireland",
+  ITA: "https://store.fifa.com/en-us/nations/uefa/italy",
+  NED: "https://store.fifa.com/en-us/nations/uefa/netherlands",
+  MKD: "https://store.fifa.com/en-us/nations/uefa/north-macedonia",
+  NOR: "https://store.fifa.com/en-us/nations/uefa/norway",
+  POL: "https://store.fifa.com/en-us/nations/uefa/poland",
+  POR: "https://store.fifa.com/en-us/nations/uefa/portugal",
+  ROU: "https://store.fifa.com/en-us/nations/uefa/romania",
+  SCO: "https://store.fifa.com/en-us/nations/uefa/scotland",
+  SRB: "https://store.fifa.com/en-us/nations/uefa/serbia",
+  SVK: "https://store.fifa.com/en-us/nations/uefa/slovakia",
+  SVN: "https://store.fifa.com/en-us/nations/uefa/slovenia",
+  ESP: "https://store.fifa.com/en-us/nations/uefa/spain",
+  SWE: "https://store.fifa.com/en-us/nations/uefa/sweden",
+  SUI: "https://store.fifa.com/en-us/nations/uefa/switzerland",
+  TUR: "https://store.fifa.com/en-us/nations/uefa/turkey",
+  UKR: "https://store.fifa.com/en-us/nations/uefa/ukraine",
+  WAL: "https://store.fifa.com/en-us/nations/uefa/wales",
+};

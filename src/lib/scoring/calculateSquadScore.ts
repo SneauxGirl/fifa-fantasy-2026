@@ -3,7 +3,7 @@
 // Rules ref: docs/rules/rules.md §4
 // ==============================
 
-import type { Team } from "../../types/team";
+import type { Squad } from "../../types/squad";
 import type { Match } from "../../types/match";
 import type { SquadScore, SquadScoreBreakdown } from "../../types/fantasyScore";
 import { applySubstitutionModifier } from "./applySubstitutionModifier";
@@ -45,7 +45,7 @@ const ZERO_STATUSES = new Set(["NS", "PST", "CANC", "TBD"]);
  * @param advancementBonus  optional bonus points awarded separately at week end
  */
 export function calculateSquadScore(
-  team:             Team,
+  team:             Squad,
   match:            Match,
   isSubstitute:     boolean,
   advancementBonus  = 0

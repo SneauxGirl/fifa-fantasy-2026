@@ -1,0 +1,181 @@
+/* ==============================
+ * Design Tokens: Light & Dark Mode
+ * Automatically switches based on system preference
+ * Can be overridden manually via data-theme attribute
+ * ============================== */
+
+/* Light Mode (Default) */
+:root {
+  /* Primary Colors */
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-primary-light: #e7f1ff;
+
+  /* Status Colors */
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-info: #17a2b8;
+
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-hover: #f0f0f0;
+  --bg-active: #e0e0e0;
+
+  /* Text */
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #999999;
+  --text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --border-color: #dee2e6;
+  --border-light: #f0f0f0;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Spacing (optional, for consistency) */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-tooltip: 1070;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Primary Colors */
+    --color-primary: #0d6efd;
+    --color-primary-dark: #0a58ca;
+    --color-primary-light: #084298;
+
+    /* Status Colors */
+    --color-success: #198754;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-info: #0dcaf0;
+
+    /* Backgrounds */
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    --bg-hover: #3a3a3a;
+    --bg-active: #4a4a4a;
+
+    /* Text */
+    --text-primary: #e8e8e8;
+    --text-secondary: #b0b0b0;
+    --text-muted: #757575;
+    --text-inverse: #121212;
+
+    /* Borders & Dividers */
+    --border-color: #3a3a3a;
+    --border-light: #2d2d2d;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Manual Dark Mode Override */
+body[data-theme="dark"] {
+  --color-primary: #0d6efd;
+  --color-primary-dark: #0a58ca;
+  --color-primary-light: #084298;
+
+  --color-success: #198754;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-info: #0dcaf0;
+
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --bg-hover: #3a3a3a;
+  --bg-active: #4a4a4a;
+
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0b0;
+  --text-muted: #757575;
+  --text-inverse: #121212;
+
+  --border-color: #3a3a3a;
+  --border-light: #2d2d2d;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Manual Light Mode Override */
+body[data-theme="light"] {
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-primary-light: #e7f1ff;
+
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-info: #17a2b8;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-hover: #f0f0f0;
+  --bg-active: #e0e0e0;
+
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #999999;
+  --text-inverse: #ffffff;
+
+  --border-color: #dee2e6;
+  --border-light: #f0f0f0;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+button {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

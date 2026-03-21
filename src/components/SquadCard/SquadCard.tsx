@@ -1,11 +1,11 @@
 // src/components/SquadCard/SquadCard.tsx
 import React, { useState } from "react";
-import type { Team } from "../../types/team";
+import type { Squad } from "../../types/squad";
 import { nationalColors } from "../../lib/nationalColors";
 import styles from "./SquadCard.module.scss";
 
 interface SquadCardProps {
-  team: Team;
+  team: Squad;
   fantasyStatus: "active" | "substitute" | "eliminated";
 }
 

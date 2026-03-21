@@ -1,0 +1,106 @@
+.availableSquads {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+.empty {
+  margin: 0;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #999;
+  text-align: center;
+  font-style: italic;
+}
+
+.squadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+  }
+}
+
+.squadCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: 6px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  text-align: center;
+  font-family: inherit;
+
+  &:hover:not(:disabled) {
+    background: #f8fbff;
+    border-color: #0055a4;
+    box-shadow: 0 2px 8px rgba(0, 85, 164, 0.15);
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: 2px solid #0055a4;
+    outline-offset: 2px;
+    background: #f8fbff;
+    border-color: #0055a4;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    cursor: grabbing;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.eliminated {
+    background: #f5f5f5;
+    border-color: #ccc;
+    opacity: 0.6;
+  }
+}
+
+.flag {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  word-break: break-word;
+}
+
+.code {
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+}

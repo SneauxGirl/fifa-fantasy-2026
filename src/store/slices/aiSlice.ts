@@ -5,10 +5,9 @@
 // Phase 4: populated via aiService.ts (Claude / OpenAI)
 // ==============================
 
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { TournamentRound } from "../../types/fantasyScore";
-import type { RootState } from "../index";
 
 // ─── State shape ─────────────────────────────────────────────────────────────
 
@@ -118,26 +117,29 @@ export default aiSlice.reducer;
 // Kept here (not store/selectors/) because they are tightly coupled to
 // AIInsightEntry's shape. Relocate to selectors/ if they expand in Phase 4.
 
+// ⚠️ These selectors are for Phase 4 (AI Integration) and require aiSlice and lineupSlice to be added to store/index.ts
+// TODO: Uncomment these when aiSlice and lineupSlice are registered in the Redux store
+
 /**
  * Returns Player insight text only if fresh (generated in the current round).
  * Returns null if missing or stale.
  */
-export const selectFreshPlayerInsight = (playerId: number) =>
-  createSelector(
-    (state: RootState) => state.ai.playerInsights[playerId],
-    (state: RootState) => state.lineup.currentRound,
-    (entry, currentRound): string | null =>
-      entry?.forRound === currentRound ? entry.text : null
-  );
+// export const selectFreshPlayerInsight = (playerId: number) =>
+//   createSelector(
+//     (state: RootState) => state.ai.playerInsights[playerId],
+//     (state: RootState) => state.lineup.currentRound,
+//     (entry, currentRound): string | null =>
+//       entry?.forRound === currentRound ? entry.text : null
+//   );
 
 /**
  * Returns Squad insight text only if fresh (generated in the current round).
  * Returns null if missing or stale.
  */
-export const selectFreshSquadInsight = (teamId: number) =>
-  createSelector(
-    (state: RootState) => state.ai.squadInsights[teamId],
-    (state: RootState) => state.lineup.currentRound,
-    (entry, currentRound): string | null =>
-      entry?.forRound === currentRound ? entry.text : null
-  );
+// export const selectFreshSquadInsight = (teamId: number) =>
+//   createSelector(
+//     (state: RootState) => state.ai.squadInsights[teamId],
+//     (state: RootState) => state.lineup.currentRound,
+//     (entry, currentRound): string | null =>
+//       entry?.forRound === currentRound ? entry.text : null
+//   );

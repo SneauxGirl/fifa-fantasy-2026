@@ -1,0 +1,140 @@
+.unsignedSquads {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #ffa500;
+    font-weight: 600;
+  }
+}
+
+.squadList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.squadItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: #fffbf0;
+  border: 1px solid #ffe0b2;
+  border-left: 4px solid #ffa500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.15);
+    border-color: #ff9800;
+  }
+}
+
+.squadHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.squadInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.flag {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.nameBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  word-break: break-word;
+}
+
+.code {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+
+  &:focus {
+    outline: 2px solid #0055a4;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.remove {
+  background: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #ffcdd2;
+
+  &:hover {
+    background: #ffcdd2;
+    border-color: #d32f2f;
+  }
+}
+
+.sign {
+  background: #0055a4;
+  color: white;
+  border: 1px solid #0055a4;
+
+  &:hover {
+    background: #003d7a;
+    box-shadow: 0 2px 6px rgba(0, 85, 164, 0.2);
+  }
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .button {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}

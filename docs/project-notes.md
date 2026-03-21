@@ -189,8 +189,160 @@ src/
          - Optional per-match or per-player insights
 
 ---------------------------------------------------------
-### COMPLETE TO THIS POINT
+### COMPLETE TO THIS POINT (3/20/26)
 _________________________________________________________
+
+## Phase 2.5 — Architecture & Implementation Plan for Dashboard/Roster/FutureMatches
+
+// ====== Goal: Plan full page structure, routing, state management, and data models before implementation. =====
+
+### Key Design Decisions:
+
+**Navigation Structure:**
+- Three main pages:
+  1. Dashboard (landing page) - overview of current/upcoming/past matches
+  2. Roster (formerly "Lineup") - player/squad selection and management
+  3. Future Matches - tournament brackets + insights and team strategy recommendations
+
+**Dashboard Page Features:**
+- Summary stats ticker (marquee style):
+  - Tournament-to-date match scores
+  - Coming matches with dates/times/locations
+  - "Find Match Day Tickets" (StubHub link)
+  - "Find Merch" (FIFA Store link)
+- Match list (minimal view):
+  - All upcoming, current, and last week's final scores
+  - Non-roster matches show team/time/score only
+  - Roster matches highlighted to indicate fantasy impact
+  - Click roster match to open MatchCard modal
+- Roster sidebar (collapsible on browser/tablet):
+  - Shows current roster at-a-glance
+  - "GO TO ROSTER" link/button to navigate to Roster page
+
+**Roster Page Features:**
+- Position filter (dropdowns, not checkboxes - tab-through friendly)
+- Select position → show available players for that position
+- Drag players between available/unsigned/signed/starters/bench
+- Squads always displayed at top (max 4 signed)
+- Validation rules (through Round 16):
+  - Must have 11+ players signed to unlock starters/bench drag
+  - Must have 4 squads signed
+  - One dedicated goalie slot required
+- Post-Round 16:
+  - Roster locks to no new additions
+  - Can still replace eliminated players
+  - Players continue to be eliminated as tournament progresses
+- Semantic HTML, aria labels, tab-through friendly
+
+**Future Matches Page Features:**
+- Tournament bracket view (groups → knockout stages)
+- Mobile: dropdown/tab-through to select matches
+- Desktop: full bracket display
+- Click match for insights/recommendations panel
+- Insights priority levels:
+  - ⚠️ High Priority: team conflicts, strategic warnings
+  - ℹ️ Info: lineup optimization, player recommendations
+- "Click for insights" to trigger updates
+
+---
+
+### File Structure (Current):
+
+```
+src/
+  pages/
+    Dashboard.tsx           # Match summary, roster impact overview
+    Roster.tsx              # Available players + squads, bench/starters
+    FutureMatches.tsx       # Tournament bracket view & insights
+
+  components/
+    Navigation/
+      TopNav.tsx
+      Sidebar.tsx
+      BottomNav.tsx
+      ThemeToggle.tsx
+
+    Dashboard/
+      MatchList.tsx
+      SummaryTicker.tsx
+      RosterSidebar.tsx
+
+    Roster/
+      PositionFilter.tsx           # Dropdown: ALL, GK, DEF, MID, FWD
+      AvailablePlayersList.tsx     # Grid cards (3-row fixed height, scrollable)
+      AvailableSquadsList.tsx      # Squad selection cards
+      RosterDragZone.tsx           # Unsigned players (GK/DEF/MID/FWD columns)
+      RosterSidebar.tsx            # Goalie cap + validation display
+      SquadsSection.tsx            # Squad status
+      SquadSigningModal.tsx        # Squad confirmation modal
+      AvailableSquadsList.tsx      # Available squad grid
+
+    FutureMatches/
+      BracketView.tsx
+      BracketDropdown.tsx
+      InsightsPanel.tsx
+
+    Modals/
+      Modal.tsx                    # Base modal wrapper
+      MatchCardModal.tsx
+      PlayerCardModal.tsx          # Status: available | starter | bench | eliminated
+      SquadCardModal.tsx
+      PlayerSigningModal.tsx       # Confirmation: "Player X of 18. Min. 1 of 3 goalies?"
+      SquadSigningModal.tsx
+
+    PlayerCard/
+      PlayerCard.tsx               # Detailed stats + fantasy status badge
+
+    SquadCard/
+      SquadCard.tsx
+
+  store/
+    index.ts
+    slices/
+      rosterSlice.ts               # Players: available, unsigned, signed, starters, bench, eliminated
+      matchesSlice.ts              # Match data + live scores
+      uiSlice.ts                   # Modal state, sidebar visibility
+
+  services/
+    matchService.ts                # getMatches(), normalizeData()
+    pollService.ts                 # startPolling(), managePollingIntervals()
+    rosterService.ts               # validateRoster(), canAddToStarters(), etc.
+    SERVICES_ARCHITECTURE.md       # Detailed separation of concerns
+
+  data/
+    squads.json                    # 4 teams w/ officialRoster (id, name, position, number, flag, matchPoints)
+    matches.json                   # Fixtures + live scores
+    historicalCache.ts             # In-memory cache structure
+
+  lib/
+    nationalColors.ts              # nationalColors, nationalFlags, nationalConfederations, nationalMerchUrls
+    scoring/
+      calculateSquadScore.ts       # Match impact calculations
+    dataTransform.ts               # enrichPlayerForDisplay(), transformMatch(), etc.
+
+  layouts/
+    AppLayout.tsx
+
+  hooks/
+    useTheme.ts                    # Light/dark/system theme management
+
+  styles/
+    tokens.css                     # CSS custom properties (light/dark mode)
+    THEME_GUIDE.md                 # Theme system documentation
+
+  types/
+    match.ts                       # RosterPlayer, RosterSquad, Match
+```
+
+**Key Consolidations:**
+- ✅ players.json + teams.json → squads.json officialRoster
+- ✅ Layout/ → Navigation/
+- ✅ Store uses slices/ subfolder
+- ✅ Theme system: CSS variables + useTheme hook
+- ✅ Modal confirmations: PlayerSigningModal, SquadSigningModal
+- ✅ Available players: 3-row fixed height grid, scrollable
+
+---
 
 4. Layout / Pages:
    - Dashboard page:
@@ -259,7 +411,7 @@ _________________________________________________________
 
 5. Test with mock AI responses first before connecting live API.
 
----
+-------------------------------------------
 
 ## Phase 5 — GraphQL (Learning Module)
 

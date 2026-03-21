@@ -1,0 +1,61 @@
+.rosterSidebar {
+  display: none;
+  flex-direction: column;
+  background: #f8f9fa;
+  border-left: 1px solid #e5e5e5;
+  padding: 12px;
+  overflow-y: auto;
+  flex: 1;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.title {
+  margin: 0 0 12px 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e5e5;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.sectionLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.item {
+  font-size: 0.8rem;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.badge {
+  font-size: 0.65rem;
+  color: #999;
+  font-weight: 500;
+  margin-left: 2px;
+  font-style: italic;
+}
