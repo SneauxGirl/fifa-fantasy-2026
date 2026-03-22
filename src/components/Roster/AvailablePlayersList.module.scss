@@ -69,16 +69,16 @@
 
   &:hover:not(:disabled) {
     background: #f8fbff;
-    border-color: #0055a4;
+    border-color: #304FFE;
     box-shadow: 0 2px 8px rgba(0, 85, 164, 0.15);
     transform: translateY(-2px);
   }
 
   &:focus {
-    outline: 2px solid #0055a4;
+    outline: 2px solid #304FFE;
     outline-offset: 2px;
     background: #f8fbff;
-    border-color: #0055a4;
+    border-color: #304FFE;
   }
 
   &:active:not(:disabled) {

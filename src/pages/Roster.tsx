@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store";
-import { setSidebarOpen } from "../store/slices/uiSlice";
 import { AvailableSquadsList } from "../components/Roster/AvailableSquadsList";
 import { SquadsSection } from "../components/Roster/SquadsSection";
 import { PositionFilter } from "../components/Roster/PositionFilter";
@@ -8,27 +6,22 @@ import { AvailablePlayersList } from "../components/Roster/AvailablePlayersList"
 import { RosterDragZone } from "../components/Roster/RosterDragZone";
 import { StartersLineup } from "../components/Roster/StartersLineup";
 import { RosterSidebar } from "../components/Roster/RosterSidebar";
-import { Sidebar } from "../components/Navigation";
 import styles from "./Roster.module.scss";
 
 type PositionType = "GK" | "DEF" | "MID" | "FWD" | "ALL";
+type TabType = "roster" | "starters";
 
 /**
  * Roster Page
  * Player/squad selection and management
  * Position filters, drag & drop starters/bench, validation rules
+ * Tablet/mobile: tab-based interface for Select Roster vs Select Starters
+ * Desktop: no tabs, traditional layout
  */
 
 const Roster = () => {
-  const dispatch = useAppDispatch();
-  const sidebarOpen = useAppSelector((state) => state.ui.sidebar.open);
   const [selectedPosition, setSelectedPosition] = useState<PositionType>("ALL");
-
-  const handleNavigation = () => {
-    if (sidebarOpen) {
-      dispatch(setSidebarOpen(false));
-    }
-  };
+  const [activeTab, setActiveTab] = useState<TabType>("roster");
 
   return (
     <div className={styles.roster}>
@@ -37,9 +30,25 @@ const Roster = () => {
         <p>Build your fantasy roster: select 4 squads and 18 players (minimum 11 starters)</p>
       </header>
 
+      {/* Tabs (tablet/mobile only) */}
+      <div className={styles.tabs}>
+        <button
+          className={`${styles.tab} ${activeTab === "roster" ? styles.active : ""}`}
+          onClick={() => setActiveTab("roster")}
+        >
+          Select Roster
+        </button>
+        <button
+          className={`${styles.tab} ${activeTab === "starters" ? styles.active : ""}`}
+          onClick={() => setActiveTab("starters")}
+        >
+          Select Starters
+        </button>
+      </div>
+
       {/* Content + Sidebars */}
       <div className={styles.content}>
-        {/* Main Content (left) */}
+        {/* Main Content - Squad/Player Selection */}
         <div className={styles.mainContent}>
           {/* Select Squads Section */}
           <section className={styles.section}>
@@ -71,29 +80,19 @@ const Roster = () => {
           </section>
         </div>
 
-        {/* Right Sidebar Stack (Nav + Starters + Roster) */}
-        <div className={styles.rightSidebars}>
-          {/* Navigation Sidebar */}
-          <nav className={styles.navSidebar} aria-label="Main navigation">
-            <Sidebar onNavigate={handleNavigation} />
-          </nav>
+        {/* Right Sidebars */}
+        <div className={styles.rightSidebars} data-active-tab={activeTab}>
+          {/* StartersLineup */}
+          <div className={styles.startersColumn}>
+            <StartersLineup />
+          </div>
 
-          {/* Starters Lineup */}
-          <StartersLineup />
-
-          {/* Roster Sidebar */}
-          <RosterSidebar />
+          {/* RosterSidebar */}
+          <div className={styles.rosterColumn}>
+            <RosterSidebar />
+          </div>
         </div>
       </div>
-
-      {/* Mobile Nav Overlay */}
-      {sidebarOpen && (
-        <div
-          className={styles.mobileNavOverlay}
-          onClick={() => dispatch(setSidebarOpen(false))}
-          aria-hidden="true"
-        />
-      )}
     </div>
   );
 };

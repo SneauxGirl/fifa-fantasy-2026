@@ -5,12 +5,13 @@
   padding: 20px;
   background: #f9f9f9;
   border-radius: 8px;
+  margin-top: 20px;
   margin-bottom: 20px;
   transition: background-color 0.2s ease;
 
   &.dragOver {
     background-color: #e8f4ff;
-    box-shadow: inset 0 0 0 2px #0055a4;
+    box-shadow: inset 0 0 0 2px #304FFE;
   }
 
   h2 {
@@ -30,8 +31,8 @@
 
   &.dragOver {
     background-color: #e8f4ff;
-    border: 2px dashed #0055a4;
-    color: #0055a4;
+    border: 2px dashed #304FFE;
+    color: #304FFE;
     padding: 38px 18px;
   }
 
@@ -184,7 +185,7 @@
   font-family: inherit;
 
   &:focus {
-    outline: 2px solid #0055a4;
+    outline: 2px solid #304FFE;
     outline-offset: 2px;
   }
 
@@ -204,12 +205,12 @@
   }
 
   &.sign {
-    background: #0055a4;
+    background: #304FFE;
     color: white;
-    border: 1px solid #0055a4;
+    border: 1px solid #304FFE;
 
     &:hover {
-      background: #003d7a;
+      background: #1F3FBB;
       box-shadow: 0 2px 6px rgba(0, 85, 164, 0.2);
     }
   }
@@ -294,13 +295,13 @@
   font-size: 11px;
 
   &:hover {
-    border-color: #0055a4;
+    border-color: #304FFE;
     background: linear-gradient(135deg, #e8f4ff 0%, #d0e8ff 100%);
     box-shadow: 0 2px 6px rgba(0, 85, 164, 0.15);
   }
 
   &:focus {
-    outline: 2px solid #0055a4;
+    outline: 2px solid #304FFE;
     outline-offset: 2px;
   }
 
@@ -328,7 +329,7 @@
 
 .number {
   font-weight: 700;
-  color: #0055a4;
+  color: #304FFE;
   font-size: 12px;
 }
 

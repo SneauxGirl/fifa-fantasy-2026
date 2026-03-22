@@ -81,18 +81,6 @@ export const selectActiveStarterIds = createSelector(
   }
 );
 
-/** BENCH-flagged Players — used by the 50% multiplier (substitute role). */
-export const selectSubstitutePlayerIds = createSelector(
-  selectSignedPlayers,
-  (roster: RosterPlayer[]) => new Set(roster.filter((p) => p.status === "bench").map((p) => p.playerId))
-);
-
-/** BENCH-flagged Squads — used by the 50% multiplier (substitute role). */
-export const selectSubstituteSquadIds = createSelector(
-  selectSignedSquads,
-  (squads: RosterSquad[]) => new Set(squads.filter((t) => t.status === "bench").map((t) => t.teamId))
-);
-
 /** Roster object with signed squads and players for match card modal. */
 export const selectMatchRoster = createSelector(
   selectSignedSquads,

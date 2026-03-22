@@ -94,10 +94,14 @@ export const SummaryTicker: React.FC = () => {
     </div>,
   ];
 
+  // Filter out null items and duplicate for seamless loop
+  const items = tickerItems.filter(Boolean);
+  const loopedItems = [...items, ...items];
+
   return (
     <div className={styles.summaryTicker}>
       <div className={styles.tickerContent}>
-        {tickerItems.map((item) => item)}
+        {loopedItems.map((item) => item)}
       </div>
     </div>
   );

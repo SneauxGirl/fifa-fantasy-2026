@@ -1,47 +1,40 @@
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { toggleSidebar } from "../../store/slices/uiSlice";
 import styles from "./TopNav.module.scss";
 
 /**
- * Top Navigation Bar
- * - Logo/branding (left)
- * - Hamburger menu for mobile (right)
- * - Minimal on mobile, slightly more content on tablet+
+ * Top Navigation Bar (FIFA Links)
+ * - External links to FIFA services
+ * - Right-aligned
+ * - Black background, white text (always)
+ * - Matches FIFA.com style
  */
 const TopNav = () => {
-  const dispatch = useAppDispatch();
-  const sidebarOpen = useAppSelector((state) => state.ui.sidebar.open);
-
-  const toggleMenu = () => {
-    dispatch(toggleSidebar());
-  };
+  const links = [
+    { label: "Tickets and Hospitality", href: "https://www.fifa.com/tickets" },
+    { label: "FIFA Store", href: "https://store.fifa.com/" },
+    { label: "FIFA Rewards", href: "https://www.fifa.com/en/rewards" },
+    { label: "FIFA+", href: "https://www.fifa.com/fifaplus" },
+    { label: "Inside FIFA", href: "https://inside.fifa.com/" },
+  ];
 
   return (
-    <nav className={styles.topNav} aria-label="Main navigation">
+    <nav className={styles.topNav} aria-label="FIFA services">
       <div className={styles.navContainer}>
-        {/* Logo / Branding */}
-        <Link to="/" className={styles.logo} aria-label="Home">
-          <span className={styles.logoText}>FF26</span>
-        </Link>
-
-        {/* Center - Title (hidden on mobile) */}
-        <div className={styles.navTitle}>
-          <h1>FIFA Fantasy 2026</h1>
+        <div className={styles.logoSection}>
+          <img src="/FIFA_Logo_White_Generic.png" alt="FIFA World Cup 2026" className={styles.logo} />
         </div>
-
-        {/* Right - Hamburger Menu (mobile only) */}
-        <button
-          className={`${styles.hamburger} ${sidebarOpen ? styles.active : ""}`}
-          onClick={toggleMenu}
-          aria-label="Toggle navigation menu"
-          aria-expanded={sidebarOpen}
-          aria-controls="sidebar"
-        >
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-        </button>
+        <div className={styles.linkGroup}>
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   );

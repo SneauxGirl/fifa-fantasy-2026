@@ -6,11 +6,19 @@
 }
 
 .header {
-  padding: 20px;
-  background: linear-gradient(135deg, #0055a4 0%, #003d7a 100%);
+  padding: 20px 36px;
+  background: #304FFE;
   color: white;
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 20px;
+
+  @media (min-width: 480px) {
+    padding: 20px 40px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 20px 44px;
+  }
 
   h1 {
     margin: 0 0 8px 0;
@@ -27,13 +35,21 @@
 .mobileDropdown {
   display: none;
   padding: 0 20px;
+
+  @media (min-width: 1440px) {
+    padding: 0 80px;
+  }
 }
 
 .content {
   display: flex;
   gap: 20px;
-  padding: 0 20px;
   position: relative;
+  padding: 0 20px;
+
+  @media (min-width: 1440px) {
+    padding: 0 80px;
+  }
 }
 
 .rightSidebars {
@@ -47,31 +63,6 @@
   }
 }
 
-.navSidebar {
-  background: #f5f5f5;
-  border-left: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.mobileNavOverlay {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 64px;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 99;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 .bracketSection {
   min-width: 0;
@@ -123,7 +114,6 @@
   .content {
     flex-direction: column;
     gap: 12px;
-    padding: 0 16px;
   }
 }
 
@@ -146,11 +136,5 @@
     }
   }
 
-  .mobileDropdown {
-    padding: 0 12px;
-  }
-
-  .content {
-    padding: 0 12px;
-  }
 }
+

@@ -1,104 +1,72 @@
 .topNav {
-  background: #fff;
-  border-bottom: 1px solid #e5e5e5;
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  height: 64px;
-  display: flex;
-  align-items: center;
+  background: #000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 0;
+  height: auto;
 }
 
 .navContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  max-width: 100%;
-  padding: 0 16px;
+  padding: 6px 16px;
   gap: 16px;
 
   @media (min-width: 480px) {
-    padding: 0 20px;
+    padding: 6px 20px;
   }
 
   @media (min-width: 768px) {
-    padding: 0 24px;
+    padding: 6px 24px;
   }
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.logoText {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #0055a4; // FIFA blue
-  letter-spacing: 1px;
-}
-
-.navTitle {
-  flex: 1;
-  text-align: center;
-  display: none;
-
-  h1 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #111;
-    letter-spacing: 0.5px;
-  }
+  height: 1rem;
+  width: auto;
 
   @media (min-width: 768px) {
-    display: block;
+    height: 1rem;
   }
 }
 
-// ── Hamburger Menu ────────────────────────────────────────────────────────
-
-.hamburger {
+.linkGroup {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  gap: 15px;
   align-items: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  justify-content: flex-end;
+}
+
+.link {
   padding: 0;
-  flex-shrink: 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border: none;
 
-  @media (min-width: 768px) {
-    display: none;
+  display: inline-block;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
   }
-}
 
-.hamburgerLine {
-  width: 24px;
-  height: 2px;
-  background: #111;
-  border-radius: 1px;
-  transition: all 0.3s ease;
-  display: block;
+  @media (min-width: 1024px) {
+    font-size: 0.75rem;
+  }
 
-  .hamburger.active & {
-    &:first-child {
-      transform: rotate(45deg) translateY(10px);
-    }
-
-    &:nth-child(2) {
-      opacity: 0;
-    }
-
-    &:last-child {
-      transform: rotate(-45deg) translateY(-10px);
-    }
+  @media (max-width: 480px) {
+    font-size: 0.6rem;
   }
 }

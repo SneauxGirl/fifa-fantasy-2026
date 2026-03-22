@@ -1,10 +1,8 @@
-import { useAppDispatch, useAppSelector } from "../store";
-import { setSidebarOpen } from "../store/slices/uiSlice";
+import { useAppSelector } from "../store";
 import { BracketView } from "../components/FutureMatches/BracketView";
 import { BracketDropdown } from "../components/FutureMatches/BracketDropdown";
 import { InsightsPanel } from "../components/FutureMatches/InsightsPanel";
-import { RosterSidebar } from "../components/Dashboard/RosterSidebar";
-import { Sidebar } from "../components/Navigation";
+import { RosterSidebar } from "../components/Shared/RosterSidebar";
 import type { Match } from "../types/match";
 import styles from "./FutureMatches.module.scss";
 
@@ -15,16 +13,8 @@ import styles from "./FutureMatches.module.scss";
  */
 
 const FutureMatches = () => {
-  const dispatch = useAppDispatch();
-  const sidebarOpen = useAppSelector((state) => state.ui.sidebar.open);
   const modal = useAppSelector((state) => state.ui.modal);
   const selectedMatch = modal.type === "match" ? (modal.selectedCard as Match) : null;
-
-  const handleNavigation = () => {
-    if (sidebarOpen) {
-      dispatch(setSidebarOpen(false));
-    }
-  };
 
   return (
     <div className={styles.futureMatches}>
@@ -38,38 +28,24 @@ const FutureMatches = () => {
         <BracketDropdown />
       </div>
 
-      {/* Desktop Bracket + Insights + Nav + Roster */}
+      {/* Bracket + Insights + Roster */}
       <div className={styles.content}>
-        {/* Bracket View (Desktop) */}
+        {/* Bracket View */}
         <div className={styles.bracketSection}>
           <BracketView />
         </div>
 
-        {/* Insights Panel (Sidebar on desktop, below on mobile) */}
+        {/* Insights Panel */}
         <aside className={styles.insightsSection}>
           <InsightsPanel match={selectedMatch} />
         </aside>
 
-        {/* Right Sidebar Stack (Nav + Roster) */}
+        {/* Right Sidebar (Roster) */}
         <div className={styles.rightSidebars}>
-          {/* Navigation Sidebar */}
-          <nav className={styles.navSidebar} aria-label="Main navigation">
-            <Sidebar onNavigate={handleNavigation} />
-          </nav>
-
           {/* Roster Sidebar */}
           <RosterSidebar />
         </div>
       </div>
-
-      {/* Mobile Nav Overlay */}
-      {sidebarOpen && (
-        <div
-          className={styles.mobileNavOverlay}
-          onClick={() => dispatch(setSidebarOpen(false))}
-          aria-hidden="true"
-        />
-      )}
     </div>
   );
 };

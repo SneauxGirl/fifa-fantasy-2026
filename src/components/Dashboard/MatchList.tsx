@@ -76,37 +76,6 @@ export const MatchList: React.FC = () => {
     dispatch(openMatchModal(match));
   };
 
-  if (isLoading) {
-    return (
-      <div className={styles.matchList}>
-        <div className={styles.loadingState}>
-          <p>Loading matches...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.matchList}>
-        <div className={styles.errorState}>
-          <p>Error loading matches</p>
-          <p className={styles.errorMessage}>{error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (filteredMatches.length === 0) {
-    return (
-      <div className={styles.matchList}>
-        <div className={styles.emptyState}>
-          <p>No matches found for this filter</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.matchList}>
       {/* Filter Tabs */}
@@ -139,6 +108,22 @@ export const MatchList: React.FC = () => {
 
       {/* Match Items */}
       <div className={styles.matchItems}>
+        {isLoading && (
+          <div className={styles.loadingState}>
+            <p>Loading matches...</p>
+          </div>
+        )}
+        {error && (
+          <div className={styles.errorState}>
+            <p>Error loading matches</p>
+            <p className={styles.errorMessage}>{error}</p>
+          </div>
+        )}
+        {!isLoading && !error && filteredMatches.length === 0 && (
+          <div className={styles.emptyState}>
+            <p>No matches found for this filter</p>
+          </div>
+        )}
         {filteredMatches.map((match) => {
           const isRoster = isRosterMatch(match);
           const isLive = ["1H", "2H", "ET", "HT", "P"].includes(match.status.short);

@@ -95,7 +95,7 @@
   font-family: inherit;
 
   &:focus {
-    outline: 2px solid #0055a4;
+    outline: 2px solid #304FFE;
     outline-offset: 2px;
   }
 
@@ -116,12 +116,12 @@
 }
 
 .sign {
-  background: #0055a4;
+  background: #304FFE;
   color: white;
-  border: 1px solid #0055a4;
+  border: 1px solid #304FFE;
 
   &:hover {
-    background: #003d7a;
+    background: #1F3FBB;
     box-shadow: 0 2px 6px rgba(0, 85, 164, 0.2);
   }
 }

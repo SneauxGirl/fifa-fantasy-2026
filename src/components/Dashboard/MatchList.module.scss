@@ -23,11 +23,11 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: #0055a4;
+    color: #304FFE;
   }
 
   &.active {
-    color: #0055a4;
+    color: #304FFE;
 
     &::after {
       content: "";
@@ -36,13 +36,8 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: #0055a4;
+      background: #304FFE;
     }
-  }
-
-  &:focus {
-    outline: 2px solid #0055a4;
-    outline-offset: 2px;
   }
 }
 
@@ -64,18 +59,18 @@
   background: white;
 
   &:hover {
-    border-color: #0055a4;
+    border-color: #304FFE;
     box-shadow: 0 2px 8px rgba(0, 85, 164, 0.1);
   }
 
   &:focus-within {
-    outline: 2px solid #0055a4;
+    outline: 2px solid #304FFE;
     outline-offset: 2px;
   }
 
   &.rosterMatch {
     background: rgba(0, 85, 164, 0.04);
-    border-color: #0055a4;
+    border-color: #304FFE;
     border-width: 2px;
     padding: 15px;
   }

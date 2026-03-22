@@ -9,8 +9,12 @@
   display: flex;
   gap: 20px;
   flex: 1;
-  padding: 20px;
+  padding: 0 20px;
   position: relative;
+
+  @media (min-width: 1440px) {
+    padding: 0 80px;
+  }
 }
 
 .rightSidebars {
@@ -24,32 +28,6 @@
   }
 }
 
-.navSidebar {
-  background: #f5f5f5;
-  border-left: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.mobileNavOverlay {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 64px;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 99;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .mainColumn {
   flex: 1;
   min-width: 0;
@@ -58,7 +36,7 @@
     margin: 0 0 20px 0;
     font-size: 28px;
     color: #333;
-    border-bottom: 2px solid #0055a4;
+    border-bottom: 2px solid #304FFE;
     padding-bottom: 12px;
   }
 }

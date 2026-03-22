@@ -3,44 +3,44 @@ import styles from "./BottomNav.module.scss";
 
 /**
  * Bottom Navigation Bar
- * Mobile/Tablet only - provides tab-based navigation at bottom of screen
- * Hidden on desktop (768px+)
+ * Footer-style navigation - visible at all widths
+ * Provides navigation links at bottom of page
  */
 const BottomNav = () => {
   return (
     <nav className={styles.bottomNav} aria-label="Bottom navigation">
-      <NavLink
-        to="/"
-        className={({ isActive }: { isActive: boolean }) =>
-          `${styles.navItem} ${isActive ? styles.active : ""}`
-        }
-        title="Dashboard"
-      >
-        <span className={styles.icon}>📊</span>
-        <span className={styles.label}>Dashboard</span>
-      </NavLink>
+      <div className={styles.navLinks}>
+        <NavLink
+          to="/"
+          className={({ isActive }: { isActive: boolean }) =>
+            `${styles.navItem} ${isActive ? styles.active : ""}`
+          }
+        >
+          Dashboard
+        </NavLink>
 
-      <NavLink
-        to="/roster"
-        className={({ isActive }: { isActive: boolean }) =>
-          `${styles.navItem} ${isActive ? styles.active : ""}`
-        }
-        title="Roster"
-      >
-        <span className={styles.icon}>👥</span>
-        <span className={styles.label}>Roster</span>
-      </NavLink>
+        <NavLink
+          to="/roster"
+          className={({ isActive }: { isActive: boolean }) =>
+            `${styles.navItem} ${isActive ? styles.active : ""}`
+          }
+        >
+          Roster
+        </NavLink>
 
-      <NavLink
-        to="/future-matches"
-        className={({ isActive }: { isActive: boolean }) =>
-          `${styles.navItem} ${isActive ? styles.active : ""}`
-        }
-        title="Future Matches"
-      >
-        <span className={styles.icon}>🏆</span>
-        <span className={styles.label}>Matches</span>
-      </NavLink>
+        <NavLink
+          to="/future-matches"
+          className={({ isActive }: { isActive: boolean }) =>
+            `${styles.navItem} ${isActive ? styles.active : ""}`
+          }
+        >
+          Matches
+        </NavLink>
+      </div>
+
+      <div className={styles.copyright}>
+        © 2026 FIFA Fantasy. All rights reserved.
+      </div>
     </nav>
   );
 };
