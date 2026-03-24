@@ -1,11 +1,13 @@
+@use '../../styles/tokens.scss' as *;
+
 .rosterSidebar {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  background: #000;
-  border: 1px solid #333;
-  border-radius: 6px;
+  gap: $spacing-16;
+  padding: $spacing-16;
+  background: $color-bg-secondary;
+  border: $border-width-1 solid $color-neutral-darker;
+  border-radius: $border-radius-4;
   max-height: 400px;
   overflow-y: auto;
 }
@@ -15,14 +17,14 @@
   padding: 0;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #fff;
+  color: $color-text-inverse;
   letter-spacing: 0.5px;
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-8;
   padding-bottom: 12px;
   border-bottom: 1px solid #333;
 
@@ -36,7 +38,7 @@
   margin: 0;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #aaa;
+  color: $color-text-medium;
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -78,7 +80,7 @@
 .playerName {
   flex: 1;
   font-weight: 500;
-  color: #fff;
+  color: $color-text-inverse;
   min-width: 0;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -89,8 +91,8 @@
   flex-shrink: 0;
   margin-left: 8px;
   padding: 2px 6px;
-  background: #EDF0FF;
-  color: #304FFE;
+  background: rgba($color-bg-tertiary, 0.1);
+  color: $color-bg-tertiary;
   border-radius: 3px;
   font-weight: 600;
   font-size: 0.7rem;

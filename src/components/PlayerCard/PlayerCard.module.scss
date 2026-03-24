@@ -1,20 +1,23 @@
 // src/components/PlayerCard/PlayerCard.module.scss
+
+@use '../../styles/tokens.scss' as *;
+
 .playerCard {
   position: relative;
-  border-radius: 12px;
+  border-radius: $border-radius-8;
   overflow: hidden;
-  background: #fff;
+  background: $color-bg-primary-alt;
   width: 100%;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: $shadow-low;
   font-family: inherit;
 
   @media (min-width: 480px) {
-    max-width: 540px;
+    max-width: 33.75rem;
     margin: 0 auto;
   }
 
   @media (min-width: 768px) {
-    max-width: 640px;
+    max-width: 40rem;
   }
 }
 
@@ -43,26 +46,26 @@
 .playerCardHeaderMeta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: $spacing-8;
+  margin-bottom: $spacing-6;
   position: relative;
   z-index: 1;
 }
 
 .playerCardNationalityBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: $font-size-10;
+  font-weight: $font-weight-bold;
   color: var(--flag-color-1);
-  background: #fff;
-  border-radius: 3px;
-  padding: 1px 5px;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-2;
+  padding: $spacing-1 $spacing-2;
   letter-spacing: 0.5px;
 }
 
 .playerCardPositionLabel {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #111;
+  font-size: $font-size-12;
+  font-weight: $font-weight-bold;
+  color: $color-text-default;
   letter-spacing: 0.5px;
 }
 
@@ -70,16 +73,16 @@
   position: absolute;
   bottom: 10px;
   right: 7%;
-  font-size: 1.8rem;
+  font-size: $font-size-28;
   z-index: 1;
   line-height: 1;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
 }
 
 .playerCardName {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #111;
+  font-size: $font-size-24;
+  font-weight: $font-weight-extrabold;
+  color: $color-text-default;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1.1;
@@ -103,7 +106,7 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #e8e8e8;
+  background: $color-border-low;
 
   @media (min-width: 480px) {
     width: 200px;
@@ -123,7 +126,7 @@
 // ── Body ─────────────────────────────────────────────────────────────────────
 
 .playerCardBody {
-  padding: 12px 16px 16px;
+  padding: $spacing-12 $spacing-16 $spacing-16;
 
   @media (min-width: 480px) {
     flex: 1;
@@ -136,108 +139,108 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: $spacing-12;
 }
 
 .playerCardClub {
-  font-size: 0.9rem;
-  color: #444;
-  font-weight: 500;
+  font-size: $font-size-16;
+  color: $color-neutral-dark;
+  font-weight: $font-weight-semibold;
 }
 
 .playerCardBadge {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: $font-size-12;
+  font-weight: $font-weight-bold;
   letter-spacing: 0.6px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  color: #fff;
-  background: #888;
+  padding: $spacing-4 $spacing-10;
+  border-radius: $border-radius-100;
+  color: $color-text-inverse;
+  background: $color-neutral-medium;
   text-transform: uppercase;
 }
 
 .playerCardBadgeAvailable {
-  background: #304FFE;
+  background: $color-bg-tertiary;
 }
 
 .playerCardBadgeStarter {
-  background: #16a34a;
+  background: $color-success-primary;
 }
 
 .playerCardBadgeEliminated {
-  background: #dc2626;
+  background: $color-error-primary;
 }
 
 // ── Toggle ────────────────────────────────────────────────────────────────────
 
 .playerCardToggle {
   display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 8px;
+  gap: $spacing-6;
+  margin-bottom: $spacing-10;
+  border-bottom: $border-width-1 solid $color-border-low;
+  padding-bottom: $spacing-8;
 }
 
 .playerCardToggleBtn {
   flex: 1;
-  padding: 6px 8px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  padding: $spacing-6 $spacing-8;
+  font-size: $font-size-10;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  color: #999;
+  color: $color-neutral-medium;
   background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: $border-width-2 solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
 
   &:hover {
-    color: #666;
+    color: $color-neutral-text;
   }
 
   &.playerCardToggleBtnActive {
-    color: #1d4ed8;
-    border-bottom-color: #1d4ed8;
+    color: $color-bg-tertiary;
+    border-bottom-color: $color-bg-tertiary;
   }
 }
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 
 .playerCardStatsLabel {
-  font-size: 0.72rem;
-  color: #888;
-  font-weight: 600;
+  font-size: $font-size-10;
+  color: $color-text-medium;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  margin-bottom: 6px;
+  margin-bottom: $spacing-6;
   display: block;
 }
 
 .playerCardStatsRow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-12;
   flex-wrap: wrap;
-  margin-bottom: 14px;
+  margin-bottom: $spacing-16;
 }
 
 .playerCardStatItem {
   display: flex;
   align-items: baseline;
-  gap: 2px;
+  gap: $spacing-2;
 }
 
 .playerCardStatValue {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #111;
+  font-size: $font-size-18;
+  font-weight: $font-weight-extrabold;
+  color: $color-text-default;
 }
 
 .playerCardStatUnit {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #666;
+  font-size: $font-size-10;
+  font-weight: $font-weight-semibold;
+  color: $color-text-medium;
   text-transform: uppercase;
 }
 
@@ -245,23 +248,23 @@
 
 .playerCardAiBtn {
   width: 100%;
-  padding: 10px;
-  background: #1d4ed8;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
+  padding: $spacing-10;
+  background: $color-bg-tertiary;
+  color: $color-text-inverse;
+  font-size: $font-size-14;
+  font-weight: $font-weight-bold;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   border: none;
-  border-radius: 8px;
+  border-radius: $border-radius-8;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: $transition-all;
 
   @media (min-width: 480px) {
     margin-top: auto;
   }
 
   &:hover {
-    background: #1e40af;
+    background: $color-bg-tertiary-alt;
   }
 }

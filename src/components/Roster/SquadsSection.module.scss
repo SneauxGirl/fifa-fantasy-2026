@@ -1,38 +1,40 @@
+@use '../../styles/tokens.scss' as *;
+
 .squadsSection {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  transition: background-color 0.2s ease;
+  gap: $spacing-24;
+  padding: $spacing-24;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-8;
+  margin-top: $spacing-24;
+  margin-bottom: $spacing-24;
+  transition: background-color $transition-all;
 
   &.dragOver {
     background-color: #e8f4ff;
-    box-shadow: inset 0 0 0 2px #304FFE;
+    box-shadow: inset 0 0 0 $border-width-2 $color-bg-tertiary;
   }
 
   h2 {
     margin: 0;
-    font-size: 20px;
-    color: #333;
+    font-size: $font-size-20;
+    color: $color-text-default;
   }
 }
 
 .emptyState {
-  padding: 40px 20px;
+  padding: $spacing-40 $spacing-24;
   text-align: center;
-  background: white;
-  border-radius: 6px;
-  color: #999;
-  transition: all 0.2s ease;
+  background: $color-bg-primary;
+  border-radius: $border-radius-8;
+  color: $color-text-medium;
+  transition: $transition-all;
 
   &.dragOver {
     background-color: #e8f4ff;
-    border: 2px dashed #304FFE;
-    color: #304FFE;
+    border: $border-width-2 dashed $color-bg-tertiary;
+    color: $color-bg-tertiary;
     padding: 38px 18px;
   }
 
@@ -44,20 +46,20 @@
 .squadsList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: $spacing-24;
 }
 
 .squadCard {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid;
-  border-radius: 6px;
+  gap: $spacing-16;
+  padding: $spacing-16;
+  background: $color-bg-primary;
+  border: $border-width-1 solid $color-border-low;
+  border-left: $border-width-4 solid;
+  border-radius: $border-radius-8;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: $transition-all;
 
   &.unsigned {
     background: #fffbf0;
@@ -69,8 +71,8 @@
   }
 
   &.eliminated {
-    background: #f5f5f5;
-    border-color: #ccc;
+    background: $color-bg-primary-alt;
+    border-color: $color-border-low;
     opacity: 0.6;
 
     * {
@@ -83,19 +85,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .squadInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-12;
   flex: 1;
   min-width: 0;
 }
 
 .flag {
-  font-size: 32px;
+  font-size: $font-size-32;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -106,18 +108,18 @@
 
 .squadName {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
+  font-size: $font-size-16;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .coach {
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #999;
+  margin: $spacing-4 0 0 0;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -127,11 +129,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: $spacing-4;
   flex-shrink: 0;
-  padding: 8px 12px;
-  background: #f5f5f5;
-  border-radius: 4px;
+  padding: $spacing-8 $spacing-12;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-4;
 }
 
 .removeButton {
@@ -139,26 +141,26 @@
   width: 32px;
   height: 32px;
   padding: 0;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  background: $color-bg-primary;
+  border: $border-width-1 solid $color-border-low;
+  border-radius: $border-radius-4;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  color: #d32f2f;
-  transition: all 0.2s ease;
+  font-size: $font-size-18;
+  font-weight: $font-weight-semibold;
+  color: $color-error-primary;
+  transition: $transition-all;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
     background: #ffebee;
-    border-color: #d32f2f;
+    border-color: $color-error-primary;
     box-shadow: 0 2px 6px rgba(211, 47, 47, 0.15);
   }
 
   &:focus {
-    outline: 2px solid #d32f2f;
+    outline: $border-width-2 solid $color-error-primary;
     outline-offset: 2px;
   }
 
@@ -169,23 +171,23 @@
 
 .buttonGroup {
   display: flex;
-  gap: 8px;
+  gap: $spacing-8;
   flex-shrink: 0;
 }
 
 .actionButton {
-  padding: 8px 12px;
+  padding: $spacing-8 $spacing-12;
   border: none;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: $border-radius-4;
+  font-size: $font-size-14;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   white-space: nowrap;
   font-family: inherit;
 
   &:focus {
-    outline: 2px solid #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
     outline-offset: 2px;
   }
 
@@ -195,19 +197,19 @@
 
   &.remove {
     background: #ffebee;
-    color: #d32f2f;
-    border: 1px solid #ffcdd2;
+    color: $color-error-primary;
+    border: $border-width-1 solid #ffcdd2;
 
     &:hover {
       background: #ffcdd2;
-      border-color: #d32f2f;
+      border-color: $color-error-primary;
     }
   }
 
   &.sign {
-    background: #304FFE;
-    color: white;
-    border: 1px solid #304FFE;
+    background: $color-bg-tertiary;
+    color: $color-text-inverse;
+    border: $border-width-1 solid $color-bg-tertiary;
 
     &:hover {
       background: #1F3FBB;
@@ -223,7 +225,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: $font-size-18;
   color: #888;
 }
 
@@ -234,41 +236,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  color: #999;
-  font-weight: 700;
+  font-size: $font-size-18;
+  color: $color-text-medium;
+  font-weight: $font-weight-bold;
 }
 
 .countLabel {
-  font-size: 11px;
-  color: #999;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: $font-weight-regular;
 }
 
 .countValue {
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
+  font-size: $font-size-18;
+  font-weight: $font-weight-bold;
+  color: $color-text-default;
 }
 
 .startingXI {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .bench {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-8;
   opacity: 0.8;
 }
 
 .subsectionTitle {
   margin: 0;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $font-size-12;
+  font-weight: $font-weight-semibold;
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -277,31 +279,31 @@
 .playerGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .playerBadge {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
+  gap: $spacing-2;
+  padding: $spacing-8 $spacing-4;
+  background: linear-gradient(135deg, $color-bg-primary-alt 0%, #e8e8e8 100%);
+  border: $border-width-1 solid #d0d0d0;
+  border-radius: $border-radius-4;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   position: relative;
-  font-size: 11px;
+  font-size: $font-size-12;
 
   &:hover {
-    border-color: #304FFE;
+    border-color: $color-bg-tertiary;
     background: linear-gradient(135deg, #e8f4ff 0%, #d0e8ff 100%);
     box-shadow: 0 2px 6px rgba(0, 85, 164, 0.15);
   }
 
   &:focus {
-    outline: 2px solid #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
     outline-offset: 2px;
   }
 
@@ -316,8 +318,8 @@
 
 .eliminated {
   opacity: 0.4;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-  border-color: #ccc;
+  background: linear-gradient(135deg, $color-bg-primary-alt 0%, #e8e8e8 100%);
+  border-color: $color-border-low;
   text-decoration: line-through;
   cursor: not-allowed;
 
@@ -328,41 +330,41 @@
 }
 
 .number {
-  font-weight: 700;
-  color: #304FFE;
-  font-size: 12px;
+  font-weight: $font-weight-bold;
+  color: $color-bg-tertiary;
+  font-size: $font-size-12;
 }
 
 .initials {
-  font-weight: 600;
-  color: #333;
-  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
+  font-size: $font-size-12;
 }
 
 .position {
-  font-size: 9px;
-  color: #999;
-  font-weight: 500;
+  font-size: $font-size-10;
+  color: $color-text-medium;
+  font-weight: $font-weight-regular;
 }
 
 .injuryIcon {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  font-size: 10px;
+  top: $spacing-2;
+  right: $spacing-2;
+  font-size: $font-size-10;
 }
 
 .eliminatedIcon {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  font-size: 10px;
-  color: #d32f2f;
+  top: $spacing-2;
+  right: $spacing-2;
+  font-size: $font-size-10;
+  color: $color-error-primary;
 }
 
 @media (max-width: 768px) {
   .squadsSection {
-    padding: 16px;
+    padding: $spacing-16;
   }
 
   .squadHeader {
@@ -375,31 +377,31 @@
   }
 
   .playerBadge {
-    padding: 6px 3px;
-    font-size: 10px;
+    padding: $spacing-6 $spacing-4;
+    font-size: $font-size-10;
   }
 
   .number {
-    font-size: 11px;
+    font-size: $font-size-12;
   }
 
   .initials {
-    font-size: 11px;
+    font-size: $font-size-12;
   }
 }
 
 @media (max-width: 480px) {
   .squadsSection {
-    padding: 12px;
+    padding: $spacing-12;
   }
 
   .playerGrid {
     grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-    gap: 6px;
+    gap: $spacing-6;
   }
 
   .playerBadge {
-    padding: 5px 2px;
-    font-size: 9px;
+    padding: $spacing-6 $spacing-2;
+    font-size: $font-size-10;
   }
 }

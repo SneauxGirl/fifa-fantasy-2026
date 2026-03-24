@@ -1,33 +1,35 @@
+@use '../../styles/tokens.scss' as *;
+
 .matchList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: $spacing-24;
 }
 
 .filterTabs {
   display: flex;
-  gap: 8px;
-  border-bottom: 1px solid #e0e0e0;
+  gap: $spacing-8;
+  border-bottom: $border-width-1 solid $color-border-low;
   padding-bottom: 0;
 }
 
 .tab {
   background: none;
   border: none;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #666;
+  padding: $spacing-12 $spacing-16;
+  font-size: $font-size-14;
+  font-weight: $font-weight-regular;
+  color: $color-text-medium;
   cursor: pointer;
   position: relative;
-  transition: color 0.2s ease;
+  transition: $transition-colors;
 
   &:hover {
-    color: #304FFE;
+    color: $color-bg-tertiary;
   }
 
   &.active {
-    color: #304FFE;
+    color: $color-bg-tertiary;
 
     &::after {
       content: "";
@@ -36,7 +38,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: #304FFE;
+      background: $color-bg-tertiary;
     }
   }
 }
@@ -44,59 +46,59 @@
 .matchItems {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .matchItem {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
+  gap: $spacing-12;
+  padding: $spacing-16;
+  border: $border-width-1 solid $color-border-low;
+  border-radius: $border-radius-4;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: white;
+  transition: $transition-all;
+  background: $color-bg-primary;
 
   &:hover {
-    border-color: #304FFE;
-    box-shadow: 0 2px 8px rgba(0, 85, 164, 0.1);
+    border-color: $color-bg-tertiary;
+    box-shadow: $shadow-low;
   }
 
   &:focus-within {
-    outline: 2px solid #304FFE;
-    outline-offset: 2px;
+    outline: $border-width-2 solid $color-bg-tertiary;
+    outline-offset: $spacing-2;
   }
 
   &.rosterMatch {
-    background: rgba(0, 85, 164, 0.04);
-    border-color: #304FFE;
-    border-width: 2px;
-    padding: 15px;
+    background: rgba($color-bg-tertiary, 0.04);
+    border-color: $color-bg-tertiary;
+    border-width: $border-width-2;
+    padding: $spacing-16;
   }
 
   &.liveMatch {
-    border-color: #ff0000;
-    border-width: 2px;
-    padding: 15px;
+    border-color: $color-error-primary;
+    border-width: $border-width-2;
+    padding: $spacing-16;
   }
 }
 
 .rosterBadge {
-  font-size: 20px;
+  font-size: $font-size-20;
   flex-shrink: 0;
 }
 
 .liveBadge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: bold;
-  background: rgba(255, 0, 0, 0.1);
-  color: #ff0000;
-  padding: 4px 8px;
-  border-radius: 3px;
+  gap: $spacing-4;
+  font-size: $font-size-10;
+  font-weight: $font-weight-bold;
+  background: rgba($color-error-primary, 0.1);
+  color: $color-error-primary;
+  padding: $spacing-4 $spacing-8;
+  border-radius: $border-radius-2;
   flex-shrink: 0;
   animation: pulse 1s infinite;
 }
@@ -110,18 +112,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: $spacing-12;
+  margin-bottom: $spacing-8;
 }
 
 .teams {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $spacing-8;
   flex-wrap: wrap;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-14;
+  color: $color-text-default;
   flex: 1;
   min-width: 0;
 }
@@ -133,19 +135,19 @@
 }
 
 .vs {
-  color: #999;
-  font-weight: normal;
-  font-size: 12px;
+  color: $color-text-medium;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-12;
   flex-shrink: 0;
 }
 
 .status {
-  background: #f5f5f5;
-  padding: 4px 12px;
-  border-radius: 3px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #666;
+  background: $color-bg-primary-alt;
+  padding: $spacing-4 $spacing-12;
+  border-radius: $border-radius-2;
+  font-size: $font-size-12;
+  font-weight: $font-weight-regular;
+  color: $color-text-medium;
   flex-shrink: 0;
   white-space: nowrap;
 }
@@ -153,33 +155,33 @@
 .matchDetails {
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-size: 13px;
-  color: #666;
+  gap: $spacing-16;
+  font-size: $font-size-14;
+  color: $color-text-medium;
   flex-wrap: wrap;
 }
 
 .score {
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-14;
+  color: $color-text-default;
 }
 
 .dateTime {
-  color: #999;
+  color: $color-text-medium;
 }
 
 .venue {
-  color: #999;
-  font-size: 12px;
+  color: $color-text-medium;
+  font-size: $font-size-12;
 }
 
 .loadingState,
 .emptyState,
 .errorState {
-  padding: 40px 20px;
+  padding: $spacing-40 $spacing-24;
   text-align: center;
-  color: #666;
+  color: $color-text-medium;
 
   p {
     margin: 0;
@@ -187,9 +189,9 @@
 }
 
 .errorMessage {
-  font-size: 12px;
-  color: #d32f2f;
-  margin-top: 8px;
+  font-size: $font-size-12;
+  color: $color-error-primary;
+  margin-top: $spacing-8;
 }
 
 @keyframes pulse {
@@ -204,18 +206,18 @@
 
 @media (max-width: 480px) {
   .filterTabs {
-    gap: 4px;
+    gap: $spacing-4;
     overflow-x: auto;
   }
 
   .tab {
-    padding: 10px 12px;
-    font-size: 12px;
+    padding: $spacing-10 $spacing-12;
+    font-size: $font-size-12;
   }
 
   .matchItem {
-    padding: 12px;
-    gap: 8px;
+    padding: $spacing-12;
+    gap: $spacing-8;
   }
 
   .matchHeader {
@@ -224,16 +226,16 @@
   }
 
   .teams {
-    font-size: 13px;
+    font-size: $font-size-14;
   }
 
   .status {
-    font-size: 11px;
+    font-size: $font-size-10;
   }
 
   .matchDetails {
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: $spacing-4;
   }
 }

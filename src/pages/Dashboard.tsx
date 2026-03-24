@@ -2,6 +2,7 @@ import { SummaryTicker } from "../components/Dashboard/SummaryTicker";
 import { MatchList } from "../components/Dashboard/MatchList";
 import { RosterSidebar } from "../components/Shared/RosterSidebar";
 import styles from "./Dashboard.module.scss";
+import appLayoutStyles from "../layouts/AppLayout.module.scss";
 
 /**
  * Dashboard Page
@@ -10,27 +11,21 @@ import styles from "./Dashboard.module.scss";
  */
 
 const Dashboard = () => {
-
   return (
-    <div className={styles.dashboard}>
-      {/* Summary Ticker - Full Width */}
-      <SummaryTicker />
-
+    <>
       {/* Main Content + Right Sidebar */}
-      <div className={styles.content}>
+      <div className={appLayoutStyles.pageLayout}>
         {/* Match List (left) */}
         <div className={styles.mainColumn}>
-          <h1>Matches</h1>
           <MatchList />
         </div>
 
         {/* Right Sidebar - Roster Only */}
-        <div className={styles.rightSidebars}>
+        <div className={appLayoutStyles.rightSidebar}>
           <RosterSidebar />
         </div>
       </div>
-
-    </div>
+    </>
   );
 };
 

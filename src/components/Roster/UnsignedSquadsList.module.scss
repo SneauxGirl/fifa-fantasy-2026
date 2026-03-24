@@ -1,36 +1,38 @@
+@use '../../styles/tokens.scss' as *;
+
 .unsignedSquads {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-12;
 
   h3 {
     margin: 0;
-    font-size: 0.95rem;
-    color: #ffa500;
-    font-weight: 600;
+    font-size: $font-size-16;
+    color: $color-warning-primary;
+    font-weight: $font-weight-semibold;
   }
 }
 
 .squadList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .squadItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  background: #fffbf0;
-  border: 1px solid #ffe0b2;
-  border-left: 4px solid #ffa500;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  gap: $spacing-8;
+  padding: $spacing-12;
+  background: rgba($color-warning-primary, 0.05);
+  border: $border-width-1 solid rgba($color-warning-primary, 0.25);
+  border-left: $border-width-4 solid $color-warning-primary;
+  border-radius: $border-radius-4;
+  transition: $transition-all;
 
   &:hover {
-    box-shadow: 0 2px 6px rgba(255, 165, 0, 0.15);
-    border-color: #ff9800;
+    box-shadow: $shadow-low;
+    border-color: $color-warning-primary;
   }
 }
 
@@ -38,19 +40,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .squadInfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: $spacing-10;
   flex: 1;
   min-width: 0;
 }
 
 .flag {
-  font-size: 1.5rem;
+  font-size: $font-size-24;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -58,45 +60,45 @@
 .nameBlock {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: $spacing-2;
   min-width: 0;
 }
 
 .name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #333;
+  font-size: $font-size-16;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
   word-break: break-word;
 }
 
 .code {
-  font-size: 0.75rem;
-  color: #999;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  font-weight: 500;
+  font-weight: $font-weight-regular;
 }
 
 .actions {
   display: flex;
-  gap: 8px;
+  gap: $spacing-8;
   justify-content: flex-end;
 }
 
 .button {
-  padding: 8px 12px;
+  padding: $spacing-8 $spacing-12;
   border: none;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: $border-radius-4;
+  font-size: $font-size-14;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   white-space: nowrap;
   font-family: inherit;
 
   &:focus {
-    outline: 2px solid #304FFE;
-    outline-offset: 2px;
+    outline: $border-width-2 solid $color-bg-tertiary;
+    outline-offset: $spacing-2;
   }
 
   &:active {
@@ -105,36 +107,36 @@
 }
 
 .remove {
-  background: #ffebee;
-  color: #d32f2f;
-  border: 1px solid #ffcdd2;
+  background: rgba($color-error-primary, 0.1);
+  color: $color-error-primary;
+  border: $border-width-1 solid rgba($color-error-primary, 0.25);
 
   &:hover {
-    background: #ffcdd2;
-    border-color: #d32f2f;
+    background: rgba($color-error-primary, 0.15);
+    border-color: $color-error-primary;
   }
 }
 
 .sign {
-  background: #304FFE;
-  color: white;
-  border: 1px solid #304FFE;
+  background: $color-bg-tertiary;
+  color: $color-text-inverse;
+  border: $border-width-1 solid $color-bg-tertiary;
 
   &:hover {
-    background: #1F3FBB;
-    box-shadow: 0 2px 6px rgba(0, 85, 164, 0.2);
+    background: $color-bg-tertiary-alt;
+    box-shadow: $shadow-low;
   }
 }
 
 @media (max-width: 480px) {
   .actions {
     flex-direction: column;
-    gap: 6px;
+    gap: $spacing-6;
   }
 
   .button {
     width: 100%;
-    font-size: 0.8rem;
-    padding: 8px;
+    font-size: $font-size-12;
+    padding: $spacing-8;
   }
 }

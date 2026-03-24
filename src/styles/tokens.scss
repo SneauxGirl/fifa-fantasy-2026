@@ -1,0 +1,307 @@
+/* ==============================
+ * FIFA Design Tokens
+ * Official FIFA design system values
+ * ============================== */
+
+// ========== COLORS - FIFA OFFICIAL ==========
+
+// Neutral/Grayscale
+$color-neutral-white: #ffffff;
+$color-neutral-black: #000000;
+$color-neutral-light: #e4e8f0;
+$color-neutral-medium: #a5acbb;
+$color-neutral-dark: #505b73;
+$color-neutral-darker: #404040;
+$color-neutral-text: #666666;
+
+// Action/Button Colors
+$color-action-default: #000000;
+$color-action-pressed: #000000;
+$color-action-disabled: #e4e8f0;
+$color-action-text: #ffffff;
+$color-action-text-disabled: #a5acbb;
+
+$color-action-secondary-default: #ffffff;
+$color-action-secondary-pressed: #e4e8f0;
+$color-action-secondary-disabled: #e4e8f0;
+$color-action-secondary-text: #000000;
+$color-action-secondary-text-disabled: #a5acbb;
+
+$color-action-tertiary-text: #000000;
+$color-action-tertiary-text-disabled: #a5acbb;
+$color-action-tertiary-pressed: #e4e8f0;
+
+// Background Colors
+$color-bg-primary: #ffffff;
+$color-bg-primary-alt: #ffffff;
+$color-bg-secondary: #000000;
+$color-bg-secondary-alt: #ff3d00;
+$color-bg-tertiary: #304ffe;           // FIFA Brand Blue!
+$color-bg-tertiary-alt: #304ffe;
+$color-bg-quaternary: #6200ea;
+$color-bg-quaternary-alt: #afea00;
+
+// Status Colors
+$color-success-primary: #00c852;
+$color-success-secondary: #004d3f;
+$color-error-primary: #ff3d00;
+$color-error-secondary: #751312;
+$color-warning-primary: #ff9f0a;
+$color-warning-secondary: #8c5706;
+
+// Border Colors
+$color-border-low: #e4e8f0;
+$color-border-mid: #a5acbb;
+$color-border-high: #505b73;
+$color-border-transparent: #666666;
+
+// Icon Colors
+$color-icon-background: #404040;
+$color-icon-background-pressed: #808080;
+$color-icon-background-alt: #e4e8f0;
+$color-icon-background-alt-pressed: #e4e8f0;
+$color-icon-light: #ffffff;
+$color-icon-disabled: #a5acbb;
+$color-icon-darker: #000000;
+$color-icon-alternative: #000000;
+
+// Text Colors
+$color-text-default: #000000;
+$color-text-alternative: #ffffff;
+$color-text-low: #ffffff;
+$color-text-medium: #a5acbb;
+$color-text-high: #505b73;
+$color-text-primary: #000000;
+$color-text-secondary: #000000;
+$color-text-tertiary: #f43056;
+$color-text-inverse: #ffffff;
+
+// ========== TYPOGRAPHY ==========
+
+// Font Families
+$font-family-base: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-semibold: 500;
+$font-weight-bold: 600;
+$font-weight-extrabold: 700;
+
+// Font Sizes (FIFA granular scale in rem)
+$font-size-10: 0.625rem;   // 10px
+$font-size-12: 0.75rem;    // 12px
+$font-size-14: 0.875rem;   // 14px
+$font-size-16: 1rem;       // 16px
+$font-size-18: 1.125rem;   // 18px
+$font-size-20: 1.25rem;    // 20px
+$font-size-24: 1.5rem;     // 24px
+$font-size-28: 1.75rem;    // 28px
+$font-size-32: 2rem;       // 32px
+$font-size-40: 2.5rem;     // 40px
+$font-size-48: 3rem;       // 48px
+$font-size-56: 3.5rem;     // 56px
+$font-size-64: 4rem;       // 64px
+$font-size-72: 4.5rem;     // 72px
+$font-size-80: 5rem;       // 80px
+$font-size-106: 6rem;       // 96px
+
+// Font Size Aliases for backward compatibility
+$font-size-xs: $font-size-12;
+$font-size-sm: $font-size-14;
+$font-size-base: $font-size-16;
+$font-size-lg: $font-size-18;
+$font-size-xl: $font-size-20;
+$font-size-2xl: $font-size-24;
+$font-size-3xl: $font-size-32;
+$font-size-4xl: $font-size-40;
+$font-size-5xl: $font-size-48;
+
+// Line Heights (FIFA granular scale in rem)
+$line-height-18: 1.125rem;
+$line-height-20: 1.25rem;
+$line-height-22: 1.375rem;
+$line-height-24: 1.5rem;
+$line-height-26: 1.625rem;
+$line-height-28: 1.75rem;
+$line-height-32: 2rem;
+$line-height-36: 2.25rem;
+$line-height-40: 2.5rem;
+$line-height-48: 3rem;
+$line-height-58: 3.625rem;
+$line-height-66: 4.125rem;
+$line-height-74: 4.625rem;
+$line-height-82: 5.125rem;
+$line-height-106: 6.625rem;
+
+// Line Height Aliases for backward compatibility
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// ========== SPACING - FIFA OFFICIAL ==========
+
+// Granular spacing scale (FIFA standard)
+$spacing-1: 0.0625rem;   // 1px
+$spacing-2: 0.125rem;    // 2px
+$spacing-4: 0.25rem;     // 4px
+$spacing-6: 0.375rem;    // 6px
+$spacing-8: 0.5rem;      // 8px
+$spacing-10: 0.625rem;   // 10px
+$spacing-12: 0.75rem;    // 12px
+$spacing-16: 1rem;       // 16px
+$spacing-24: 1.5rem;     // 24px
+$spacing-42: 2rem;       // 32px
+$spacing-40: 2.5rem;     // 40px
+$spacing-64: 4rem;       // 64px
+$spacing-80: 5rem;       // 80px
+$spacing-96: 6rem;       // 96px
+$spacing-160: 10rem;     // 160px
+
+// Spacing Aliases for backward compatibility
+$space-0: 0;
+$space-1: $spacing-4;      // 4px
+$space-2: $spacing-8;      // 8px
+$space-3: $spacing-12;     // 12px
+$space-4: $spacing-16;     // 16px
+$space-5: $spacing-24;     // 24px (adjusted from 20px)
+$space-6: $spacing-24;     // 24px
+$space-8: $spacing-42;     // 32px
+$space-10: $spacing-40;    // 40px
+$space-12: $spacing-96;    // 96px (adjusted from 48px)
+$space-16: $spacing-160;   // 160px (adjusted from 64px)
+
+// Container/Layout Spacing
+$container-spacing-xs: 1.5rem;
+$container-spacing-md: 2.5rem;
+$container-spacing-lg: 4rem;
+$container-spacing-xl: 5rem;
+
+// Gap/Gutter Spacing
+$container-gap-xs: 1rem;
+$container-gap-md: 1.5rem;
+$container-gap-lg: 2.5rem;
+$container-gap-xl: 2.5rem;
+
+// ========== BORDER RADIUS ==========
+
+$border-radius-0: 0;
+$border-radius-2: 0.125rem;    // 2px
+$border-radius-4: 0.25rem;     // 4px
+$border-radius-8: 0.5rem;      // 8px
+$border-radius-16: 1rem;       // 16px
+$border-radius-100: 6.25rem;   // 100px
+
+// Border Radius Aliases for backward compatibility
+$radius-sm: $border-radius-4;
+$radius-md: $border-radius-8;
+$radius-lg: $border-radius-16;
+$radius-xl: 1.5rem;       // 24px
+$radius-2xl: 2rem;        // 32px
+$radius-button: 1.875rem; // 30px - FIFA button radius
+$radius-full: 9999px;     // fully rounded
+
+// ========== BORDER WIDTH ==========
+
+$border-width-0: 0;
+$border-width-1: 0.0625rem;    // 1px
+$border-width-2: 0.125rem;     // 2px
+$border-width-4: 0.25rem;      // 4px
+$border-width-8: 0.5rem;       // 8px
+$border-width-16: 1rem;        // 16px
+
+// ========== SIZING ==========
+
+$sizing-8: 0.5rem;     // 8px
+$sizing-16: 1rem;      // 16px
+$sizing-20: 1.25rem;   // 20px
+$sizing-24: 1.5rem;    // 24px
+$sizing-32: 2rem;      // 32px
+$sizing-40: 2.5rem;    // 40px
+$sizing-48: 3rem;      // 48px
+$sizing-64: 4rem;      // 64px
+$sizing-80: 5rem;      // 80px
+$sizing-96: 6rem;      // 96px
+$sizing-160: 10rem;    // 160px
+
+// ========== BUTTON STYLES - FIFA OFFICIAL ==========
+
+$button-background: linear-gradient(111.98deg, #00b8ff 18.07%, #1574c4 90.31%);
+$button-background-hover: linear-gradient(111.98deg, #00b8ff 18.07%, #1574c4 90.31%);
+$button-padding: 0.5rem 3rem;
+$button-border-radius: 1.875rem;
+$button-border-color: transparent;
+$button-border-size: 0;
+$button-text-color: #fff;
+$button-text-color-hover: #fff;
+$button-text-transform: uppercase;
+$button-transition: all 0.2s ease-in-out;
+$button-transform-hover: scale(1.1);
+$button-font-size: 0.75rem;
+$button-font-size-small: 0.75rem;
+$button-font-size-small-lg: 0.875rem;
+$button-line-height: 160%;
+
+// ========== SHADOWS ==========
+
+// Shadow components (X, Y, Blur, Spread)
+$shadow-lowest: 0 0.25rem 1rem 0 rgba(0, 0, 0, 0.05);
+$shadow-low: 0 0.5rem 1.5rem 0 rgba(0, 0, 0, 0.1);
+$shadow-high: 0 1rem 2rem 0 rgba(0, 0, 0, 0.15);
+$shadow-highest: 0 1.5rem 2.5rem 0 rgba(0, 0, 0, 0.2);
+$shadow-right: 0.25rem 0 1rem 0 rgba(0, 0, 0, 0.1);
+
+// Shadow Aliases for backward compatibility
+$shadow-sm: $shadow-lowest;
+$shadow-md: $shadow-low;
+$shadow-lg: $shadow-high;
+$shadow-xl: $shadow-highest;
+$shadow-2xl: 0 1.5625rem 3.125rem -0.75rem rgba(0, 0, 0, 0.25);
+
+// ========== TRANSITIONS ==========
+
+$transition-fast: 150ms ease-in-out;
+$transition-base: 200ms ease-in-out;
+$transition-slow: 300ms ease-in-out;
+
+// Common transition properties
+$transition-colors: color $transition-base, background-color $transition-base, border-color $transition-base;
+$transition-all: all $transition-base;
+
+// ========== Z-INDEX ==========
+
+$z-index-hide: -1;
+$z-index-auto: auto;
+$z-index-base: 1;
+$z-index-dropdown: 100;
+$z-index-sticky: 200;
+$z-index-fixed: 300;
+$z-index-modal-backdrop: 400;
+$z-index-modal: 500;
+$z-index-tooltip: 600;
+$z-index-notification: 700;
+
+// ========== MEDIA QUERY BREAKPOINTS ==========
+
+$breakpoint-sm: 768px;   // tablet
+$breakpoint-md: 1024px;  // medium desktop
+$breakpoint-lg: 1440px;  // large desktop
+
+// SCSS Mixins for Breakpoints
+@mixin media-sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin media-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}

@@ -1,17 +1,19 @@
+@use '../../styles/tokens.scss' as *;
+
 .rosterDragZone {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $spacing-16;
 }
 
 .infoBanner,
 .errorBanner,
 .successBanner {
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: $spacing-12 $spacing-16;
+  border-radius: $border-radius-4;
+  font-size: $font-size-14;
+  font-weight: $font-weight-regular;
 
   p {
     margin: 0;
@@ -19,27 +21,27 @@
 }
 
 .infoBanner {
-  background: rgba(0, 85, 164, 0.1);
-  color: #304FFE;
-  border-left: 4px solid #304FFE;
+  background: rgba($color-bg-tertiary, 0.1);
+  color: $color-bg-tertiary;
+  border-left: $border-width-4 solid $color-bg-tertiary;
 }
 
 .errorBanner {
-  background: rgba(211, 47, 47, 0.1);
-  color: #d32f2f;
-  border-left: 4px solid #d32f2f;
+  background: rgba($color-error-primary, 0.1);
+  color: $color-error-primary;
+  border-left: $border-width-4 solid $color-error-primary;
 }
 
 .successBanner {
-  background: rgba(56, 142, 60, 0.1);
-  color: #238e3c;
-  border-left: 4px solid #238e3c;
+  background: rgba($color-success-primary, 0.1);
+  color: $color-success-secondary;
+  border-left: $border-width-4 solid $color-success-primary;
 }
 
 .benchByPosition {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  gap: $spacing-16;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -53,11 +55,11 @@
 .positionColumn {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  gap: $spacing-12;
+  padding: $spacing-12;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-8;
+  border: $border-width-1 solid $color-border-low;
 }
 
 .positionHeader {
@@ -65,38 +67,38 @@
   justify-content: space-between;
   align-items: center;
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: $font-size-16;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #333;
+  color: $color-text-default;
 }
 
 .positionCount {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: #304FFE;
-  color: white;
+  width: $sizing-24;
+  height: $sizing-24;
+  background: $color-bg-tertiary;
+  color: $color-text-inverse;
   border-radius: 50%;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: $font-size-12;
+  font-weight: $font-weight-semibold;
 }
 
 .positionPlayers {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .emptyPosition {
   margin: 0;
-  padding: 12px;
+  padding: $spacing-12;
   text-align: center;
-  color: #999;
-  font-size: 0.85rem;
+  color: $color-text-medium;
+  font-size: $font-size-14;
   font-style: italic;
 }
 
@@ -104,47 +106,47 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: white;
-  border: 1px solid #d0d0d0;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  padding: $spacing-10;
+  background: $color-bg-primary;
+  border: $border-width-1 solid $color-border-mid;
+  border-radius: $border-radius-4;
+  transition: $transition-all;
 
   &.unsigned {
-    border-left: 3px solid #ff9800;
+    border-left: 3px solid $color-warning-primary;
   }
 
   &.signed {
-    border-left: 3px solid #4caf50;
-    background: #f1f8f4;
+    border-left: 3px solid $color-success-primary;
+    background: rgba($color-success-primary, 0.05);
   }
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-color: #304FFE;
+    box-shadow: $shadow-low;
+    border-color: $color-bg-tertiary;
   }
 }
 
 .playerInfo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $spacing-8;
   flex: 1;
   min-width: 0;
 }
 
 .playerNumber {
   flex-shrink: 0;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #555;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-16;
+  color: $color-neutral-dark;
   min-width: 20px;
 }
 
 .playerName {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: $spacing-6;
   flex: 1;
   min-width: 0;
 }
@@ -154,13 +156,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: #304FFE;
-  color: white;
+  width: $spacing-42;
+  height: $spacing-42;
+  background: $color-bg-tertiary;
+  color: $color-text-inverse;
   border-radius: 50%;
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-12;
 }
 
 .name {
@@ -168,30 +170,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 500;
-  font-size: 0.85rem;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-14;
 }
 
 .playerActions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: $spacing-6;
   flex-shrink: 0;
 }
 
 .actionBtn {
-  padding: 4px 8px;
-  background: white;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  padding: $spacing-4 $spacing-8;
+  background: $color-bg-primary;
+  border: $border-width-1 solid $color-border-mid;
+  border-radius: $border-radius-4;
+  font-size: $font-size-10;
+  font-weight: $font-weight-semibold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
 
   &:hover:not(:disabled) {
-    background: #f0f0f0;
-    border-color: #304FFE;
+    background: $color-bg-primary-alt;
+    border-color: $color-bg-tertiary;
   }
 
   &:active:not(:disabled) {
@@ -205,21 +207,21 @@
 }
 
 .signBtn {
-  background: #4caf50;
-  color: white;
-  border-color: #4caf50;
+  background: $color-success-primary;
+  color: $color-text-inverse;
+  border-color: $color-success-primary;
 
   &:hover:not(:disabled) {
-    background: #45a049;
-    border-color: #45a049;
+    background: $color-success-secondary;
+    border-color: $color-success-secondary;
   }
 }
 
 .removeBtn {
-  background: #f44336;
-  color: white;
-  border-color: #f44336;
-  padding: 4px 6px;
+  background: $color-error-primary;
+  color: $color-text-inverse;
+  border-color: $color-error-primary;
+  padding: $spacing-4 $spacing-6;
 
   &:hover:not(:disabled) {
     background: #da190b;
@@ -230,13 +232,13 @@
 .signedBadge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background: #4caf50;
-  color: white;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  gap: $spacing-4;
+  padding: $spacing-4 $spacing-8;
+  background: $color-success-primary;
+  color: $color-text-inverse;
+  border-radius: $border-radius-4;
+  font-size: $font-size-10;
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -244,24 +246,24 @@
 
 @media (max-width: 1024px) {
   .benchByPosition {
-    gap: 12px;
+    gap: $spacing-12;
   }
 }
 
 @media (max-width: 768px) {
   .benchByPosition {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: $spacing-12;
   }
 
   .benchPlayerCard {
-    padding: 8px;
-    font-size: 0.8rem;
+    padding: $spacing-8;
+    font-size: $font-size-12;
   }
 
   .actionBtn {
-    padding: 3px 6px;
-    font-size: 0.65rem;
+    padding: $spacing-2 $spacing-6;
+    font-size: $font-size-10;
   }
 }
 
@@ -271,17 +273,17 @@
   }
 
   .playerInfo {
-    gap: 6px;
+    gap: $spacing-6;
   }
 
   .initials {
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
+    width: $sizing-24;
+    height: $sizing-24;
+    font-size: $font-size-10;
   }
 
   .actionBtn {
-    padding: 3px 5px;
-    font-size: 0.6rem;
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-10;
   }
 }

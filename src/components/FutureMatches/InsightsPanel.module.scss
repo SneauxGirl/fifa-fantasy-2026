@@ -1,18 +1,20 @@
+@use '../../styles/tokens.scss' as *;
+
 .insightsPanel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  gap: $spacing-16;
+  padding: $spacing-24;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-8;
+  border: $border-width-1 solid $color-border-low;
 }
 
 .placeholder {
-  padding: 40px 20px;
+  padding: $spacing-40 $spacing-24;
   text-align: center;
-  color: #999;
-  font-size: 14px;
+  color: $color-text-medium;
+  font-size: $font-size-14;
 
   p {
     margin: 0;
@@ -23,138 +25,138 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #304FFE;
+  gap: $spacing-12;
+  padding-bottom: $spacing-12;
+  border-bottom: $border-width-2 solid $color-bg-tertiary;
 
   h3 {
     margin: 0;
-    font-size: 16px;
-    color: #333;
+    font-size: $font-size-16;
+    color: $color-text-default;
     flex: 1;
   }
 }
 
 .date {
-  font-size: 12px;
-  color: #999;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   white-space: nowrap;
 }
 
 .insightsList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .insightItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 6px;
-  border-left: 4px solid;
+  gap: $spacing-8;
+  padding: $spacing-12;
+  border-radius: $border-radius-4;
+  border-left: $border-width-4 solid;
 
   &.warning {
-    background: rgba(211, 47, 47, 0.08);
-    border-left-color: #d32f2f;
+    background: rgba($color-error-primary, 0.08);
+    border-left-color: $color-error-primary;
   }
 
   &.info {
-    background: rgba(0, 85, 164, 0.08);
-    border-left-color: #304FFE;
+    background: rgba($color-bg-tertiary, 0.08);
+    border-left-color: $color-bg-tertiary;
   }
 }
 
 .insightHeader {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .insightTitle {
   margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: #333;
+  font-size: $font-size-14;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
 }
 
 .insightDescription {
   margin: 0;
-  font-size: 12px;
-  color: #666;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   line-height: 1.5;
 }
 
 .matchDetails {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 12px;
-  background: white;
-  border-radius: 6px;
+  gap: $spacing-12;
+  padding: $spacing-12;
+  background: $color-bg-primary;
+  border-radius: $border-radius-4;
 
   h4 {
     margin: 0;
-    font-size: 13px;
-    font-weight: 600;
-    color: #333;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
+    color: $color-text-default;
   }
 }
 
 .detailsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .detail {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $spacing-4;
 }
 
 .label {
-  font-size: 11px;
-  color: #999;
+  font-size: $font-size-10;
+  color: $color-text-medium;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: $font-weight-regular;
 }
 
 .value {
-  font-size: 12px;
-  color: #333;
-  font-weight: 500;
+  font-size: $font-size-12;
+  color: $color-text-default;
+  font-weight: $font-weight-regular;
 }
 
 .recommendation {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
+  gap: $spacing-8;
+  padding: $spacing-12;
   background: linear-gradient(90deg, rgba(255, 237, 74, 0.1) 0%, rgba(0, 85, 164, 0.05) 100%);
-  border-radius: 6px;
-  border-left: 4px solid #ffed4e;
+  border-radius: $border-radius-4;
+  border-left: $border-width-4 solid #ffed4e;
 
   h4 {
     margin: 0;
-    font-size: 13px;
-    font-weight: 600;
-    color: #333;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
+    color: $color-text-default;
   }
 
   p {
     margin: 0;
-    font-size: 12px;
-    color: #666;
+    font-size: $font-size-12;
+    color: $color-text-medium;
     line-height: 1.5;
   }
 }
 
 @media (max-width: 768px) {
   .insightsPanel {
-    padding: 16px;
-    gap: 12px;
+    padding: $spacing-16;
+    gap: $spacing-12;
   }
 
   .matchHeader {
@@ -162,12 +164,12 @@
     align-items: flex-start;
 
     h3 {
-      font-size: 14px;
+      font-size: $font-size-14;
     }
   }
 
   .date {
-    font-size: 11px;
+    font-size: $font-size-10;
   }
 
   .detailsGrid {
@@ -175,58 +177,58 @@
   }
 
   .insightItem {
-    padding: 10px;
+    padding: $spacing-10;
   }
 
   .insightDescription {
-    font-size: 11px;
+    font-size: $font-size-10;
   }
 }
 
 @media (max-width: 480px) {
   .insightsPanel {
-    padding: 12px;
-    gap: 10px;
+    padding: $spacing-12;
+    gap: $spacing-10;
   }
 
   .matchHeader {
-    gap: 8px;
+    gap: $spacing-8;
 
     h3 {
-      font-size: 13px;
+      font-size: $font-size-14;
     }
   }
 
   .date {
-    font-size: 10px;
+    font-size: $font-size-10;
   }
 
   .insightItem {
-    padding: 8px;
+    padding: $spacing-8;
   }
 
   .insightTitle {
-    font-size: 12px;
+    font-size: $font-size-12;
   }
 
   .insightDescription {
-    font-size: 11px;
+    font-size: $font-size-10;
   }
 
   .matchDetails {
-    padding: 10px;
+    padding: $spacing-10;
   }
 
   .matchDetails h4,
   .recommendation h4 {
-    font-size: 12px;
+    font-size: $font-size-12;
   }
 
   .recommendation {
-    padding: 10px;
+    padding: $spacing-10;
   }
 
   .recommendation p {
-    font-size: 11px;
+    font-size: $font-size-10;
   }
 }

@@ -1,17 +1,23 @@
+@use '../../styles/tokens.scss' as *;
+
 .summaryTicker {
   width: 100%;
-  margin-top: 20px;
-  background: #304FFE;
-  color: white;
-  padding: 12px 0;
+  max-width: 100%;
+  min-width: 0;
   overflow: hidden;
+  flex: 1;
+  background: $color-bg-tertiary;
+  color: $color-text-inverse;
+  padding: 0;
+  text-transform: uppercase;
+  font-weight: $font-weight-light;
+  font-size: $font-size-20;
 }
 
 .tickerContent {
   display: flex;
-  padding: 0 20px;
+  flex-wrap: nowrap;
   animation: scroll 60s linear infinite;
-  white-space: nowrap;
 
   &:hover {
     animation-play-state: paused;
@@ -21,11 +27,12 @@
 .tickerItem {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  gap: $spacing-8;
   flex-shrink: 0;
-  padding: 0 32px;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 $spacing-42;
+  border-right: $border-width-1 solid $color-neutral-white;
+  flex: 0 0 auto;
+  white-space: nowrap;
 
   &:last-child {
     border-right: none;
@@ -35,44 +42,37 @@
 .live {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-weight: bold;
-  font-size: 12px;
+  gap: $spacing-4;
   background: rgba(255, 0, 0, 0.3);
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: $spacing-2 $spacing-6;
+  border-radius: $border-radius-2;
   animation: pulse 1s infinite;
 }
 
 .matchScore {
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: $font-weight-regular;
 }
 
-.minute {
-  font-size: 12px;
-  color: #fff;
-  opacity: 0.8;
-}
-
+.minute,
 .details {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
+  color: $color-neutral-white;
+  opacity: 0.8;
+  font-size: $font-size-18;
 }
 
 .externalLink {
-  color: #fff;
+  color: $color-neutral-white;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  font-weight: $font-weight-semibold;
+  transition: $transition-colors;
 
   &:hover {
-    color: #ffed4e;
+    color: $color-text-tertiary;
     text-decoration: underline;
   }
 
   &:focus {
-    outline: 2px solid #ffed4e;
+    outline: $border-width-2 solid $color-text-tertiary;
     outline-offset: 2px;
   }
 }
@@ -98,15 +98,15 @@
 
 @media (max-width: 480px) {
   .tickerContent {
-    padding: 0 16px;
+    padding: 0 $spacing-16;
   }
 
   .tickerItem {
-    padding: 0 20px;
-    font-size: 12px;
+    padding: 0 $spacing-24;
+    font-size: $font-size-16;
   }
 
   .matchScore {
-    font-size: 12px;
+    font-size: $font-size-16;
   }
 }

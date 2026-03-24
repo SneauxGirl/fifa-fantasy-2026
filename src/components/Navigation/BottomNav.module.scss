@@ -1,19 +1,21 @@
+@use '../../styles/tokens.scss' as *;
+
 .bottomNav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000;
-  border-top: 1px solid #333;
+  background: $color-bg-secondary;
+  border-top: $border-width-1 solid $color-neutral-darker;
   height: 60px;
   position: sticky;
   bottom: 0;
   z-index: 200;
-  padding: 0 36px;
+  padding: 0 $spacing-40;
 }
 
 .navLinks {
   display: flex;
-  gap: 32px;
+  gap: $spacing-42;
   align-items: center;
 }
 
@@ -22,17 +24,17 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 400;
+  color: $color-text-inverse;
+  font-size: $font-size-12;
+  font-weight: $font-weight-regular;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
-  font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: $font-family-base;
 
   &:hover {
     opacity: 0.8;
@@ -43,16 +45,16 @@
   }
 
   &.active {
-    color: #fff;
+    color: $color-text-inverse;
     background: transparent;
   }
 }
 
 .copyright {
-  color: #fff;
-  font-size: 0.6rem;
-  font-weight: 400;
+  color: $color-text-inverse;
+  font-size: $font-size-10;
+  font-weight: $font-weight-regular;
   white-space: nowrap;
-  font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: $font-family-base;
 }
 

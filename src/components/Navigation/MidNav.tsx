@@ -22,48 +22,48 @@ const MidNav = () => {
   return (
     <nav className={styles.midNav} aria-label="Main navigation">
       <div className={styles.navContainer}>
-        {/* Hamburger Menu (mobile only) */}
-        <button
-          className={`${styles.hamburger} ${mobileMenuOpen ? styles.active : ""}`}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={mobileMenuOpen}
-        >
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-        </button>
+        {/* Left side: Hamburger + Logo */}
+        <div className={styles.midNavLeft}>
+          {/* Hamburger Menu (mobile only) */}
+          <button
+            className={`${styles.hamburger} ${mobileMenuOpen ? styles.active : ""}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+          </button>
 
-        {/* Logo / Branding */}
-        <Link to="/" className={styles.logo} aria-label="Home">
-          <img src="/fifa2026-wht.svg" alt="FIFA 2026" className={styles.logoImg} />
-        </Link>
-
-        {/* Center - Title (hidden on mobile) */}
-        <div className={styles.navTitle}>
-          <h1>FIFA Fantasy 2026</h1>
+          {/* Logo / Branding */}
+          <Link to="/" className={styles.logo} aria-label="Home">
+            <img src="/fifa2026-wht.svg" alt="FIFA 2026" className={styles.logoImg} />
+          </Link>
         </div>
 
-        {/* Navigation Links (hidden on mobile) */}
-        <div className={styles.navLinks}>
-          <Link
-            to="/"
-            className={`${styles.navLink} ${isActive("/") ? styles.active : ""}`}
-          >
-            Dashboard
-          </Link>
-          <Link
-            to="/roster"
-            className={`${styles.navLink} ${isActive("/roster") ? styles.active : ""}`}
-          >
-            Roster
-          </Link>
-          <Link
-            to="/future-matches"
-            className={`${styles.navLink} ${isActive("/future-matches") ? styles.active : ""}`}
-          >
-            Matches
-          </Link>
+        {/* Right side: Navigation Links (hidden on mobile) */}
+        <div className={styles.midNavRight}>
+          <div className={styles.navLinks}>
+            <Link
+              to="/"
+              className={`${styles.navLink} ${isActive("/") ? styles.active : ""}`}
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/roster"
+              className={`${styles.navLink} ${isActive("/roster") ? styles.active : ""}`}
+            >
+              Roster
+            </Link>
+            <Link
+              to="/future-matches"
+              className={`${styles.navLink} ${isActive("/future-matches") ? styles.active : ""}`}
+            >
+              Matches
+            </Link>
+          </div>
         </div>
       </div>
 

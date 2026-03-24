@@ -1,23 +1,25 @@
+@use '../../styles/tokens.scss' as *;
+
 .availableSquads {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-12;
 
   h3 {
     margin: 0;
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 600;
+    font-size: $font-size-16;
+    color: $color-text-default;
+    font-weight: $font-weight-semibold;
   }
 }
 
 .empty {
   margin: 0;
-  padding: 12px;
-  background: #f5f5f5;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  color: #999;
+  padding: $spacing-12;
+  background: $color-bg-primary-alt;
+  border-radius: $border-radius-4;
+  font-size: $font-size-14;
+  color: $color-text-medium;
   text-align: center;
   font-style: italic;
 }
@@ -25,11 +27,11 @@
 .squadGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 8px;
+  gap: $spacing-8;
 
   @media (max-width: 480px) {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 6px;
+    gap: $spacing-6;
   }
 }
 
@@ -37,28 +39,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background: #fff;
-  border: 2px solid #e5e5e5;
-  border-radius: 6px;
+  gap: $spacing-8;
+  padding: $spacing-12;
+  background: $color-bg-primary;
+  border: $border-width-2 solid $color-border-low;
+  border-radius: $border-radius-4;
   cursor: grab;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   text-align: center;
   font-family: inherit;
 
   &:hover:not(:disabled) {
-    background: #f8fbff;
-    border-color: #304FFE;
-    box-shadow: 0 2px 8px rgba(0, 85, 164, 0.15);
+    background: rgba($color-bg-tertiary, 0.05);
+    border-color: $color-bg-tertiary;
+    box-shadow: $shadow-low;
     transform: translateY(-2px);
   }
 
   &:focus {
-    outline: 2px solid #304FFE;
-    outline-offset: 2px;
-    background: #f8fbff;
-    border-color: #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
+    outline-offset: $spacing-2;
+    background: rgba($color-bg-tertiary, 0.05);
+    border-color: $color-bg-tertiary;
   }
 
   &:active:not(:disabled) {
@@ -72,35 +74,35 @@
   }
 
   &.eliminated {
-    background: #f5f5f5;
-    border-color: #ccc;
+    background: $color-bg-primary-alt;
+    border-color: $color-border-mid;
     opacity: 0.6;
   }
 }
 
 .flag {
-  font-size: 2rem;
+  font-size: $font-size-32;
   line-height: 1;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: $spacing-2;
   width: 100%;
 }
 
 .name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #333;
+  font-size: $font-size-12;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
   word-break: break-word;
 }
 
 .code {
-  font-size: 0.7rem;
-  color: #999;
+  font-size: $font-size-10;
+  color: $color-text-medium;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  font-weight: 500;
+  font-weight: $font-weight-regular;
 }

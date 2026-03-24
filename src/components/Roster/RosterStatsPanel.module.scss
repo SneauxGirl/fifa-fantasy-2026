@@ -1,19 +1,21 @@
+@use '../../styles/tokens.scss' as *;
+
 .rosterStatsPanel {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 12px;
-  background: #f8f9fa;
-  border-left: 1px solid #e5e5e5;
+  padding: $spacing-12;
+  background: $color-bg-primary-alt;
+  border-left: $border-width-1 solid $color-border-low;
   overflow-y: auto;
   flex: 1;
 }
 
 .title {
-  margin: 0 0 12px 0;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #333;
+  margin: 0 0 $spacing-12 0;
+  font-size: $font-size-12;
+  font-weight: $font-weight-bold;
+  color: $color-text-default;
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -21,10 +23,10 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e5e5e5;
+  gap: $spacing-2;
+  margin-bottom: $spacing-8;
+  padding-bottom: $spacing-8;
+  border-bottom: $border-width-1 solid $color-border-low;
 
   &:last-child {
     border-bottom: none;
@@ -34,25 +36,25 @@
 }
 
 .sectionLabel {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #999;
+  font-size: $font-size-10;
+  font-weight: $font-weight-semibold;
+  color: $color-text-medium;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 4px;
+  margin-bottom: $spacing-4;
 }
 
 .item {
-  font-size: 0.8rem;
-  color: #333;
+  font-size: $font-size-14;
+  color: $color-text-default;
   line-height: 1.4;
   word-break: break-word;
 }
 
 .badge {
-  font-size: 0.65rem;
-  color: #999;
-  font-weight: 500;
-  margin-left: 2px;
+  font-size: $font-size-10;
+  color: $color-text-medium;
+  font-weight: $font-weight-regular;
+  margin-left: $spacing-2;
   font-style: italic;
 }

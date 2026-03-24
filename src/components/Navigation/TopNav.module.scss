@@ -1,6 +1,8 @@
+@use '../../styles/tokens.scss' as *;
+
 .topNav {
-  background: #000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  background: $color-bg-secondary;
+  border-bottom: 1px solid $color-border-transparent;
   padding: 0;
   height: auto;
 }
@@ -9,15 +11,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 16px;
+  padding: 0 1rem;
   gap: 16px;
 
   @media (min-width: 480px) {
-    padding: 6px 20px;
+    padding: 6px 1.3rem;
   }
 
   @media (min-width: 768px) {
-    padding: 6px 24px;
+    padding: 6px 1.3rem;
   }
 }
 
@@ -28,12 +30,9 @@
 }
 
 .logo {
-  height: 1rem;
+  height: 15px;
   width: auto;
 
-  @media (min-width: 768px) {
-    height: 1rem;
-  }
 }
 
 .linkGroup {
@@ -46,7 +45,7 @@
 .link {
   padding: 0;
   text-decoration: none;
-  color: #fff;
+  color: $color-text-inverse;
   font-size: 0.8rem;
   font-weight: 300;
   text-transform: uppercase;
@@ -58,8 +57,8 @@
   white-space: nowrap;
 
   &:hover {
-    background-color: #fff;
-    color: #000;
+    background-color: $color-neutral-white;
+    color: $color-neutral-black;
   }
 
   @media (min-width: 1024px) {

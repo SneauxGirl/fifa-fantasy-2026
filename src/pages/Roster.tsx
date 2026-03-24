@@ -7,6 +7,7 @@ import { RosterDragZone } from "../components/Roster/RosterDragZone";
 import { StartersLineup } from "../components/Roster/StartersLineup";
 import { RosterSidebar } from "../components/Roster/RosterSidebar";
 import styles from "./Roster.module.scss";
+import appLayoutStyles from "../layouts/AppLayout.module.scss";
 
 type PositionType = "GK" | "DEF" | "MID" | "FWD" | "ALL";
 type TabType = "roster" | "starters";
@@ -24,12 +25,7 @@ const Roster = () => {
   const [activeTab, setActiveTab] = useState<TabType>("roster");
 
   return (
-    <div className={styles.roster}>
-      <header className={styles.header}>
-        <h1>Roster Management</h1>
-        <p>Build your fantasy roster: select 4 squads and 18 players (minimum 11 starters)</p>
-      </header>
-
+    <>
       {/* Tabs (tablet/mobile only) */}
       <div className={styles.tabs}>
         <button
@@ -47,7 +43,7 @@ const Roster = () => {
       </div>
 
       {/* Content + Sidebars */}
-      <div className={styles.content}>
+      <div className={appLayoutStyles.pageLayout}>
         {/* Main Content - Squad/Player Selection */}
         <div className={styles.mainContent}>
           {/* Select Squads Section */}
@@ -81,7 +77,7 @@ const Roster = () => {
         </div>
 
         {/* Right Sidebars */}
-        <div className={styles.rightSidebars} data-active-tab={activeTab}>
+        <div className={appLayoutStyles.rightSidebar} data-active-tab={activeTab}>
           {/* StartersLineup */}
           <div className={styles.startersColumn}>
             <StartersLineup />
@@ -93,7 +89,7 @@ const Roster = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

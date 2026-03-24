@@ -5,6 +5,7 @@ import { InsightsPanel } from "../components/FutureMatches/InsightsPanel";
 import { RosterSidebar } from "../components/Shared/RosterSidebar";
 import type { Match } from "../types/match";
 import styles from "./FutureMatches.module.scss";
+import appLayoutStyles from "../layouts/AppLayout.module.scss";
 
 /**
  * Future Matches Page
@@ -17,19 +18,14 @@ const FutureMatches = () => {
   const selectedMatch = modal.type === "match" ? (modal.selectedCard as Match) : null;
 
   return (
-    <div className={styles.futureMatches}>
-      <header className={styles.header}>
-        <h1>Tournament Brackets</h1>
-        <p>View upcoming matches and strategic insights</p>
-      </header>
-
+    <>
       {/* Mobile Dropdown (visible only on small screens) */}
       <div className={styles.mobileDropdown}>
         <BracketDropdown />
       </div>
 
       {/* Bracket + Insights + Roster */}
-      <div className={styles.content}>
+      <div className={appLayoutStyles.pageLayout}>
         {/* Bracket View */}
         <div className={styles.bracketSection}>
           <BracketView />
@@ -41,12 +37,12 @@ const FutureMatches = () => {
         </aside>
 
         {/* Right Sidebar (Roster) */}
-        <div className={styles.rightSidebars}>
+        <div className={appLayoutStyles.rightSidebar}>
           {/* Roster Sidebar */}
           <RosterSidebar />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

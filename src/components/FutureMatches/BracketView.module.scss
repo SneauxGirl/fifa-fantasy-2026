@@ -1,21 +1,23 @@
+@use '../../styles/tokens.scss' as *;
+
 .bracketView {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-top: 20px;
+  margin-top: $spacing-24;
 }
 
 .bracketContainer {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .stage {
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
+  border: $border-width-1 solid $color-border-low;
+  border-radius: $border-radius-8;
   overflow: hidden;
-  background: white;
+  background: $color-bg-primary;
 }
 
 .stageHeader {
@@ -23,28 +25,28 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(90deg, #f9f9f9 0%, #f5f5f5 100%);
+  padding: $spacing-16;
+  background: linear-gradient(90deg, $color-bg-primary-alt 0%, $color-bg-primary-alt 100%);
   border: none;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: $border-width-1 solid $color-border-low;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
+  transition: $transition-all;
+  font-size: $font-size-14;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
 
   &:hover {
     background: linear-gradient(90deg, #f0f0f0 0%, #e8e8e8 100%);
   }
 
   &.expanded {
-    border-bottom-color: #304FFE;
+    border-bottom-color: $color-bg-tertiary;
     background: linear-gradient(90deg, #e8f4ff 0%, #d0e8ff 100%);
-    color: #304FFE;
+    color: $color-bg-tertiary;
   }
 
   &:focus {
-    outline: 2px solid #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
     outline-offset: -2px;
   }
 }
@@ -55,56 +57,56 @@
 }
 
 .stageCount {
-  font-size: 12px;
-  font-weight: 500;
-  color: #999;
-  margin: 0 12px;
+  font-size: $font-size-12;
+  font-weight: $font-weight-regular;
+  color: $color-text-medium;
+  margin: 0 $spacing-12;
 }
 
 .toggle {
-  font-size: 12px;
-  transition: transform 0.2s ease;
+  font-size: $font-size-12;
+  transition: transform $transition-all;
 }
 
 .stageMatches {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 12px;
-  padding: 16px;
+  gap: $spacing-12;
+  padding: $spacing-16;
 }
 
 .matchItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  gap: $spacing-8;
+  padding: $spacing-12;
+  background: $color-bg-primary;
+  border: $border-width-1 solid $color-border-low;
+  border-radius: $border-radius-4;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   text-align: center;
 
   &:hover {
-    border-color: #304FFE;
+    border-color: $color-bg-tertiary;
     box-shadow: 0 2px 8px rgba(0, 85, 164, 0.1);
   }
 
   &:focus {
-    outline: 2px solid #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
     outline-offset: 2px;
   }
 
   &.rosterMatch {
     background: rgba(0, 85, 164, 0.04);
-    border-color: #304FFE;
-    border-width: 2px;
+    border-color: $color-bg-tertiary;
+    border-width: $border-width-2;
     padding: 11px;
   }
 
   &.liveMatch {
-    border-color: #ff0000;
-    border-width: 2px;
+    border-color: $color-error-primary;
+    border-width: $border-width-2;
     padding: 11px;
   }
 }
@@ -112,48 +114,48 @@
 .matchHeader {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: $spacing-8;
 }
 
 .rosterBadge,
 .liveBadge {
-  font-size: 14px;
+  font-size: $font-size-14;
 }
 
 .teams {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: $spacing-4;
 }
 
 .team {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: $spacing-4;
   min-width: 0;
   flex: 1;
 }
 
 .teamName {
-  font-weight: 600;
-  font-size: 13px;
-  color: #333;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-14;
+  color: $color-text-default;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .score {
-  font-weight: 700;
-  font-size: 14px;
-  color: #304FFE;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-14;
+  color: $color-bg-tertiary;
   min-width: 20px;
 }
 
 .vs {
-  font-size: 11px;
-  color: #999;
+  font-size: $font-size-12;
+  color: $color-text-medium;
   flex-shrink: 0;
 }
 
@@ -161,28 +163,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: #999;
+  gap: $spacing-8;
+  font-size: $font-size-12;
+  color: $color-text-medium;
 }
 
 .status {
-  font-weight: 500;
+  font-weight: $font-weight-regular;
   color: #666;
 }
 
 .venue {
-  font-size: 10px;
+  font-size: $font-size-10;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .noMatches {
-  padding: 20px;
+  padding: $spacing-24;
   text-align: center;
-  color: #999;
-  font-size: 13px;
+  color: $color-text-medium;
+  font-size: $font-size-14;
 
   p {
     margin: 0;
@@ -195,35 +197,36 @@
   }
 }
 
+
 @media (max-width: 768px) {
   .stageMatches {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 8px;
-    padding: 12px;
+    gap: $spacing-8;
+    padding: $spacing-12;
   }
 
   .matchItem {
-    padding: 10px;
+    padding: $spacing-10;
   }
 
   .stageHeader {
-    padding: 12px;
+    padding: $spacing-12;
   }
 
   .stageName {
-    font-size: 13px;
+    font-size: $font-size-14;
   }
 
   .stageCount {
-    font-size: 11px;
+    font-size: $font-size-12;
   }
 
   .teamName {
-    font-size: 12px;
+    font-size: $font-size-12;
   }
 
   .score {
-    font-size: 13px;
+    font-size: $font-size-14;
   }
 }
 
@@ -233,20 +236,20 @@
   }
 
   .matchItem {
-    padding: 8px;
+    padding: $spacing-8;
   }
 
   .stageHeader {
-    padding: 10px;
-    font-size: 13px;
+    padding: $spacing-10;
+    font-size: $font-size-14;
   }
 
   .stageName {
-    font-size: 12px;
+    font-size: $font-size-12;
   }
 
   .stageCount {
-    font-size: 10px;
-    margin: 0 8px;
+    font-size: $font-size-10;
+    margin: 0 $spacing-8;
   }
 }

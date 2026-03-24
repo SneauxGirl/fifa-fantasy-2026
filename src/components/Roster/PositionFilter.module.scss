@@ -1,66 +1,68 @@
+@use '../../styles/tokens.scss' as *;
+
 .positionFilter {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: $spacing-12;
 }
 
 .label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
+  font-size: $font-size-14;
+  font-weight: $font-weight-regular;
+  color: $color-text-default;
   white-space: nowrap;
 }
 
 .select {
-  padding: 10px 12px;
-  font-size: 14px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background: white;
-  color: #333;
+  padding: $spacing-10 $spacing-12;
+  font-size: $font-size-14;
+  border: $border-width-1 solid $color-border-low;
+  border-radius: $border-radius-4;
+  background: $color-bg-primary;
+  color: $color-text-default;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: $transition-all;
   appearance: none;
   padding-right: 28px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23333' d='M4.5 6l3.5 5 3.5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right $spacing-8 center;
   background-size: 16px;
-  padding-right: 32px;
+  padding-right: $spacing-42;
 
   &:hover {
-    border-color: #304FFE;
+    border-color: $color-bg-tertiary;
   }
 
   &:focus {
-    outline: 2px solid #304FFE;
-    outline-offset: 2px;
-    border-color: #304FFE;
+    outline: $border-width-2 solid $color-bg-tertiary;
+    outline-offset: $spacing-2;
+    border-color: $color-bg-tertiary;
   }
 
   &:active {
-    background-color: #f9f9f9;
+    background-color: $color-bg-primary-alt;
   }
 
   option {
-    padding: 8px;
-    color: #333;
-    background: white;
+    padding: $spacing-8;
+    color: $color-text-default;
+    background: $color-bg-primary;
   }
 }
 
 @media (max-width: 480px) {
   .positionFilter {
-    gap: 8px;
+    gap: $spacing-8;
   }
 
   .label {
-    font-size: 12px;
+    font-size: $font-size-12;
   }
 
   .select {
-    font-size: 13px;
-    padding: 8px 10px;
+    font-size: $font-size-14;
+    padding: $spacing-8 $spacing-10;
     padding-right: 28px;
   }
 }

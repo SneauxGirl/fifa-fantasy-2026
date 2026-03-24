@@ -1,0 +1,190 @@
+/* ==============================
+ * Global Styles & Resets
+ * Base typography, resets, and layout defaults
+ * ============================== */
+
+@use 'sass:color';
+@use './tokens.scss' as *;
+
+// ========== CSS RESET & BASE STYLES ==========
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-light;
+  line-height: $line-height-normal;
+  color: $color-text-default;
+  background-color: $color-bg-primary;
+  transition: $transition-colors;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 100%;
+}
+
+// ========== TYPOGRAPHY DEFAULTS ==========
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+}
+
+h1 {
+  font-size: $font-size-5xl;
+}
+
+h2 {
+  font-size: $font-size-4xl;
+}
+
+h3 {
+  font-size: $font-size-3xl;
+}
+
+h4 {
+  font-size: $font-size-2xl;
+}
+
+h5 {
+  font-size: $font-size-xl;
+}
+
+h6 {
+  font-size: $font-size-lg;
+}
+
+p {
+  margin: 0;
+  line-height: $line-height-normal;
+}
+
+// ========== FORM ELEMENTS ==========
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+input,
+textarea,
+select {
+  padding: $space-2;
+  border: 1px solid $color-border-mid;
+  border-radius: $radius-md;
+  background-color: $color-bg-primary-alt;
+  color: $color-text-primary;
+  transition: $transition-colors;
+
+  &:focus {
+    outline: none;
+    border-color: $color-bg-tertiary;
+    background-color: $color-bg-primary-alt;
+  }
+}
+
+// ========== LINKS ==========
+
+a {
+  color: $color-bg-tertiary;
+  text-decoration: none;
+  transition: $transition-colors;
+
+  &:hover {
+    color: color.adjust($color-bg-tertiary, $lightness: -10%);
+  }
+
+  &:active {
+    color: color.adjust($color-bg-tertiary, $lightness: -20%);
+  }
+}
+
+// ========== LISTS ==========
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  margin: 0;
+}
+
+// ========== IMAGES ==========
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ========== CODE BLOCKS ==========
+
+code,
+pre {
+  font-family: 'Courier New', monospace;
+}
+
+// ========== DARK MODE (via device preference) ==========
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: color.adjust($color-neutral-black, $lightness: -5%);
+    color: $color-neutral-light;
+  }
+
+  a {
+    color: color.adjust($color-bg-tertiary, $lightness: 20%);
+
+    &:hover {
+      color: color.adjust($color-bg-tertiary, $lightness: 30%);
+    }
+
+    &:active {
+      color: color.adjust($color-bg-tertiary, $lightness: 40%);
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: color.adjust($color-neutral-black, $lightness: -3%);
+    color: $color-neutral-light;
+    border-color: $color-neutral-medium;
+
+    &:focus {
+      border-color: color.adjust($color-bg-tertiary, $lightness: 15%);
+    }
+  }
+
+  code,
+  pre {
+    background-color: color.adjust($color-neutral-black, $lightness: -3%);
+    color: $color-neutral-light;
+  }
+}
