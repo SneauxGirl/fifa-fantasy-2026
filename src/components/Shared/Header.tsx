@@ -1,15 +1,14 @@
 import styles from "./Header.module.scss";
-import { SummaryTicker } from "../Dashboard/SummaryTicker";
 
 interface HeaderProps {
   title?: string;
   children?: React.ReactNode;
+  ticker?: React.ReactNode;
 }
 
-export const Header = ({ title, children }: HeaderProps) => {
+export const Header = ({ title, children, ticker }: HeaderProps) => {
   return (
     <header className={styles.headerBanner}>
-      {/* Content constrained to pageContent width/padding */}
       <div className={styles.headerContent}>
         {/* Left side: Icon */}
         <div className={styles.headerLeft}>
@@ -20,6 +19,9 @@ export const Header = ({ title, children }: HeaderProps) => {
           />
         </div>
 
+        {/* Center: Ticker (if provided) */}
+        {ticker && <div className={styles.tickerWrapper}>{ticker}</div>}
+
         {/* Right side: Title or Children */}
         {(title || children) && (
           <div className={styles.headerRight}>
@@ -28,9 +30,6 @@ export const Header = ({ title, children }: HeaderProps) => {
           </div>
         )}
       </div>
-
-      {/* Ticker for testing */}
-      <SummaryTicker />
     </header>
   );
 };

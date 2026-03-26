@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  gap: 16px;
+  gap: 1rem;
 
   @media (min-width: 480px) {
     padding: 6px 1.3rem;
@@ -37,13 +37,12 @@
 
 .linkGroup {
   display: flex;
-  gap: 15px;
+  gap: 11px;
   align-items: center;
   justify-content: flex-end;
 }
 
 .link {
-  padding: 0;
   text-decoration: none;
   color: $color-text-inverse;
   font-size: 0.8rem;
@@ -52,13 +51,14 @@
   letter-spacing: 0.5px;
   transition: background-color 0.2s ease, color 0.2s ease;
   border: none;
-
+  padding: 0 4px;
   display: inline-block;
   white-space: nowrap;
 
   &:hover {
     background-color: $color-neutral-white;
     color: $color-neutral-black;
+    border-radius: $border-radius-4;
   }
 
   @media (min-width: 1024px) {

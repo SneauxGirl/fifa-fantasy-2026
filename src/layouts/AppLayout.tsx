@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { TopNav, MidNav, BottomNav } from "../components/Navigation";
 import { Header } from "../components/Shared/Header";
+import { SummaryTicker } from "../components/Dashboard/SummaryTicker";
 import { MatchCardModal, PlayerCardModal, SquadCardModal, SquadSigningModal, PlayerSigningModal } from "../components/Modals";
 import styles from "./AppLayout.module.scss";
 
@@ -9,6 +10,8 @@ import styles from "./AppLayout.module.scss";
  * TopNav (FIFA links, always) + MidNav (app nav, all pages) + Page Content + Bottom Nav
  */
 const AppLayout = () => {
+  const location = useLocation();
+  const isDashboard = location.pathname === "/" || location.pathname === "/dashboard";
 
   return (
     <div className={styles.appLayout}>
@@ -18,8 +21,8 @@ const AppLayout = () => {
       {/* App Navigation (all pages) */}
       <MidNav />
 
-      {/* Page Header (with optional title or children content) */}
-      <Header />
+      {/* Page Header (with optional ticker on Dashboard) */}
+      <Header ticker={isDashboard ? <SummaryTicker /> : undefined} />
 
       {/* Main Content Area */}
       <main>

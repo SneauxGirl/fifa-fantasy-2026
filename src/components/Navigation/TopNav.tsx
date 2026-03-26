@@ -9,6 +9,7 @@ import styles from "./TopNav.module.scss";
  */
 const TopNav = () => {
   const links = [
+    { label: "World Cup 2026", href: "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026" },
     { label: "Tickets and Hospitality", href: "https://www.fifa.com/tickets" },
     { label: "FIFA Store", href: "https://store.fifa.com/" },
     { label: "FIFA Rewards", href: "https://www.fifa.com/en/rewards" },

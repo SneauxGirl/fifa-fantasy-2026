@@ -15,7 +15,7 @@
 
 .navLinks {
   display: flex;
-  gap: $spacing-42;
+  gap: $spacing-32;
   align-items: center;
 }
 
@@ -33,7 +33,8 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  padding: 0;
+  padding: 2px 4px;
+  border-radius: 5px;
   font-family: $font-family-base;
 
   &:hover {
