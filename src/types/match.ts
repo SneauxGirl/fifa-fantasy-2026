@@ -100,7 +100,24 @@ export interface Match {
 
 // ─── Roster & Fantasy ─────────────────────────────────────────────────────
 
+// New semantic model: pool (where) + role (what function)
+export type RosterPool = "available" | "unsigned" | "signed" | "eliminated";
+export type RosterRole = "starter" | "bench" | "UpNext" | "eliminatedSigned" | null;
+
+// Legacy (deprecated, kept for backwards compatibility during migration)
 export type RosterMemberStatus = "available" | "unsigned" | "signed" | "starter" | "bench" | "eliminated";
+
+/**
+ * Represents a single game a squad/player participates in
+ */
+export interface Game {
+  matchId: number;
+  date: string;                    // ISO 8601 string
+  homeTeam: string;               // Team code
+  awayTeam: string;               // Team code
+  isComplete: boolean;            // Match finished and results final
+  points?: number;                // Points earned in this game
+}
 
 /**
  * Player injury status
@@ -135,11 +152,30 @@ export interface RosterSquad {
   type: "squad";
   id: number;                          // Team ID
   teamId: number;                      // same as id, for clarity
-  status: RosterMemberStatus;
+
+  // New semantic model (replaces status)
+  pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
+  role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
+
+  // Legacy (for backwards compatibility, to be deprecated)
+  status?: RosterMemberStatus;
+
+  // Core data
   name: string;
   code: string;
   flag: string;
+
+  // Points tracking
   matchPoints: Record<string, number>; // matchId → points gained in that match
+  totalPoints: number;                 // All points (respects substitute 50% multiplier)
+
+  // Game tracking
+  isEliminated: boolean;               // Tournament eliminated status
+  gamesComplete: boolean;              // All games for this week completed?
+  substitute: boolean;                 // Signed during R16? Scores at 50% forever
+  squadGames?: Game[];                 // Games scheduled for this squad with isComplete flag
+
+  // Squad-specific
   coaches?: Coach[];                   // Head coach(es) info
   officialRoster?: RosterPlayer[];     // Full squad roster from official source
 }
@@ -152,16 +188,35 @@ export interface RosterPlayer {
   type: "player";
   id: number;                          // Player ID
   playerId: number;                    // same as id, for clarity
-  status: RosterMemberStatus;
+
+  // New semantic model (replaces status)
+  pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
+  role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
+
+  // Legacy (for backwards compatibility, to be deprecated)
+  status?: RosterMemberStatus;
+
+  // Core data
   name: string;
   position: "FWD" | "MID" | "DEF" | "GK"; // Standardized position
   number: number;                      // Jersey number
   teamId: number;                      // National team ID
   code: string;                        // FIFA country code (e.g., "ARG", "BRA")
   flag: string;                        // Country flag emoji
+
+  // Points tracking
   matchPoints: Record<string, number>; // matchId → points gained in that match
+  totalPoints: number;                 // All points (respects substitute 50% multiplier)
+
+  // Game tracking
+  isEliminated: boolean;               // Tournament eliminated status (from national team data)
+  gamesComplete: boolean;              // All games for this week completed?
+  substitute: boolean;                 // Signed during R16? Scores at 50% forever
+  playerGames?: Game[];                // Games scheduled for this player with isComplete flag
+
+  // Player-specific
   injury?: PlayerInjury;               // Injury status and availability
-  eliminatedReason?: PlayerEliminationReason; // Why player was eliminated (if status === "eliminated")
+  eliminatedReason?: PlayerEliminationReason; // Why player was eliminated (if isEliminated === true)
 }
 
 export type RosterMember = RosterSquad | RosterPlayer;

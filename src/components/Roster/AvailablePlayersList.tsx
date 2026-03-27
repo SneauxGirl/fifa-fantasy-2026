@@ -2,6 +2,10 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { openPlayerModal } from "../../store/slices/uiSlice";
 import { movePlayerToUnsigned } from "../../store/slices/rosterSlice";
+import {
+  selectActiveAvailablePlayers,
+  selectEliminatedAvailablePlayers,
+} from "../../store/selectors/rosterSelectors";
 import type { RosterPlayer } from "../../types/match";
 import styles from "./AvailablePlayersList.module.scss";
 
@@ -13,8 +17,9 @@ interface AvailablePlayersListProps {
 
 /**
  * AvailablePlayersList Component
- * Displays available players, filtered by position.
- * Click to view player details or drag to roster.
+ * Displays available players (active first, eliminated at bottom), filtered by position.
+ * Click to view player details or add to roster.
+ * Eliminated players are greyed out and disabled.
  *
  * Note: For full display data (firstName, lastName, stats), pass enrichedPlayers.
  * Falls back to RosterPlayer properties if enrichment data not provided.
@@ -23,10 +28,12 @@ export const AvailablePlayersList: React.FC<AvailablePlayersListProps> = ({
   selectedPosition,
 }) => {
   const dispatch = useAppDispatch();
-  const availablePlayers = useAppSelector((state) => state.roster.players.available);
+  const activeAvailablePlayers = useAppSelector(selectActiveAvailablePlayers);
+  const eliminatedAvailablePlayers = useAppSelector(selectEliminatedAvailablePlayers);
+  const allAvailablePlayers = [...activeAvailablePlayers, ...eliminatedAvailablePlayers];
 
   // Filter by position
-  const filteredPlayers = availablePlayers.filter((player) => {
+  const filteredPlayers = allAvailablePlayers.filter((player) => {
     if (selectedPosition === "ALL") return true;
     return player.position === selectedPosition;
   });
@@ -44,7 +51,7 @@ export const AvailablePlayersList: React.FC<AvailablePlayersListProps> = ({
       <div className={styles.availablePlayersList}>
         <div className={styles.emptyState}>
           <p>
-            {availablePlayers.length === 0
+            {allAvailablePlayers.length === 0
               ? "All players have been selected."
               : `No ${selectedPosition} players available.`}
           </p>
@@ -93,15 +100,37 @@ const PlayerListItem: React.FC<PlayerListItemProps> = ({
   onClick,
   onAdd,
 }) => {
-  const isEliminated = player.status === "eliminated";
+  const isEliminated = player.isEliminated;
+
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only open modal if clicking on the card itself, not the button
+    if ((e.target as HTMLElement).closest(`.${styles.addPlayerButton}`)) {
+      return;
+    }
+    if (!isEliminated) {
+      onClick();
+    }
+  };
+
+  const handleCardKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if ((e.key === "Enter" || e.key === " ") && !isEliminated) {
+      // Don't trigger if focus is on the + button
+      if ((e.target as HTMLElement) === e.currentTarget) {
+        e.preventDefault();
+        onClick();
+      }
+    }
+  };
 
   return (
-    <button
+    <div
       className={`${styles.playerCard} ${isEliminated ? styles.eliminated : ""}`}
-      onClick={onClick}
-      disabled={isEliminated}
-      title={isEliminated ? `${player.name} - Eliminated from tournament` : `${player.name} - Click for details or use the + button to add`}
-      aria-label={isEliminated ? `${player.name} - Eliminated from tournament` : `${player.name} - ${player.position}`}
+      role="button"
+      tabIndex={isEliminated ? -1 : 0}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      aria-label={`${player.name} - ${player.position}. Click to view details${!isEliminated ? ", or press Tab to add to bench" : ""}`}
+      style={{ cursor: isEliminated ? "not-allowed" : "pointer" }}
     >
       <div className={styles.flag}>{player.flag}</div>
 
@@ -116,26 +145,26 @@ const PlayerListItem: React.FC<PlayerListItemProps> = ({
       </div>
 
       {!isEliminated && (
-        <div
+        <button
+          type="button"
           className={styles.addPlayerButton}
           onClick={(e) => {
             e.stopPropagation();
             onAdd();
           }}
-          role="button"
-          tabIndex={0}
           title="Add to Bench"
           aria-label={`Add ${player.name} to bench`}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.stopPropagation();
+              e.preventDefault();
               onAdd();
             }
           }}
         >
           +
-        </div>
+        </button>
       )}
-    </button>
+    </div>
   );
 };

@@ -1,4 +1,3 @@
-import { SummaryTicker } from "../components/Dashboard/SummaryTicker";
 import { MatchList } from "../components/Dashboard/MatchList";
 import { RosterSidebar } from "../components/Shared/RosterSidebar";
 import styles from "./Dashboard.module.scss";

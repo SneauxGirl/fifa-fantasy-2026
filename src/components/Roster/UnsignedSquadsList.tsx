@@ -2,18 +2,22 @@ import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { openSquadSigningModal } from "../../store/slices/uiSlice";
 import { moveSquadToAvailable } from "../../store/slices/rosterSlice";
+import {
+  selectUnsignedSquads,
+  selectSignedSquads,
+} from "../../store/selectors/rosterSelectors";
 import type { RosterSquad } from "../../types/match";
 import styles from "./UnsignedSquadsList.module.scss";
 
 /**
  * UnsignedSquadsList Component
- * Shows unsigned squads - squads that are selected but not yet locked in
+ * Shows unsigned squads (staging) - squads selected but not yet locked in
  * Allows signing (with confirmation modal) or removing back to available
  */
 export const UnsignedSquadsList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const unsignedSquads = useAppSelector((state) => state.roster.squads.unsigned);
-  const signedSquads = useAppSelector((state) => state.roster.squads.signed);
+  const unsignedSquads = useAppSelector(selectUnsignedSquads);
+  const signedSquads = useAppSelector(selectSignedSquads);
   const liveRegionRef = useRef<HTMLDivElement>(null);
 
   const announce = (message: string) => {
@@ -62,16 +66,30 @@ export const UnsignedSquadsList: React.FC = () => {
 
             <div className={styles.actions}>
               <button
+                type="button"
                 className={`${styles.button} ${styles.remove}`}
                 onClick={() => handleRemoveSquad(squad)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleRemoveSquad(squad);
+                  }
+                }}
                 title={`Remove ${squad.name}`}
                 aria-label={`Remove ${squad.name} from selection`}
               >
                 ✕ Remove
               </button>
               <button
+                type="button"
                 className={`${styles.button} ${styles.sign}`}
                 onClick={() => handleSignSquad(squad)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSignSquad(squad);
+                  }
+                }}
                 title={`Sign ${squad.name} to roster`}
                 aria-label={`Sign ${squad.name} to roster`}
               >

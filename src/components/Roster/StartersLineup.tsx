@@ -1,31 +1,69 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { movePlayerToBench } from "../../store/slices/rosterSlice";
+import { movePlayerToBench, movePlayerToStarter } from "../../store/slices/rosterSlice";
 import {
-  selectStarterPlayers,
-  selectStartersGroupedByPosition,
-} from "../../store/selectors/scoringSelectors";
+  selectScoringPlayers,
+  selectScoringPlayersGroupedByPosition,
+  selectStarterSquads,
+} from "../../store/selectors/rosterSelectors";
 import type { RosterPlayer } from "../../types/match";
 import styles from "./StartersLineup.module.scss";
 
 /**
  * StartersLineup Component
- * Display 11-player formation
+ * Display 11-player formation (includes both Starter and UpNext players)
  * Players can be removed to bench via button click
+ * UpNext players show with muted colors (locked until Thu 00:00)
  */
 export const StartersLineup: React.FC = () => {
   const dispatch = useAppDispatch();
-  const starters = useAppSelector(selectStarterPlayers);
-  const positionGroups = useAppSelector(selectStartersGroupedByPosition);
-  const signedSquads = useAppSelector((state) => state.roster.squads.signed);
+  const [isDragOver, setIsDragOver] = React.useState(false);
+
+  // Show both Starter and UpNext players in formation
+  const scoringPlayers = useAppSelector(selectScoringPlayers);
+  const positionGroups = useAppSelector(
+    selectScoringPlayersGroupedByPosition
+  );
+  const signedSquads = useAppSelector(selectStarterSquads);
 
   const handleRemoveStarter = (player: RosterPlayer) => {
     dispatch(movePlayerToBench(player));
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    try {
+      const data = e.dataTransfer.getData("application/json");
+      console.log("Drop received - raw data:", data);
+      const parsed = JSON.parse(data);
+      console.log("Drop parsed:", parsed);
+
+      // Handle bench player drops
+      if (parsed.type === "benchPlayer" && parsed.player) {
+        console.log("Moving player to starter:", parsed.player.name);
+        dispatch(movePlayerToStarter(parsed.player));
+      } else {
+        console.log("Drop data doesn't match benchPlayer type");
+      }
+    } catch (err) {
+      console.log("Drop handler error:", err);
+    }
+  };
+
   return (
     <div className={styles.startersLineup}>
-      <h3 className={styles.title}>STARTERS (4 Squads + {starters.length}/11)</h3>
+      <h3 className={styles.title}>STARTERS (4 Squads + {scoringPlayers.length}/11)</h3>
 
       {/* Signed Squads Section */}
       <div className={styles.squadsSection}>
@@ -45,13 +83,21 @@ export const StartersLineup: React.FC = () => {
             ))}
       </div>
 
-      {starters.length === 0 ? (
-        <div className={styles.emptyState}>
+      {scoringPlayers.length === 0 ? (
+        <div
+          className={styles.emptyState}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
           <p>No starters yet</p>
           <p className={styles.hint}>Sign players and drag them here</p>
         </div>
       ) : (
-        <div className={styles.formation}>
+        <div
+          className={styles.formation}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
           {/* Goalkeeper */}
           <div className={styles.positionRow}>
             <div className={styles.positionLabel}>GK</div>

@@ -1,5 +1,12 @@
 import React from "react";
 import { useAppSelector } from "../../store";
+import {
+  selectSignedSquads,
+  selectStarterPlayers,
+  selectBenchPlayers,
+  selectEliminatedSignedSquads,
+  selectEliminatedSignedPlayers,
+} from "../../store/selectors/rosterSelectors";
 import styles from "./RosterStatsPanel.module.scss";
 
 /**
@@ -8,13 +15,11 @@ import styles from "./RosterStatsPanel.module.scss";
  * Used on Roster page sidebar
  */
 export const RosterStatsPanel: React.FC = () => {
-  const signedSquads = useAppSelector((state) => state.roster.squads.signed);
-  const starters = useAppSelector((state) => state.roster.players.starters);
-  const bench = useAppSelector((state) => state.roster.players.signed).filter(
-    (p) => !starters.find((s) => s.id === p.id)
-  );
-  const eliminatedSquads = useAppSelector((state) => state.roster.squads.eliminated);
-  const eliminatedPlayers = useAppSelector((state) => state.roster.players.eliminated);
+  const signedSquads = useAppSelector(selectSignedSquads);
+  const starters = useAppSelector(selectStarterPlayers);
+  const bench = useAppSelector(selectBenchPlayers);
+  const eliminatedSquads = useAppSelector(selectEliminatedSignedSquads);
+  const eliminatedPlayers = useAppSelector(selectEliminatedSignedPlayers);
 
   return (
     <div className={styles.rosterStatsPanel}>

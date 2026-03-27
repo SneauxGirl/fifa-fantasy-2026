@@ -4,7 +4,7 @@ import {
   movePlayerToAvailable,
 } from "../../store/slices/rosterSlice";
 import { openPlayerSigningModal } from "../../store/slices/uiSlice";
-import { selectUnsignedPlayers } from "../../store/selectors/scoringSelectors";
+import { selectUnsignedPlayers } from "../../store/selectors/rosterSelectors";
 import type { RosterPlayer } from "../../types/match";
 import styles from "./RosterDragZone.module.scss";
 

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Review the code that was just written/edited for accessibility compliance. Check for:\n\n1. BUTTONS: All <button> elements have type=\"button\", onKeyDown handlers for Enter/Space, aria-label, and :focus CSS with outline\n2. KEYBOARD: All interactive elements are reachable via Tab, proper tabIndex management, no tab traps\n3. FOCUS STATES: Visible :focus styles with outline-offset, not just hover states\n4. SEMANTIC HTML: Using <button> not <div role=\"button\">, proper labels on forms\n5. MODALS: Focus traps, Escape key support, Enter/Space for actions, focus restoration\n6. ARIA: aria-label on interactive elements, aria-live for announcements where needed\n\nIf violations found, list them specifically with line numbers and suggest fixes. If compliant, confirm briefly.",
+            "statusMessage": "Checking accessibility compliance..."
+          }
+        ]
+      }
+    ]
+  }
+}

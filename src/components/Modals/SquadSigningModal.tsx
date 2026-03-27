@@ -1,7 +1,8 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { signSquad } from "../../store/slices/rosterSlice";
+import { moveSquadToSigned } from "../../store/slices/rosterSlice";
 import { closeModal } from "../../store/slices/uiSlice";
+import { selectSignedSquads } from "../../store/selectors/rosterSelectors";
 import type { RosterSquad } from "../../types/match";
 import { Modal } from "./Modal";
 import styles from "./SquadSigningModal.module.scss";
@@ -10,16 +11,21 @@ import styles from "./SquadSigningModal.module.scss";
  * SquadSigningModal Component
  * Confirmation dialog for signing a squad to the roster
  * Shows tournament duration reminder and requires user confirmation
+ * Max 4 signed squads allowed
  */
 export const SquadSigningModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const modal = useAppSelector((state) => state.ui.modal);
+  const signedSquads = useAppSelector(selectSignedSquads);
   const isOpen = modal.type === "squadSigning";
   const selectedSquad = modal.selectedCard as RosterSquad | undefined;
 
+  const canSign = signedSquads.length < 4;
+
   const handleConfirm = () => {
-    if (selectedSquad) {
-      dispatch(signSquad(selectedSquad));
+    if (selectedSquad && canSign) {
+      // Squads are always signed with role: "starter" (handled in reducer)
+      dispatch(moveSquadToSigned(selectedSquad));
       dispatch(closeModal());
     }
   };
@@ -33,7 +39,7 @@ export const SquadSigningModal: React.FC = () => {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={handleCancel}>
+    <Modal isOpen={isOpen} onClose={handleCancel} title="Confirm Squad Signing">
       <div className={styles.container}>
         <div className={styles.header}>
           <span className={styles.flag}>{selectedSquad.flag}</span>
@@ -45,10 +51,16 @@ export const SquadSigningModal: React.FC = () => {
 
           <div className={styles.reminder}>
             <p className={styles.reminderTitle}>⚠️ Important:</p>
-            <p className={styles.reminderText}>
-              By signing this squad, you commit to this team for the duration of the tournament.
-              You cannot change this selection until the tournament ends.
-            </p>
+            {!canSign ? (
+              <p className={styles.reminderText} style={{ color: "#d32f2f" }}>
+                Your roster is full. You already have 4 signed squads. Remove one to sign a new squad.
+              </p>
+            ) : (
+              <p className={styles.reminderText}>
+                By signing this squad, you commit to this team for the duration of the tournament.
+                You cannot change this selection until the tournament ends.
+              </p>
+            )}
           </div>
 
           <div className={styles.details}>
@@ -69,14 +81,31 @@ export const SquadSigningModal: React.FC = () => {
 
         <div className={styles.actions}>
           <button
+            type="button"
             className={`${styles.button} ${styles.cancel}`}
             onClick={handleCancel}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleCancel();
+              }
+            }}
           >
             Cancel
           </button>
           <button
+            type="button"
             className={`${styles.button} ${styles.confirm}`}
             onClick={handleConfirm}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (canSign) {
+                  handleConfirm();
+                }
+              }
+            }}
+            disabled={!canSign}
           >
             Confirm Signing
           </button>

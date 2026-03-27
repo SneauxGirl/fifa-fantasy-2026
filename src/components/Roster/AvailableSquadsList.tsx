@@ -1,22 +1,31 @@
 import React, { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { moveSquadToUnsigned } from "../../store/slices/rosterSlice";
+import {
+  selectActiveAvailableSquads,
+  selectEliminatedAvailableSquads,
+  selectUnsignedSquads,
+  selectSignedSquads,
+} from "../../store/selectors/rosterSelectors";
 import type { RosterSquad } from "../../types/match";
 import styles from "./AvailableSquadsList.module.scss";
 
 /**
  * AvailableSquadsList Component
  * Shows available squads that can be selected to add to roster
+ * Active squads at top, eliminated squads at bottom (greyed out, disabled)
  * Supports: click, keyboard navigation (arrow keys, Enter/Space), and HTML5 drag-and-drop
  * Accessible with aria-live announcements for screen readers
  */
 export const AvailableSquadsList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const availableSquads = useAppSelector((state) => state.roster.squads.available);
-  const unsignedSquads = useAppSelector((state) => state.roster.squads.unsigned);
-  const signedSquads = useAppSelector((state) => state.roster.squads.signed);
+  const activeAvailableSquads = useAppSelector(selectActiveAvailableSquads);
+  const eliminatedAvailableSquads = useAppSelector(selectEliminatedAvailableSquads);
+  const allAvailableSquads = [...activeAvailableSquads, ...eliminatedAvailableSquads];
+  const unsignedSquads = useAppSelector(selectUnsignedSquads);
+  const signedSquads = useAppSelector(selectSignedSquads);
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const liveRegionRef = useRef<HTMLDivElement>(null);
 
   const announce = (message: string) => {
@@ -25,18 +34,19 @@ export const AvailableSquadsList: React.FC = () => {
     }
   };
 
-  const totalSelected = unsignedSquads.length + signedSquads.length;
-  const remainingSlots = 4 - totalSelected;
+  // No cap on unsigned (staging) squads - only cap on signed
+  // Cap check happens when signing from unsigned → signed
+  const canAddToUnsigned = (squad: RosterSquad) => !squad.isEliminated;
 
   const handleSignSquad = (squad: RosterSquad) => {
-    if (remainingSlots > 0) {
+    if (canAddToUnsigned(squad)) {
       dispatch(moveSquadToUnsigned(squad));
-      announce(`${squad.name} moved to pending. ${remainingSlots - 1} slots remaining.`);
+      announce(`${squad.name} moved to staging. ${signedSquads.length}/4 signed squads.`);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    const squad = availableSquads[index];
+    const squad = allAvailableSquads[index];
 
     switch (e.key) {
       case "ArrowUp":
@@ -53,7 +63,7 @@ export const AvailableSquadsList: React.FC = () => {
 
       case "ArrowDown":
         e.preventDefault();
-        if (index < availableSquads.length - 1) {
+        if (index < allAvailableSquads.length - 1) {
           setActiveIndex(index + 1);
           // Focus the next element
           const nextButton = document.querySelector(
@@ -66,10 +76,8 @@ export const AvailableSquadsList: React.FC = () => {
       case " ":
       case "Enter":
         e.preventDefault();
-        if (remainingSlots > 0) {
+        if (!squad.isEliminated) {
           handleSignSquad(squad);
-        } else {
-          announce("Roster is full. Remove a squad to add another.");
         }
         break;
     }
@@ -93,15 +101,16 @@ export const AvailableSquadsList: React.FC = () => {
         style={{ position: "absolute", left: "-9999px" }}
       />
 
-      <h3>Available Squads ({remainingSlots} slots remaining)</h3>
-      {availableSquads.length === 0 ? (
+      <h3>Available Squads ({signedSquads.length}/4 signed)</h3>
+      {allAvailableSquads.length === 0 ? (
         <p className={styles.empty}>No squads available</p>
       ) : (
         <div className={styles.squadGrid}>
-          {availableSquads.map((squad, index) => {
-            const isEliminated = squad.status === "eliminated";
+          {allAvailableSquads.map((squad, index) => {
+            const isEliminated = squad.isEliminated;
             return (
               <button
+                type="button"
                 key={squad.teamId}
                 data-squad-index={index}
                 className={`${styles.squadCard} ${isEliminated ? styles.eliminated : ""}`}
@@ -111,8 +120,8 @@ export const AvailableSquadsList: React.FC = () => {
                 onFocus={() => setActiveIndex(index)}
                 title={isEliminated ? `${squad.name} - Eliminated from tournament` : `Select ${squad.name}. Use arrow keys to navigate, Enter or Space to select.`}
                 aria-label={isEliminated ? `${squad.name} - Eliminated from tournament` : `${squad.name}. Use arrow keys to navigate, Enter or Space to select for review.`}
-                disabled={remainingSlots <= 0 || isEliminated}
-                draggable
+                disabled={isEliminated}
+                draggable={!isEliminated}
                 tabIndex={activeIndex === index ? 0 : -1}
               >
                 <div className={styles.flag}>{squad.flag}</div>

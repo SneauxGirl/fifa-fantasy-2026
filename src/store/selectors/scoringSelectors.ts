@@ -1,9 +1,10 @@
 // ==============================
 // Scoring Selectors
-// Derived / computed state — bridges raw Redux data and the scoring engine.
+// Points calculation & assignment logic only.
 // ==============================
 // Architecture rule: scoring functions are NEVER called inside reducers.
-// Raw data lives in slices. Computed scores live here, derived on read.
+// Raw roster state lives in rosterSlice. Computed scores live here, derived on read.
+// Roster-related selectors (pool/role/workflow) are in rosterSelectors.ts
 //
 // Phase 1: lineup + match selectors only (no score computation yet —
 //          player data is not in Redux; it comes from mock JSON directly).
@@ -14,77 +15,55 @@
 import { createSelector } from "@reduxjs/toolkit";
 import type { RootState } from "../index";
 import type { Match, RosterPlayer, RosterSquad } from "../../types/match";
+import {
+  selectScoringPlayers,
+  selectScoringSquads,
+  selectActiveSignedPlayers,
+  selectActiveSignedSquads,
+  selectSubstitutePlayers,
+  selectSubstituteSquads,
+} from "./rosterSelectors";
 
-// ─── Roster selectors ──────────────────────────────────────────────────────────
-
-export const selectSignedSquads = (state: RootState) =>
-  state.roster.squads.signed;
-
-export const selectSignedPlayers = (state: RootState) =>
-  state.roster.players.signed;
-
-export const selectStarterPlayers = (state: RootState) =>
-  state.roster.players.starters;
-
-export const selectUnsignedPlayers = (state: RootState) =>
-  state.roster.players.unsigned;
+// ─── Roster-derived selectors (focus on scoring) ──────────────────────────────────
 
 /** Signed squad team IDs. */
 export const selectSignedSquadIds = createSelector(
-  selectSignedSquads,
+  selectScoringSquads,
   (squads: RosterSquad[]) => squads.map((s) => s.teamId)
 );
 
-/** Signed player team IDs. */
+/** Signed player team IDs (active members). */
 export const selectSignedPlayerTeamIds = createSelector(
-  selectSignedPlayers,
+  selectActiveSignedPlayers,
   (players: RosterPlayer[]) => players.map((p) => p.teamId)
 );
 
-/** Bench players (unsigned + signed, but not starters). */
-export const selectBenchPlayers = createSelector(
-  selectUnsignedPlayers,
-  selectSignedPlayers,
-  (unsigned: RosterPlayer[], signed: RosterPlayer[]) => [...unsigned, ...signed]
-);
-
-/** Starters grouped by position. */
-export const selectStartersGroupedByPosition = createSelector(
-  selectStarterPlayers,
-  (starters: RosterPlayer[]) => ({
-    gk: starters.filter((p) => p.position === "GK"),
-    def: starters.filter((p) => p.position === "DEF"),
-    mid: starters.filter((p) => p.position === "MID"),
-    fwd: starters.filter((p) => p.position === "FWD"),
-  })
-);
-
-/** Active (non-ELIMINATED) Squads only. */
+/** Active (non-tournament-eliminated) Squads. */
 export const selectActiveSquads = createSelector(
-  selectSignedSquads,
-  (squads: RosterSquad[]) => squads.filter((t) => t.status !== "eliminated")
+  selectActiveSignedSquads,
+  (squads: RosterSquad[]) => squads
 );
 
-/** Non-ELIMINATED Players on the ROSTER. */
+/** Active (non-tournament-eliminated) Players on the roster. */
 export const selectActiveRosterPlayers = createSelector(
-  selectSignedPlayers,
-  (roster: RosterPlayer[]) => roster.filter((p) => p.status !== "eliminated")
+  selectActiveSignedPlayers,
+  (roster: RosterPlayer[]) => roster
 );
 
-/** Active STARTER Player IDs. */
-export const selectActiveStarterIds = createSelector(
-  selectStarterPlayers,
-  selectActiveRosterPlayers,
-  (starters: RosterPlayer[], activeRoster: RosterPlayer[]) => {
-    const activeIds = new Set(activeRoster.map((p) => p.playerId));
-    return starters.map((s) => s.playerId).filter((id) => activeIds.has(id));
+/** Active SCORER Player IDs (starter or UpNext). */
+export const selectActiveScorerIds = createSelector(
+  selectScoringPlayers,
+  selectActiveSignedPlayers,
+  (scorers: RosterPlayer[], active: RosterPlayer[]) => {
+    const activeIds = new Set(active.map((p) => p.playerId));
+    return scorers.map((s) => s.playerId).filter((id) => activeIds.has(id));
   }
 );
 
 /** Roster object with signed squads and players for match card modal. */
 export const selectMatchRoster = createSelector(
-  selectSignedSquads,
-  selectSignedPlayers,
+  selectScoringSquads,
+  selectScoringPlayers,
   (squads: RosterSquad[], players: RosterPlayer[]) => ({
     squads,
     players,

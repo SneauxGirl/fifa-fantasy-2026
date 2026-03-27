@@ -1,41 +1,104 @@
 import React from "react";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { movePlayerToStarter } from "../../store/slices/rosterSlice";
+import {
+  selectRosterBenchPlayers,
+  selectEliminatedSignedPlayers,
+} from "../../store/selectors/rosterSelectors";
+import type { RosterPlayer } from "../../types/match";
 import styles from "./RosterSidebar.module.scss";
 
 /**
  * RosterSidebar Component
- * Display signed players (non-starters) and eliminated players
+ * Display bench players and eliminated players
  * Located in right sidebar below starters
+ * Bench players are draggable to move to starter formation
  */
-export const RosterSidebar: React.FC = () => {
-  const signedPlayers = useAppSelector((state) => state.roster.players.signed);
-  const starterPlayers = useAppSelector((state) => state.roster.players.starters);
-  const eliminatedPlayers = useAppSelector((state) => state.roster.players.eliminated);
 
-  // Non-starter signed players
-  const nonStarterSigned = signedPlayers.filter(
-    (p) => !starterPlayers.some((s) => s.id === p.id)
-  );
+// Position order for sorting
+const POSITION_ORDER: Record<string, number> = {
+  "GK": 0,
+  "DEF": 1,
+  "MID": 2,
+  "FWD": 3,
+};
+
+const sortPlayersByPosition = (players: RosterPlayer[]): RosterPlayer[] => {
+  return [...players].sort((a, b) => {
+    const orderA = POSITION_ORDER[a.position] ?? 999;
+    const orderB = POSITION_ORDER[b.position] ?? 999;
+    if (orderA !== orderB) return orderA - orderB;
+    // If same position, sort alphabetically by name
+    return a.name.localeCompare(b.name);
+  });
+};
+
+export const RosterSidebar: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const benchPlayers = useAppSelector(selectRosterBenchPlayers);
+  const eliminatedPlayers = useAppSelector(selectEliminatedSignedPlayers);
+
+  const sortedBenchPlayers = sortPlayersByPosition(benchPlayers);
+
+  const handleDragStart = (e: React.DragEvent, player: RosterPlayer) => {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("application/json", JSON.stringify({
+      type: "benchPlayer",
+      player: player,
+    }));
+  };
+
+  const handleMoveToStarter = (player: RosterPlayer) => {
+    console.log("Moving to starter:", {
+      playerId: player.id,
+      playerName: player.name,
+      pool: player.pool,
+      role: player.role,
+      gamesComplete: player.gamesComplete,
+    });
+    dispatch(movePlayerToStarter(player));
+  };
 
   return (
     <div className={styles.rosterSidebar}>
       <h3 className={styles.title}>ROSTER</h3>
 
-      {/* Signed Players (Non-Starters) */}
+      {/* Bench Players */}
       <div className={styles.section}>
         <h4 className={styles.sectionTitle}>
-          Signed Players ({nonStarterSigned.length})
+          Bench ({benchPlayers.length})
         </h4>
-        {nonStarterSigned.length === 0 ? (
-          <p className={styles.empty}>No signed players on bench</p>
+        {benchPlayers.length === 0 ? (
+          <p className={styles.empty}>No players on bench</p>
         ) : (
           <div className={styles.playersList}>
-            {nonStarterSigned.map((player) => (
-              <div key={player.id} className={styles.playerItem}>
-                <span className={styles.playerName}>{player.name}</span>
-                <span className={styles.playerPosition}>{player.position}</span>
-              </div>
-            ))}
+            {sortedBenchPlayers.map((player) => {
+              const isStarter = player.role === "starter";
+              return (
+                <button
+                  type="button"
+                  key={player.id}
+                  className={styles.playerItem}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, player)}
+                  onClick={() => handleMoveToStarter(player)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleMoveToStarter(player);
+                    }
+                  }}
+                  title={isStarter ? `${player.name} - In starters formation` : `${player.name} - Click to move to starter, or drag to formation`}
+                  aria-label={isStarter ? `${player.name} (${player.position}) - In starters formation` : `${player.name} (${player.position}) - Click to move to starter formation`}
+                >
+                  <span className={styles.playerName}>
+                    {player.name}
+                    {isStarter && <span className={styles.starterIcon} title="In starters formation">⚽</span>}
+                  </span>
+                  <span className={styles.playerPosition}>{player.position}</span>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

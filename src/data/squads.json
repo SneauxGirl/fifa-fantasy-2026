@@ -149,5 +149,35 @@
       { "type": "player", "id": 4017, "playerId": 4017, "status": "eliminated", "name": "Christian Günter", "position": "DEF", "number": 19, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} },
       { "type": "player", "id": 4018, "playerId": 4018, "status": "eliminated", "name": "Thomas Müller", "position": "MID", "number": 13, "teamId": 4, "code": "GER", "flag": "🇩🇪", "matchPoints": {} }
     ]
+  },
+  {
+    "teamId": 10,
+    "name": "Morocco",
+    "code": "MAR",
+    "flag": "🇲🇦",
+    "confederation": "CAF",
+    "coaches": [
+      { "name": "Walid Regragui", "role": "Head Coach" }
+    ],
+    "officialRoster": [
+      { "type": "player", "id": 10001, "playerId": 10001, "status": "signed", "name": "Bono", "position": "GK", "number": 1, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10002, "playerId": 10002, "status": "signed", "name": "Achraf Hakimi", "position": "DEF", "number": 2, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10003, "playerId": 10003, "status": "signed", "name": "Romain Saïss", "position": "DEF", "number": 19, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10004, "playerId": 10004, "status": "signed", "name": "Noussair Mazraoui", "position": "DEF", "number": 3, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10005, "playerId": 10005, "status": "signed", "name": "Nayef Aguerd", "position": "DEF", "number": 5, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10006, "playerId": 10006, "status": "signed", "name": "Sofyan Amrabat", "position": "MID", "number": 4, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10007, "playerId": 10007, "status": "signed", "name": "Selim Benaïdou", "position": "MID", "number": 10, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10008, "playerId": 10008, "status": "signed", "name": "Hakim Ziyech", "position": "FWD", "number": 7, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10009, "playerId": 10009, "status": "signed", "name": "Youssef En-Nesyri", "position": "FWD", "number": 9, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10010, "playerId": 10010, "status": "signed", "name": "Anass Zaroury", "position": "FWD", "number": 11, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10011, "playerId": 10011, "status": "signed", "name": "Yahya Attiyat Allah", "position": "DEF", "number": 15, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10012, "playerId": 10012, "status": "bench", "name": "Badr Benoun", "position": "MID", "number": 13, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10013, "playerId": 10013, "status": "bench", "name": "Bilal El Khannouss", "position": "MID", "number": 6, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10014, "playerId": 10014, "status": "bench", "name": "Khaled Narey", "position": "DEF", "number": 17, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10015, "playerId": 10015, "status": "bench", "name": "Mohammed Kudus", "position": "MID", "number": 8, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10016, "playerId": 10016, "status": "bench", "name": "Munir", "position": "GK", "number": 25, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10017, "playerId": 10017, "status": "bench", "name": "Abdel Monem", "position": "DEF", "number": 12, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} },
+      { "type": "player", "id": 10018, "playerId": 10018, "status": "bench", "name": "Ez Abde", "position": "FWD", "number": 14, "teamId": 10, "code": "MAR", "flag": "🇲🇦", "matchPoints": {} }
+    ]
   }
 ]

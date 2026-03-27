@@ -32,7 +32,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, roster, onMemberCli
 
   // Calculate active points (starters only)
   const activePoints = rosterMembersInMatch
-    .filter(m => m.status === "starter")
+    .filter(m => m.role === "starter")
     .reduce((sum, m) => sum + m.pointsThisMatch, 0);
 
   // Get match status display
@@ -57,10 +57,10 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, roster, onMemberCli
 
   const statusDisplay = getStatusDisplay();
 
-  // Separate squads and players, and sort players by status
+  // Separate squads and players, and sort players by role
   const squads = rosterMembersInMatch.filter(m => m.type === "squad");
-  const starterPlayers = rosterMembersInMatch.filter(m => m.type === "player" && m.status === "starter") as Array<RosterPlayer & { pointsThisMatch: number }>;
-  const inactivePlayers = rosterMembersInMatch.filter(m => m.type === "player" && m.status !== "starter") as Array<RosterPlayer & { pointsThisMatch: number }>;
+  const starterPlayers = rosterMembersInMatch.filter(m => m.type === "player" && m.role === "starter") as Array<RosterPlayer & { pointsThisMatch: number }>;
+  const inactivePlayers = rosterMembersInMatch.filter(m => m.type === "player" && m.role !== "starter") as Array<RosterPlayer & { pointsThisMatch: number }>;
 
   // Filter events for this match (only relevant ones)
   const matchEvents = match.events

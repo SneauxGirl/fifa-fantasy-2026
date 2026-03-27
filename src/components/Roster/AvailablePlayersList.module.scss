@@ -162,7 +162,7 @@
   width: $spacing-32;
   height: $spacing-32;
   padding: 0;
-  background: var(--color-primary);
+  background: $color-bg-tertiary;
   color: $color-text-inverse;
   border: none;
   border-radius: $border-radius-2;
@@ -179,9 +179,19 @@
     opacity: 1;
   }
 
+  .playerCard:focus & {
+    opacity: 1;
+  }
+
   &:hover {
-    background: var(--color-primary-dark);
+    background: $color-bg-tertiary-alt;
     transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: $border-width-2 solid $color-text-inverse;
+    outline-offset: -4px;
+    opacity: 1;
   }
 
   &:active {

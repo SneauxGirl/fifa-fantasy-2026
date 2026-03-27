@@ -65,14 +65,47 @@
   border: 1px solid #444;
   border-radius: 4px;
   font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+
+  &:focus-visible:not(.eliminated) {
+    outline: 2px solid $color-bg-tertiary;
+    outline-offset: 2px;
+    background: #2a2a2a;
+    border-color: $color-bg-tertiary;
+  }
+
+  &:hover:not(.eliminated) {
+    background: #2a2a2a;
+    border-color: $color-bg-tertiary;
+    box-shadow: 0 2px 8px rgba($color-bg-tertiary, 0.2);
+  }
+
+  &:active:not(.eliminated) {
+    transform: scale(0.98);
+  }
 
   &.eliminated {
     background: #1a1a1a;
     border-color: #333;
     opacity: 0.6;
+    cursor: not-allowed;
 
     .playerName {
       text-decoration: line-through;
+    }
+
+    &:hover {
+      background: #1a1a1a;
+      border-color: #333;
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: none;
     }
   }
 }
@@ -96,4 +129,24 @@
   border-radius: 3px;
   font-weight: 600;
   font-size: 0.7rem;
+}
+
+.starterIcon {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  line-height: 1;
+  vertical-align: middle;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
 }

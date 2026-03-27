@@ -1,7 +1,12 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { closeModal } from "../../store/slices/uiSlice";
-import { signPlayer } from "../../store/slices/rosterSlice";
+import { movePlayerToSigned } from "../../store/slices/rosterSlice";
+import {
+  selectCanAddToSignedRoster,
+  selectRosterGKCount,
+  selectActiveSignedPlayers,
+} from "../../store/selectors/rosterSelectors";
 import type { RosterPlayer } from "../../types/match";
 import { Modal } from "./Modal";
 
@@ -11,7 +16,9 @@ export const PlayerSigningModal: React.FC = () => {
   const isOpen = modal.type === "playerSigning";
 
   const selectedPlayer = modal.selectedCard as RosterPlayer | undefined;
-  const signedPlayers = useAppSelector((state) => state.roster.players.signed);
+  const activeSignedPlayers = useAppSelector(selectActiveSignedPlayers);
+  const rosterGKCount = useAppSelector(selectRosterGKCount);
+  const canAddToRoster = useAppSelector(selectCanAddToSignedRoster);
 
   const handleClose = () => {
     dispatch(closeModal());
@@ -19,7 +26,14 @@ export const PlayerSigningModal: React.FC = () => {
 
   const handleConfirm = () => {
     if (selectedPlayer) {
-      dispatch(signPlayer(selectedPlayer));
+      // For now, default role is "bench" (can be "UpNext" if mid-week, handled in reducer)
+      // TODO: Add timing logic to determine if after Wed 23:59 ET → role: "UpNext"
+      dispatch(
+        movePlayerToSigned({
+          player: selectedPlayer,
+          role: "bench",
+        })
+      );
       dispatch(closeModal());
     }
   };
@@ -30,83 +44,128 @@ export const PlayerSigningModal: React.FC = () => {
 
   const isGoalkeeper = selectedPlayer.position === "GK";
 
-  // Only count non-eliminated signed players (these are the active roster)
-  const activeSignedPlayers = signedPlayers.filter((p) => p.status !== "eliminated");
-  const signCapReached = activeSignedPlayers.length >= 18;
+  // Check if player can be added (validator function from selector)
+  const playerCanBeAdded = canAddToRoster(selectedPlayer);
 
-  // Goalie cap logic
-  const activeSignedGoalkeepers = signedPlayers.filter(
-    (p) => p.position === "GK" && p.status !== "eliminated"
-  ).length;
-  const goalkeepersAfterSign = isGoalkeeper ? activeSignedGoalkeepers + 1 : activeSignedGoalkeepers;
-  const goalieCapReached = isGoalkeeper && activeSignedGoalkeepers >= 3;
+  // Goalie-specific validation
+  const goalieCapReached = isGoalkeeper && rosterGKCount >= 3;
+  const rosterFullReached = activeSignedPlayers.length >= 18;
 
-  // Total roster count for display
-  const totalRosterCount = activeSignedPlayers.length + 1; // +1 for the player being signed
+  // Total roster count for display (what it will be after signing)
+  const totalRosterCount = activeSignedPlayers.length + 1;
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose}>
+    <Modal isOpen={isOpen} onClose={handleClose} title={`Sign ${selectedPlayer.name}?`}>
       <div style={{ padding: "32px", textAlign: "center" }}>
         <h2 style={{ marginBottom: "12px", fontSize: "1.3rem", fontWeight: 700 }}>
           Sign {selectedPlayer.name}?
         </h2>
 
         <p style={{ color: "#666", marginBottom: "8px" }}>
-          This is player <strong>{totalRosterCount}</strong> of 18 on your roster.
+          This will be player <strong>{totalRosterCount}</strong> of 18 on your roster.
         </p>
 
-        {signCapReached && (
+        {rosterFullReached && (
           <p style={{ color: "#d32f2f", marginBottom: "24px", fontSize: "0.9rem", fontWeight: 600 }}>
             ⚠ Signed roster full (18/18). Cannot sign additional players.
           </p>
         )}
 
-        {!signCapReached && goalieCapReached && (
+        {!rosterFullReached && goalieCapReached && (
           <p style={{ color: "#d32f2f", marginBottom: "24px", fontSize: "0.9rem", fontWeight: 600 }}>
-            ⚠ Goalie cap reached (3/3). Cannot sign additional goalkeepers.
+            ⚠ Goalkeeper cap reached (3/3). Cannot sign additional goalkeepers.
           </p>
         )}
 
-        {!signCapReached && isGoalkeeper && !goalieCapReached && (
+        {!rosterFullReached && isGoalkeeper && !goalieCapReached && (
           <p style={{ color: "#666", marginBottom: "24px", fontSize: "0.9rem" }}>
-            (Reminder: you have filled {goalkeepersAfterSign} of 3 goalie slots, min. 1)
+            (Reminder: you have filled {rosterGKCount} of 3 goalkeeper slots, min. 1)
           </p>
         )}
 
-        {!signCapReached && !isGoalkeeper && activeSignedGoalkeepers < 3 && (
+        {!rosterFullReached && !isGoalkeeper && rosterGKCount < 3 && (
           <p style={{ color: "#666", marginBottom: "24px", fontSize: "0.9rem" }}>
-            (Reminder: you have filled {activeSignedGoalkeepers} of 3 goalie slots, min. 1)
+            (Reminder: you have filled {rosterGKCount} of 3 goalkeeper slots, min. 1)
           </p>
         )}
 
         <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
           <button
+            type="button"
             onClick={handleClose}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleClose();
+              }
+            }}
             style={{
               padding: "8px 20px",
               backgroundColor: "#e0e0e0",
               color: "#333",
-              border: "none",
+              border: "2px solid transparent",
               borderRadius: "6px",
               cursor: "pointer",
               fontSize: "0.95rem",
               fontWeight: 600,
+              transition: "all 0.2s ease",
+              outline: "none",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = "#0055a4";
+              e.currentTarget.style.outline = "2px solid #0055a4";
+              e.currentTarget.style.outlineOffset = "2px";
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = "transparent";
+              e.currentTarget.style.outline = "none";
             }}
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleConfirm}
-            disabled={signCapReached || goalieCapReached}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (playerCanBeAdded && !rosterFullReached && !goalieCapReached) {
+                  handleConfirm();
+                }
+              }
+            }}
+            disabled={!playerCanBeAdded || rosterFullReached || goalieCapReached}
             style={{
               padding: "8px 20px",
-              backgroundColor: signCapReached || goalieCapReached ? "#ccc" : "#0055a4",
-              color: signCapReached || goalieCapReached ? "#999" : "white",
-              border: "none",
+              backgroundColor:
+                !playerCanBeAdded || rosterFullReached || goalieCapReached
+                  ? "#ccc"
+                  : "#0055a4",
+              color:
+                !playerCanBeAdded || rosterFullReached || goalieCapReached
+                  ? "#999"
+                  : "white",
+              border: "2px solid transparent",
               borderRadius: "6px",
-              cursor: signCapReached || goalieCapReached ? "not-allowed" : "pointer",
+              cursor:
+                !playerCanBeAdded || rosterFullReached || goalieCapReached
+                  ? "not-allowed"
+                  : "pointer",
               fontSize: "0.95rem",
               fontWeight: 600,
+              transition: "all 0.2s ease",
+              outline: "none",
+            }}
+            onFocus={(e) => {
+              if (!(!playerCanBeAdded || rosterFullReached || goalieCapReached)) {
+                e.currentTarget.style.borderColor = "white";
+                e.currentTarget.style.outline = "2px solid #0055a4";
+                e.currentTarget.style.outlineOffset = "2px";
+              }
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = "transparent";
+              e.currentTarget.style.outline = "none";
             }}
           >
             Yes, Sign Player

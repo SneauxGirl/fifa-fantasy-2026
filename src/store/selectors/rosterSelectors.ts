@@ -1,0 +1,405 @@
+/**
+ * Roster Selectors — Pool + Role Model
+ *
+ * Selectors bridge Redux state (raw pool + role data) and UI components.
+ * All selectors are memoized with createSelector to prevent unnecessary re-renders.
+ *
+ * Naming convention:
+ * - select[Pool][Role]* → filtered by pool AND role
+ * - select[Pool]* → filtered by pool only
+ * - select*WithCompleteGames → game completion status
+ * - select*Count → counts and stats
+ */
+
+import { createSelector } from "@reduxjs/toolkit";
+import type { RootState } from "../index";
+import type { RosterPlayer, RosterSquad } from "../../types/match";
+
+// ─── BASE SELECTORS ──────────────────────────────────────────────────────────────
+// Raw state access (not memoized)
+
+export const selectAllPlayers = (state: RootState) => state.roster.players;
+
+export const selectAllSquads = (state: RootState) => state.roster.squads;
+
+// ─── POOL-BASED SELECTORS ──────────────────────────────────────────────────────────
+
+export const selectAvailablePlayers = createSelector(
+  selectAllPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.pool === "available")
+);
+
+export const selectUnsignedPlayers = createSelector(
+  selectAllPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.pool === "unsigned")
+);
+
+export const selectSignedPlayers = createSelector(
+  selectAllPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.pool === "signed")
+);
+
+export const selectEliminatedPlayers = createSelector(
+  selectAllPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.pool === "eliminated")
+);
+
+export const selectAvailableSquads = createSelector(
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.pool === "available")
+);
+
+export const selectUnsignedSquads = createSelector(
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.pool === "unsigned")
+);
+
+export const selectSignedSquads = createSelector(
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.pool === "signed")
+);
+
+export const selectEliminatedSquads = createSelector(
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.pool === "eliminated")
+);
+
+// ─── ROLE-BASED SELECTORS (within signed pool) ──────────────────────────────────────
+
+/**
+ * Players with role: "starter" (in formation, actively scoring)
+ */
+export const selectStarterPlayers = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.role === "starter")
+);
+
+/**
+ * Players with role: "bench" (in roster, not in formation, no scoring)
+ */
+export const selectBenchPlayers = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.role === "bench")
+);
+
+/**
+ * Players with role: "UpNext" (newly signed/swapped, locked until Thu 00:00)
+ */
+export const selectUpNextPlayers = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.role === "UpNext")
+);
+
+/**
+ * Squads with role: "starter" (all signed squads are starters by default)
+ */
+export const selectStarterSquads = createSelector(
+  selectSignedSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.role === "starter")
+);
+
+/**
+ * Eliminated players (pool: "eliminated", role: "eliminatedSigned")
+ */
+export const selectEliminatedSignedPlayers = createSelector(
+  selectEliminatedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.role === "eliminatedSigned")
+);
+
+/**
+ * Eliminated squads (pool: "eliminated", role: "eliminatedSigned")
+ */
+export const selectEliminatedSignedSquads = createSelector(
+  selectEliminatedSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.role === "eliminatedSigned")
+);
+
+// ─── ACTIVE/SCORING SELECTORS ──────────────────────────────────────────────────────
+
+/**
+ * Active signed players (not tournament-eliminated)
+ */
+export const selectActiveSignedPlayers = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => !p.isEliminated)
+);
+
+/**
+ * Active signed squads (not tournament-eliminated)
+ */
+export const selectActiveSignedSquads = createSelector(
+  selectSignedSquads,
+  (squads: RosterSquad[]) => squads.filter(s => !s.isEliminated)
+);
+
+/**
+ * Players currently scoring (starter or UpNext)
+ */
+export const selectScoringPlayers = createSelector(
+  selectStarterPlayers,
+  selectUpNextPlayers,
+  (starters: RosterPlayer[], upNext: RosterPlayer[]) => [...starters, ...upNext]
+);
+
+/**
+ * Squads currently scoring (all signed squads are starters)
+ */
+export const selectScoringSquads = createSelector(
+  selectStarterSquads,
+  (starters: RosterSquad[]) => starters.filter(s => !s.isEliminated)
+);
+
+// ─── POSITION-BASED SELECTORS ──────────────────────────────────────────────────────
+
+/**
+ * All scoring players (starter + UpNext) grouped by position
+ * Used by formation display to show active and pending players
+ */
+export const selectScoringPlayersGroupedByPosition = createSelector(
+  selectScoringPlayers,
+  (scoringPlayers: RosterPlayer[]) => ({
+    gk: scoringPlayers.filter(p => p.position === "GK"),
+    def: scoringPlayers.filter(p => p.position === "DEF"),
+    mid: scoringPlayers.filter(p => p.position === "MID"),
+    fwd: scoringPlayers.filter(p => p.position === "FWD"),
+  })
+);
+
+/**
+ * Count of goalkeepers in starters
+ */
+export const selectStarterGKCount = createSelector(
+  selectStarterPlayers,
+  (starters: RosterPlayer[]) => starters.filter(p => p.position === "GK").length
+);
+
+/**
+ * Count of goalkeepers in signed roster
+ */
+export const selectRosterGKCount = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.position === "GK").length
+);
+
+/**
+ * All signed players for roster bench display (bench + starter + UpNext)
+ * Used by RosterSidebar to show all roster members
+ * Players with role: "starter" remain visible with a ⚽ icon
+ */
+export const selectRosterBenchPlayers = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) =>
+    players.filter(p => p.role === "bench" || p.role === "starter" || p.role === "UpNext")
+);
+
+/**
+ * Signed players grouped by position
+ */
+export const selectSignedPlayersGroupedByPosition = createSelector(
+  selectSignedPlayers,
+  (signed: RosterPlayer[]) => ({
+    gk: signed.filter(p => p.position === "GK"),
+    def: signed.filter(p => p.position === "DEF"),
+    mid: signed.filter(p => p.position === "MID"),
+    fwd: signed.filter(p => p.position === "FWD"),
+  })
+);
+
+// ─── GAME COMPLETION SELECTORS ──────────────────────────────────────────────────────
+
+/**
+ * Signed players whose games are complete this week
+ */
+export const selectPlayersWithCompleteGames = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.gamesComplete)
+);
+
+/**
+ * Signed players whose games are NOT yet complete this week
+ */
+export const selectPlayersWithIncompleteGames = createSelector(
+  selectSignedPlayers,
+  (players: RosterPlayer[]) => players.filter(p => !p.gamesComplete)
+);
+
+/**
+ * Bench players eligible to promote (games complete)
+ */
+export const selectBenchPlayersEligibleToPromote = createSelector(
+  selectBenchPlayers,
+  (bench: RosterPlayer[]) => bench.filter(p => p.gamesComplete)
+);
+
+/**
+ * Starter players eligible to demote (games complete)
+ */
+export const selectStarterPlayersEligibleToDemote = createSelector(
+  selectStarterPlayers,
+  (starters: RosterPlayer[]) => starters.filter(p => p.gamesComplete)
+);
+
+// ─── SUBSTITUTE SELECTORS ──────────────────────────────────────────────────────────
+
+/**
+ * Players signed during R16 (scores at 50% forever)
+ */
+export const selectSubstitutePlayers = createSelector(
+  selectAllPlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.substitute)
+);
+
+/**
+ * Squads signed during R16 (scores at 50% forever)
+ */
+export const selectSubstituteSquads = createSelector(
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.substitute)
+);
+
+// ─── ROSTER COUNT & VALIDATION SELECTORS ──────────────────────────────────────────────
+
+/**
+ * Roster summary: counts and capacity info
+ */
+export const selectRosterCounts = createSelector(
+  selectSignedPlayers,
+  selectStarterPlayers,
+  selectSignedSquads,
+  selectRosterGKCount,
+  selectStarterGKCount,
+  (
+    signedPlayers: RosterPlayer[],
+    starters: RosterPlayer[],
+    squads: RosterSquad[],
+    rosterGK: number,
+    starterGK: number
+  ) => ({
+    signedPlayers: signedPlayers.length,
+    starters: starters.length,
+    signedSquads: squads.length,
+    rosterGK,
+    rosterGKCapacity: 3,
+    starterGK,
+    starterGKCapacity: 1,
+    starterCapacity: 11,
+    rosterCapacity: 18,
+    squadCapacity: 4,
+  })
+);
+
+/**
+ * Can promote another player to starter? (validates capacity and position)
+ */
+export const selectCanPromoteToStarter = createSelector(
+  selectStarterPlayers,
+  selectStarterGKCount,
+  (starters: RosterPlayer[], gkCount: number) => (player: RosterPlayer) => {
+    const canFitPosition = player.position === "GK" ? gkCount < 1 : true;
+    return starters.length < 11 && canFitPosition;
+  }
+);
+
+/**
+ * Can add another player to signed roster? (validates capacity and position)
+ */
+export const selectCanAddToSignedRoster = createSelector(
+  selectSignedPlayers,
+  selectRosterGKCount,
+  (signed: RosterPlayer[], gkCount: number) => (player: RosterPlayer) => {
+    const canFitPosition = player.position === "GK" ? gkCount < 3 : true;
+    return signed.length < 18 && canFitPosition;
+  }
+);
+
+/**
+ * Can sign another squad? (validates 4-squad cap)
+ */
+export const selectCanSignAnotherSquad = createSelector(
+  selectSignedSquads,
+  (squads: RosterSquad[]) => squads.length < 4
+);
+
+// ─── AVAILABLE POOL (with active/eliminated split) ──────────────────────────────────
+
+/**
+ * Active available players (not tournament-eliminated)
+ */
+export const selectActiveAvailablePlayers = createSelector(
+  selectAvailablePlayers,
+  (players: RosterPlayer[]) => players.filter(p => !p.isEliminated)
+);
+
+/**
+ * Eliminated available players (tournament-eliminated but not signed)
+ */
+export const selectEliminatedAvailablePlayers = createSelector(
+  selectAvailablePlayers,
+  (players: RosterPlayer[]) => players.filter(p => p.isEliminated)
+);
+
+/**
+ * Active available squads (not tournament-eliminated)
+ */
+export const selectActiveAvailableSquads = createSelector(
+  selectAvailableSquads,
+  (squads: RosterSquad[]) => squads.filter(s => !s.isEliminated)
+);
+
+/**
+ * Eliminated available squads (tournament-eliminated but not signed)
+ */
+export const selectEliminatedAvailableSquads = createSelector(
+  selectAvailableSquads,
+  (squads: RosterSquad[]) => squads.filter(s => s.isEliminated)
+);
+
+// ─── TEAM-BASED SELECTORS ──────────────────────────────────────────────────────────
+
+/**
+ * Get all signed players from a specific team
+ */
+export const selectSignedPlayersFromTeam = (teamId: number) =>
+  createSelector(selectSignedPlayers, (players: RosterPlayer[]) =>
+    players.filter(p => p.teamId === teamId)
+  );
+
+/**
+ * Get starter players from a specific team
+ */
+export const selectStarterPlayersFromTeam = (teamId: number) =>
+  createSelector(selectStarterPlayers, (starters: RosterPlayer[]) =>
+    starters.filter(p => p.teamId === teamId)
+  );
+
+// ─── VALIDATION HELPERS ──────────────────────────────────────────────────────────────
+
+/**
+ * Players that can be moved from bench to starter
+ * (games complete + starter capacity + position constraints)
+ */
+export const selectPromotableBenchPlayers = createSelector(
+  selectBenchPlayersEligibleToPromote,
+  selectStarterGKCount,
+  selectStarterPlayers,
+  (bench: RosterPlayer[], gkCount: number, starters: RosterPlayer[]) => {
+    const canAddMore = starters.length < 11;
+    return bench.filter(p => {
+      const canFitPosition = p.position === "GK" ? gkCount < 1 : true;
+      return canAddMore && canFitPosition;
+    });
+  }
+);
+
+/**
+ * Players that are ineligible to be demoted from starter
+ * (games incomplete - must wait for week to complete)
+ */
+export const selectLockedStarterPlayers = createSelector(
+  selectStarterPlayersEligibleToDemote,
+  selectStarterPlayers,
+  (eligible: RosterPlayer[], all: RosterPlayer[]) => {
+    const eligibleIds = new Set(eligible.map(p => p.id));
+    return all.filter(p => !eligibleIds.has(p.id));
+  }
+);

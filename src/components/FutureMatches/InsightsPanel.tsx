@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../../store";
+import { selectSignedSquads } from "../../store/selectors/rosterSelectors";
 import type { Match } from "../../types/match";
 import { transformMatch } from "../../lib/dataTransform";
 import styles from "./InsightsPanel.module.scss";
@@ -13,9 +14,8 @@ interface InsightsPanelProps {
  * Displays strategic insights and recommendations for a selected match.
  */
 export const InsightsPanel: React.FC<InsightsPanelProps> = ({ match }) => {
-  const rosterSquads = useAppSelector((state) =>
-    state.roster.squads.signed.map((s) => ({ id: s.teamId, name: s.name }))
-  );
+  const signedSquads = useAppSelector(selectSignedSquads);
+  const rosterSquads = signedSquads.map((s) => ({ id: s.teamId, name: s.name }));
 
   if (!match) {
     return (

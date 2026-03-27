@@ -14,12 +14,14 @@ function App() {
     // Extract all players from squad official rosters
     const rosterPlayers: RosterPlayer[] = mockSquadsData.flatMap((s: any) =>
       (s.officialRoster || []).map((p: any) => {
-        const status: "available" | "eliminated" = p.status === "eliminated" ? "eliminated" : "available";
+        const pool: "available" | "eliminated" = p.status === "eliminated" ? "eliminated" : "available";
         return {
           type: "player" as const,
           id: p.id,
           playerId: p.id,
-          status,
+          pool,
+          role: null,
+          isEliminated: pool === "eliminated",
           name: p.name,
           position: p.position,
           number: p.number,
@@ -27,6 +29,11 @@ function App() {
           code: s.code,
           flag: s.flag,
           matchPoints: {},
+          totalPoints: 0,
+          gamesComplete: false, // Will be calculated by reducer
+          substitute: false,
+          playerGames: [],
+          injury: { status: false, type: undefined },
         };
       })
     )
@@ -36,16 +43,23 @@ function App() {
       type: "squad" as const,
       id: s.teamId,
       teamId: s.teamId,
-      status: "available" as const,
+      pool: "available" as const,
+      role: "starter" as const,
+      isEliminated: s.status === "eliminated",
       name: s.name,
       code: s.code,
       flag: s.flag,
       matchPoints: {},
+      totalPoints: 0,
+      gamesComplete: false, // Will be calculated by reducer
+      substitute: false,
+      squadGames: [],
       coaches: s.coaches,
       officialRoster: s.officialRoster,
     }))
 
     // Load dummy data into Redux store
+    // gamesComplete will be calculated dynamically by the reducer based on tournament date
     dispatch(setMatches(mockMatches as Match[]))
     dispatch(initializeRoster({ players: rosterPlayers, squads: rosterSquads }))
   }, [dispatch])

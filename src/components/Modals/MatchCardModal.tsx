@@ -5,6 +5,7 @@ import { MatchCard } from "../MatchCard";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { closeModal } from "../../store/slices/uiSlice";
 import { selectMatchRoster } from "../../store/selectors/scoringSelectors";
+import { selectStarterPlayers } from "../../store/selectors/rosterSelectors";
 import { Modal } from "./Modal";
 
 export const MatchCardModal: React.FC = () => {
@@ -18,7 +19,7 @@ export const MatchCardModal: React.FC = () => {
 
   // Get current roster from Redux for display only
   const roster = useAppSelector(selectMatchRoster);
-  const starters = useAppSelector((state) => state.roster.players.starters);
+  const starters = useAppSelector(selectStarterPlayers);
 
   const handleClose = () => {
     dispatch(closeModal());
