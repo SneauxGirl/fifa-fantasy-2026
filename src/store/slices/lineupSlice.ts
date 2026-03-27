@@ -28,7 +28,7 @@ export interface RosterPlayerEntry {
   isEliminated: boolean; // true = knocked out; greyed out in UI
 }
 
-interface LineupState {
+export interface LineupState {
   currentRound:   TournamentRound;
   squads:         RosterSquadEntry[];  // max 4 — auto-STARTER every week
   roster:         RosterPlayerEntry[]; // max 18

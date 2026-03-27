@@ -140,6 +140,55 @@
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+.rosterItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  width: 100%;
+
+  &.eliminated {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    .rosterName,
+    .playerName {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.flag {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.rosterName {
+  flex: 1;
+  font-weight: 500;
+  color: $color-text-inverse;
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rosterType {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  background: rgba($color-bg-tertiary, 0.1);
+  color: $color-bg-tertiary;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
 @keyframes pulse {
   0%, 100% {
     opacity: 1;

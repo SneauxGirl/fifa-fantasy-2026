@@ -55,6 +55,17 @@
   gap: 20px;
 }
 
+/* Mobile/tablet: hide mainContent when starters tab is active */
+@media (max-width: 1023px) {
+  .mainContent {
+    display: none;
+  }
+
+  [data-active-tab="roster"] .mainContent {
+    display: flex;
+  }
+}
+
 /* Sidebar column visibility based on active tab */
 .startersColumn {
   /* Hidden by default on mobile/tablet */
@@ -78,11 +89,11 @@
 
 /* Mobile/tablet: show active tab's column */
 @media (max-width: 1023px) {
-  .rightSidebars[data-active-tab="starters"] .startersColumn {
+  .rightSidebar[data-active-tab="starters"] .startersColumn {
     display: block;
   }
 
-  .rightSidebars[data-active-tab="roster"] .rosterColumn {
+  .rightSidebar[data-active-tab="roster"] .rosterColumn {
     display: block;
   }
 }

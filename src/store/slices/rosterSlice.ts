@@ -52,7 +52,7 @@ function calculateGamesComplete(
  * - playerGames/squadGames: Scheduled games with isComplete flag
  */
 
-interface RosterState {
+export interface RosterState {
   players: RosterPlayer[];  // Single array, filtered by pool + role
   squads: RosterSquad[];    // Single array, filtered by pool + role
   validation: {
@@ -216,6 +216,37 @@ const rosterSlice = createSlice({
             pool: "eliminated",
             role: "eliminatedSigned",
             isEliminated: true,
+            rosterElimination: "new", // Mark as newly eliminated (triggers notification)
+            eliminatedReason: reason as any,
+          };
+        }
+      }
+    },
+
+    /**
+     * Mark unsigned/available player as eliminated
+     * Unsigned players move to available pool
+     * Available players stay in available pool
+     * Both get isEliminated: true (displayed greyed out in UI)
+     * DOES NOT move to eliminated pool (no role assignment)
+     * rosterElimination set to "resolved" (no notification)
+     */
+    markPlayerAsEliminated: (
+      state,
+      action: PayloadAction<{ player: RosterPlayer; newPool?: "available"; reason: string }>
+    ) => {
+      const { player, newPool = "available", reason } = action.payload;
+      const index = state.players.findIndex(p => p.id === player.id);
+
+      if (index !== -1) {
+        const statePlayer = state.players[index]; // Use current state, not payload
+        if (statePlayer.pool === "unsigned" || statePlayer.pool === "available") {
+          state.players[index] = {
+            ...state.players[index],
+            pool: newPool,
+            role: null, // Reset role when moving to available
+            isEliminated: true,
+            rosterElimination: "resolved", // Mark as resolved (no notification)
             eliminatedReason: reason as any,
           };
         }
@@ -286,10 +317,11 @@ const rosterSlice = createSlice({
     },
 
     /**
-     * Move squad from signed → eliminated
-     * Prerequisites: pool: "signed", isEliminated: true
-     * Updates role to "eliminatedSigned"
-     * DOES NOT cascade to players (players eliminated independently by isEliminated flag)
+     * Move squad to eliminated state
+     * Handles all pools:
+     * - SIGNED: Move to eliminated pool, role: eliminatedSigned, rosterElimination: "new"
+     * - AVAILABLE/UNSIGNED: Move to eliminated pool, role: null, rosterElimination: "resolved"
+     * Updates isEliminated: true
      */
     moveSquadToEliminated: (state, action: PayloadAction<RosterSquad>) => {
       const squad = action.payload;
@@ -297,15 +329,45 @@ const rosterSlice = createSlice({
 
       if (index !== -1) {
         const stateSquad = state.squads[index]; // Use current state, not payload
+
         if (stateSquad.pool === "signed") {
+          // Signed squads: move to eliminated with role, mark as "new" (shows in notification)
           state.squads[index] = {
             ...state.squads[index],
             pool: "eliminated",
             role: "eliminatedSigned",
             isEliminated: true,
+            rosterElimination: "new",
+          };
+        } else if (stateSquad.pool === "available" || stateSquad.pool === "unsigned") {
+          // Available/Unsigned squads: move to eliminated, mark as "resolved" (no notification)
+          state.squads[index] = {
+            ...state.squads[index],
+            pool: "eliminated",
+            role: null,
+            isEliminated: true,
+            rosterElimination: "resolved",
           };
         }
       }
+    },
+
+    /**
+     * Mark all newly eliminated members as resolved
+     * Called after notification is dismissed
+     * Transitions rosterElimination from "new" → "resolved"
+     */
+    resolveNewEliminations: (state) => {
+      state.players.forEach((player, index) => {
+        if (player.rosterElimination === "new") {
+          state.players[index].rosterElimination = "resolved";
+        }
+      });
+      state.squads.forEach((squad, index) => {
+        if (squad.rosterElimination === "new") {
+          state.squads[index].rosterElimination = "resolved";
+        }
+      });
     },
 
     // ────────────────────────────────────────────────────────────────
@@ -493,10 +555,12 @@ export const {
   movePlayerToStarter,
   movePlayerToBench,
   movePlayerToEliminated,
+  markPlayerAsEliminated,
   moveSquadToUnsigned,
   moveSquadToAvailable,
   moveSquadToSigned,
   moveSquadToEliminated,
+  resolveNewEliminations,
   updateGameComplete,
   promoteUpNextToStarter,
   updateMemberPoints,

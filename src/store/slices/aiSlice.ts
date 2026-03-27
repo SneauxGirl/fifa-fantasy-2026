@@ -38,7 +38,7 @@ export interface AIInsightEntry {
 
 type LoadStatus = "idle" | "loading" | "succeeded" | "failed";
 
-interface AIState {
+export interface AIState {
   playerInsights: Record<number, AIInsightEntry>; // keyed by playerId
   squadInsights:  Record<number, AIInsightEntry>; // keyed by teamId
   status:         LoadStatus;

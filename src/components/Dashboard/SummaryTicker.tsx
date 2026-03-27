@@ -21,7 +21,7 @@ export const SummaryTicker: React.FC = () => {
   const upcomingMatches = useAppSelector(selectUpcomingMatches);
   const liveMatches = useAppSelector(selectLiveMatches);
 
-  const renderTickerItem = (match: Match, index: number) => {
+  const renderTickerItem = (match: Match, uniqueKey: string) => {
     const displayMatch = transformMatch(match);
     const isFinished = finishedMatches.includes(match);
     const isLive = liveMatches.includes(match);
@@ -29,7 +29,7 @@ export const SummaryTicker: React.FC = () => {
 
     if (isLive) {
       return (
-        <div key={index} className={styles.tickerItem}>
+        <div key={uniqueKey} className={styles.tickerItem}>
           <span className={styles.live}>🔴 LIVE</span>
           <span className={styles.matchScore}>
             {match.homeTeam.name} {displayMatch.score.home} - {displayMatch.score.away} {match.awayTeam.name}
@@ -41,7 +41,7 @@ export const SummaryTicker: React.FC = () => {
 
     if (isFinished) {
       return (
-        <div key={index} className={styles.tickerItem}>
+        <div key={uniqueKey} className={styles.tickerItem}>
           <span className={styles.matchScore}>
             {match.homeTeam.name} {displayMatch.score.home} - {displayMatch.score.away} {match.awayTeam.name}
           </span>
@@ -54,7 +54,7 @@ export const SummaryTicker: React.FC = () => {
       const timeStr = matchDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
       return (
-        <div key={index} className={styles.tickerItem}>
+        <div key={uniqueKey} className={styles.tickerItem}>
           <span className={styles.matchScore}>
             {match.homeTeam.name} vs {match.awayTeam.name}
           </span>
@@ -69,9 +69,9 @@ export const SummaryTicker: React.FC = () => {
   };
 
   const tickerItems = [
-    ...liveMatches.map((m, i) => renderTickerItem(m, i)),
-    ...finishedMatches.map((m, i) => renderTickerItem(m, i + liveMatches.length)),
-    ...upcomingMatches.slice(0, 5).map((m, i) => renderTickerItem(m, i + liveMatches.length + finishedMatches.length)),
+    ...liveMatches.map((m) => renderTickerItem(m, `match-${m.id}`)),
+    ...finishedMatches.map((m) => renderTickerItem(m, `match-${m.id}`)),
+    ...upcomingMatches.slice(0, 5).map((m) => renderTickerItem(m, `match-${m.id}`)),
     <div key="stubhub" className={styles.tickerItem}>
       <a
         href="https://www.stubhub.com/fifa-world-cup-tickets/event/149854291"
@@ -94,14 +94,23 @@ export const SummaryTicker: React.FC = () => {
     </div>,
   ];
 
-  // Filter out null items and duplicate for seamless loop
+  // Filter out null items and duplicate for seamless loop with suffixed keys
   const items = tickerItems.filter(Boolean);
-  const loopedItems = [...items, ...items];
+  const loopedItems = [
+    ...items,
+    ...items.map((item) => {
+      // Suffix the key to make duplicates unique for the second loop
+      const originalKey = item.key;
+      return React.cloneElement(item as React.ReactElement<any>, {
+        key: `${originalKey}-dup`,
+      });
+    }),
+  ];
 
   return (
     <div className={styles.summaryTicker}>
       <div className={styles.tickerContent}>
-        {loopedItems.map((item) => item)}
+        {loopedItems}
       </div>
     </div>
   );

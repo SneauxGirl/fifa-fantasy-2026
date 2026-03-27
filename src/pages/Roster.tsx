@@ -6,6 +6,7 @@ import { AvailablePlayersList } from "../components/Roster/AvailablePlayersList"
 import { RosterDragZone } from "../components/Roster/RosterDragZone";
 import { StartersLineup } from "../components/Roster/StartersLineup";
 import { RosterSidebar } from "../components/Roster/RosterSidebar";
+import { EliminationNotificationModal } from "../components/Modals/EliminationNotificationModal";
 import styles from "./Roster.module.scss";
 import appLayoutStyles from "../layouts/AppLayout.module.scss";
 
@@ -43,7 +44,7 @@ const Roster = () => {
       </div>
 
       {/* Content + Sidebars */}
-      <div className={appLayoutStyles.pageLayout}>
+      <div className={appLayoutStyles.pageLayout} data-active-tab={activeTab}>
         {/* Main Content - Squad/Player Selection */}
         <div className={styles.mainContent}>
           {/* Select Squads Section */}
@@ -89,6 +90,9 @@ const Roster = () => {
           </div>
         </div>
       </div>
+
+      {/* Elimination Notification Modal */}
+      <EliminationNotificationModal />
     </>
   );
 };

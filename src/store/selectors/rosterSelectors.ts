@@ -347,11 +347,16 @@ export const selectActiveAvailableSquads = createSelector(
 );
 
 /**
- * Eliminated available squads (tournament-eliminated but not signed)
+ * Eliminated available squads (tournament-eliminated available/unsigned squads)
+ * Includes:
+ * 1. Available squads marked as eliminated (initial data or before moved to eliminated pool)
+ * 2. Available/Unsigned squads that moved to eliminated pool (not signed rosters)
  */
 export const selectEliminatedAvailableSquads = createSelector(
-  selectAvailableSquads,
-  (squads: RosterSquad[]) => squads.filter(s => s.isEliminated)
+  selectAllSquads,
+  (squads: RosterSquad[]) => squads.filter(
+    s => (s.pool === "available" && s.isEliminated) || (s.pool === "eliminated" && s.role !== "eliminatedSigned")
+  )
 );
 
 // ─── TEAM-BASED SELECTORS ──────────────────────────────────────────────────────────

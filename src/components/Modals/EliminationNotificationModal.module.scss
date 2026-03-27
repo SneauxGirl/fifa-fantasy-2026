@@ -1,0 +1,150 @@
+@use '../../styles/tokens.scss' as *;
+
+.container {
+  padding: 32px;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #d32f2f;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: $color-text-medium;
+  font-weight: 500;
+}
+
+.content {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.section {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sectionTitle {
+  margin: 0 0 12px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $color-text-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(211, 47, 47, 0.05);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  border-radius: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.flag {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.name {
+  flex: 1;
+  font-weight: 500;
+  color: $color-text-inverse;
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.position {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  background: rgba($color-bg-tertiary, 0.1);
+  color: $color-bg-tertiary;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  background: rgba(211, 47, 47, 0.2);
+  color: #d32f2f;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.message {
+  margin: 0 0 24px 0;
+  font-size: 0.85rem;
+  color: $color-text-medium;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.dismissButton {
+  type: button;
+  padding: 10px 32px;
+  background: #d32f2f;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  outline: none;
+
+  &:hover {
+    background: #b71c1c;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+  }
+
+  &:focus-visible {
+    border-color: white;
+    outline: 2px solid #d32f2f;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

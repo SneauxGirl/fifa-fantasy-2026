@@ -104,9 +104,6 @@ export interface Match {
 export type RosterPool = "available" | "unsigned" | "signed" | "eliminated";
 export type RosterRole = "starter" | "bench" | "UpNext" | "eliminatedSigned" | null;
 
-// Legacy (deprecated, kept for backwards compatibility during migration)
-export type RosterMemberStatus = "available" | "unsigned" | "signed" | "starter" | "bench" | "eliminated";
-
 /**
  * Represents a single game a squad/player participates in
  */
@@ -153,12 +150,9 @@ export interface RosterSquad {
   id: number;                          // Team ID
   teamId: number;                      // same as id, for clarity
 
-  // New semantic model (replaces status)
+  // Semantic model: pool (where) + role (what function)
   pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
   role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
-
-  // Legacy (for backwards compatibility, to be deprecated)
-  status?: RosterMemberStatus;
 
   // Core data
   name: string;
@@ -171,6 +165,7 @@ export interface RosterSquad {
 
   // Game tracking
   isEliminated: boolean;               // Tournament eliminated status
+  rosterElimination: null | "new" | "resolved"; // Elimination state: null=not eliminated, new=just happened, resolved=processed
   gamesComplete: boolean;              // All games for this week completed?
   substitute: boolean;                 // Signed during R16? Scores at 50% forever
   squadGames?: Game[];                 // Games scheduled for this squad with isComplete flag
@@ -189,12 +184,9 @@ export interface RosterPlayer {
   id: number;                          // Player ID
   playerId: number;                    // same as id, for clarity
 
-  // New semantic model (replaces status)
+  // Semantic model: pool (where) + role (what function)
   pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
   role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
-
-  // Legacy (for backwards compatibility, to be deprecated)
-  status?: RosterMemberStatus;
 
   // Core data
   name: string;
@@ -210,6 +202,7 @@ export interface RosterPlayer {
 
   // Game tracking
   isEliminated: boolean;               // Tournament eliminated status (from national team data)
+  rosterElimination: null | "new" | "resolved"; // Elimination state: null=not eliminated, new=just happened, resolved=processed
   gamesComplete: boolean;              // All games for this week completed?
   substitute: boolean;                 // Signed during R16? Scores at 50% forever
   playerGames?: Game[];                // Games scheduled for this player with isComplete flag

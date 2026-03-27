@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Match } from "../../types/match";
 
-interface MatchesState {
+export interface MatchesState {
   allMatches: Match[];
   rosterMatches: Match[];
   lastUpdated: number | null;

@@ -2,15 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Match, RosterSquad, RosterPlayer } from "../../types/match";
 
-type ModalCard = Match | RosterPlayer | RosterSquad;
+export type ModalCard = Match | RosterPlayer | RosterSquad;
 
-interface UIState {
+export interface UIState {
   modal: {
     type: "match" | "player" | "squad" | "squadSigning" | "playerSigning" | null;
     selectedCard: ModalCard | null;
   };
   sidebar: {
     open: boolean;
+  };
+  eliminationNotification: {
+    isOpen: boolean;
+    squads: RosterSquad[];
+    players: RosterPlayer[];
   };
 }
 
@@ -21,6 +26,11 @@ const initialState: UIState = {
   },
   sidebar: {
     open: false,
+  },
+  eliminationNotification: {
+    isOpen: false,
+    squads: [],
+    players: [],
   },
 };
 
@@ -65,6 +75,25 @@ const uiSlice = createSlice({
     toggleSidebar: (state) => {
       state.sidebar.open = !state.sidebar.open;
     },
+
+    setEliminationNotification: (
+      state,
+      action: PayloadAction<{
+        isOpen: boolean;
+        squads: RosterSquad[];
+        players: RosterPlayer[];
+      }>
+    ) => {
+      state.eliminationNotification = action.payload;
+    },
+
+    clearEliminationNotification: (state) => {
+      state.eliminationNotification = {
+        isOpen: false,
+        squads: [],
+        players: [],
+      };
+    },
   },
 });
 
@@ -77,6 +106,8 @@ export const {
   closeModal,
   setSidebarOpen,
   toggleSidebar,
+  setEliminationNotification,
+  clearEliminationNotification,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

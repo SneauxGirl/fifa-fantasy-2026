@@ -4,8 +4,9 @@ import { movePlayerToStarter } from "../../store/slices/rosterSlice";
 import {
   selectRosterBenchPlayers,
   selectEliminatedSignedPlayers,
+  selectEliminatedSignedSquads,
 } from "../../store/selectors/rosterSelectors";
-import type { RosterPlayer } from "../../types/match";
+import type { RosterPlayer, RosterSquad } from "../../types/match";
 import styles from "./RosterSidebar.module.scss";
 
 /**
@@ -37,6 +38,7 @@ export const RosterSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const benchPlayers = useAppSelector(selectRosterBenchPlayers);
   const eliminatedPlayers = useAppSelector(selectEliminatedSignedPlayers);
+  const eliminatedSquads = useAppSelector(selectEliminatedSignedSquads);
 
   const sortedBenchPlayers = sortPlayersByPosition(benchPlayers);
 
@@ -103,15 +105,25 @@ export const RosterSidebar: React.FC = () => {
         )}
       </div>
 
-      {/* Eliminated Players */}
-      {eliminatedPlayers.length > 0 && (
+      {/* Eliminated Squads & Players */}
+      {(eliminatedSquads.length > 0 || eliminatedPlayers.length > 0) && (
         <div className={styles.section}>
           <h4 className={styles.sectionTitle}>
-            Eliminated ({eliminatedPlayers.length})
+            Eliminated ({eliminatedSquads.length + eliminatedPlayers.length})
           </h4>
           <div className={styles.playersList}>
+            {/* Eliminated Squads */}
+            {eliminatedSquads.map((squad) => (
+              <div key={`squad-${squad.id}`} className={`${styles.rosterItem} ${styles.eliminated}`}>
+                <span className={styles.flag}>{squad.flag}</span>
+                <span className={styles.rosterName}>{squad.name}</span>
+                <span className={styles.rosterType}>SQUAD</span>
+              </div>
+            ))}
+
+            {/* Eliminated Players */}
             {eliminatedPlayers.map((player) => (
-              <div key={player.id} className={`${styles.playerItem} ${styles.eliminated}`}>
+              <div key={`player-${player.id}`} className={`${styles.rosterItem} ${styles.eliminated}`}>
                 <span className={styles.playerName}>{player.name}</span>
                 <span className={styles.playerPosition}>{player.position}</span>
               </div>
