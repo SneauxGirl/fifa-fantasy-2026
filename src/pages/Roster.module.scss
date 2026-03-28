@@ -8,18 +8,9 @@
   padding: 0 20px;
   //margin: 0 -20px; // counteract content padding
 
-  @media (min-width: 480px) {
-    padding: 0 $spacing-40;
-//    margin: 0 -$spacing-40;
-  }
-
+  /* Hide tabs at desktop (768px and above) */
   @media (min-width: 768px) {
-    padding: 0 2.75rem;
-//    margin: 0 -2.75rem;
-  }
-
-  @media (min-width: 1024px) {
-    display: none; // hide tabs on desktop
+    display: none;
   }
 }
 
@@ -53,47 +44,49 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
-/* Mobile/tablet: hide mainContent when starters tab is active */
-@media (max-width: 1023px) {
+/* Tablet and below: mainContent visibility controlled by tabs */
+@media (max-width: 767px) {
   .mainContent {
     display: none;
   }
 
   [data-active-tab="roster"] .mainContent {
     display: flex;
+    flex: 1;
+    width: 100%;
   }
 }
 
-/* Sidebar column visibility based on active tab */
-.startersColumn {
-  /* Hidden by default on mobile/tablet */
-  display: none;
-
-  /* Show on desktop or when starters tab is active */
-  @media (min-width: 1024px) {
-    display: block;
-  }
-}
-
+/* Column visibility */
+.startersColumn,
 .rosterColumn {
-  /* Hidden by default on mobile/tablet */
+  /* Hidden by default (mobile/tablet with tabs) */
   display: none;
 
-  /* Show on desktop or when roster tab is active */
-  @media (min-width: 1024px) {
+  /* Show on desktop+ (standard layout, no tabs) */
+  @media (min-width: 768px) {
     display: block;
   }
 }
 
-/* Mobile/tablet: show active tab's column */
-@media (max-width: 1023px) {
-  .rightSidebar[data-active-tab="starters"] .startersColumn {
+/* Tablet and below (max-width: 767px): tabs control visibility */
+@media (max-width: 767px) {
+  /* Hide both columns by default */
+  .startersColumn,
+  .rosterColumn {
+    display: none;
+  }
+
+  /* Show starters column when starters tab is active */
+  [data-active-tab="starters"] .startersColumn {
     display: block;
   }
 
-  .rightSidebar[data-active-tab="roster"] .rosterColumn {
+  /* Show roster column when starters tab is active (shows bench with starters) */
+  [data-active-tab="starters"] .rosterColumn {
     display: block;
   }
 }

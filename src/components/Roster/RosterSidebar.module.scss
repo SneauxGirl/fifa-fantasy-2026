@@ -8,7 +8,8 @@
   background: $color-bg-secondary;
   border: $border-width-1 solid $color-neutral-darker;
   border-radius: $border-radius-4;
-  max-height: 400px;
+  min-height: 400px;
+  max-height: 80vh;
   overflow-y: auto;
 }
 

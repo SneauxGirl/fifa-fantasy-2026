@@ -18,6 +18,12 @@
   padding: 0 $spacing-24;
   position: relative;
 
+  /* Mobile: single column layout */
+  @media (max-width: 479px) {
+    flex-direction: column;
+    gap: $spacing-16;
+    padding: 0 $spacing-12;
+  }
 
   @media (min-width: 1440px) {
     padding: 0 $spacing-80;
@@ -27,12 +33,19 @@
 // ── Right Sidebar (optional on all pages) ──────────────────────────────────
 
 .rightSidebar {
-  display: none;
+  display: flex;
   flex-direction: column;
   width: 280px;
   flex-shrink: 0;
+}
 
-  @media (min-width: 768px) {
+/* Mobile-only: hide by default, show when data-active-tab is present */
+@media (max-width: 767px) {
+  .rightSidebar {
+    display: none;
+  }
+
+  [data-active-tab] .rightSidebar {
     display: flex;
   }
 }
