@@ -2,6 +2,8 @@
 // Squads
 // ==============================
 
+
+//REEVALUATE for tournament Play - remove penalties, check Squad interface
 export interface SquadHistoricalPerformance {
   year: number;
   matchesPlayed: number;

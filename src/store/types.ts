@@ -4,6 +4,8 @@
 // Centralized type definitions to avoid circular dependencies
 // Combines state types from all slices without importing from index.ts
 
+//REMOVE AI logic and links
+
 import type { TypedUseSelectorHook } from "react-redux";
 import type { RosterState } from "./slices/rosterSlice";
 import type { MatchesState } from "./slices/matchesSlice";
@@ -11,6 +13,7 @@ import type { UIState } from "./slices/uiSlice";
 import type { NationTeamsState } from "./slices/nationTeamsSlice";
 import type { LineupState } from "./slices/lineupSlice";
 import type { AIState } from "./slices/aiSlice";
+import type { DataSourceState } from "./slices/dataSourceSlice";
 
 /**
  * Complete Redux state shape
@@ -23,6 +26,7 @@ export interface RootState {
   nationTeams: NationTeamsState;
   lineup: LineupState;
   ai: AIState;
+  dataSource: DataSourceState;
 }
 
 // These will be properly typed in store/index.ts after store creation

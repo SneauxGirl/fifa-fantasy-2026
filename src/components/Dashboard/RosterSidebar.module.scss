@@ -4,7 +4,7 @@
   display: none;
   flex-direction: column;
   background: $color-bg-primary-alt;
-  border-left: $border-width-1 solid $color-border-low;
+  border-left: $border-width-2 solid $color-border-low;
   padding: $spacing-12;
   overflow-y: auto;
   flex: 1;
@@ -16,7 +16,7 @@
 
 .title {
   margin: 0 0 $spacing-12 0;
-  font-size: $font-size-12;
+  font-size: $font-size-16;
   font-weight: $font-weight-bold;
   color: $color-text-default;
   text-transform: uppercase;
@@ -29,7 +29,7 @@
   gap: $spacing-2;
   margin-bottom: $spacing-8;
   padding-bottom: $spacing-8;
-  border-bottom: $border-width-1 solid $color-border-low;
+  border-bottom: $border-width-2 solid $color-border-low;
 
   &:last-child {
     border-bottom: none;
@@ -39,7 +39,7 @@
 }
 
 .sectionLabel {
-  font-size: $font-size-10;
+  font-size: $font-size-12;
   font-weight: $font-weight-semibold;
   color: $color-text-medium;
   text-transform: uppercase;
@@ -48,7 +48,7 @@
 }
 
 .item {
-  font-size: $font-size-12;
+  font-size: $font-size-14;
   color: $color-text-default;
   line-height: 1.4;
   word-break: break-word;

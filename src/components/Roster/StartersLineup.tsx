@@ -104,7 +104,7 @@ export const StartersLineup: React.FC = () => {
             <div className={styles.positionPlayers}>
               {positionGroups.gk.map((player) => (
                 <StarterPlayerCard
-                  key={player.id}
+                  key={player.playerId}
                   player={player}
                   onRemove={() => handleRemoveStarter(player)}
                 />
@@ -121,7 +121,7 @@ export const StartersLineup: React.FC = () => {
             <div className={styles.positionPlayers}>
               {positionGroups.def.map((player) => (
                 <StarterPlayerCard
-                  key={player.id}
+                  key={player.playerId}
                   player={player}
                   onRemove={() => handleRemoveStarter(player)}
                 />
@@ -138,7 +138,7 @@ export const StartersLineup: React.FC = () => {
             <div className={styles.positionPlayers}>
               {positionGroups.mid.map((player) => (
                 <StarterPlayerCard
-                  key={player.id}
+                  key={player.playerId}
                   player={player}
                   onRemove={() => handleRemoveStarter(player)}
                 />
@@ -155,7 +155,7 @@ export const StartersLineup: React.FC = () => {
             <div className={styles.positionPlayers}>
               {positionGroups.fwd.map((player) => (
                 <StarterPlayerCard
-                  key={player.id}
+                  key={player.playerId}
                   player={player}
                   onRemove={() => handleRemoveStarter(player)}
                 />

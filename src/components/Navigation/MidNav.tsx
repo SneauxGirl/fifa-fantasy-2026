@@ -26,8 +26,15 @@ const MidNav = () => {
         <div className={styles.midNavLeft}>
           {/* Hamburger Menu (mobile only) */}
           <button
+            type="button"
             className={`${styles.hamburger} ${mobileMenuOpen ? styles.active : ""}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setMobileMenuOpen(!mobileMenuOpen);
+              }
+            }}
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -36,13 +43,13 @@ const MidNav = () => {
             <span className={styles.hamburgerLine}></span>
           </button>
 
-          {/* Logo / Branding */}
+          {/* Logo / Branding -Consider linking 2022 to main icon that currently takes you "Home" #TODO */} 
           <Link to="/" className={styles.logo} aria-label="Home">
             <img src="/fifa2026-wht.svg" alt="FIFA 2026" className={styles.logoImg} />
           </Link>
         </div>
 
-        {/* Right side: Navigation Links (hidden on mobile) */}
+        {/* Right side: Navigation Links + Tournament Selector (hidden on mobile) */}
         <div className={styles.midNavRight}>
           <div className={styles.navLinks}>
             <Link
@@ -71,10 +78,17 @@ const MidNav = () => {
       {mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuHeader}>
-            <img src="/fifa2026-wht.svg" alt="FIFA 2026" className={styles.mobileLogoImg} />
+            <img src="/fifa2026-wht.svg" alt="FIFA 2022" className={styles.mobileLogoImg} />
             <button
+              type="button"
               className={styles.closeButton}
               onClick={() => setMobileMenuOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setMobileMenuOpen(false);
+                }
+              }}
               aria-label="Close menu"
             >
               ✕

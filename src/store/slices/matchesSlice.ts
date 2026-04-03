@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Match } from "../../types/match";
 
+//REVIEW for turnbased - I think polling is the only thing I need to remove #TODO
+
 export interface MatchesState {
   allMatches: Match[];
   rosterMatches: Match[];

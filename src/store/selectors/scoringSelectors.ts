@@ -113,6 +113,8 @@ export const selectScoredMatches = createSelector(
     )
 );
 
+
+//Adjust for turn based play #TODO
 /** Matches grouped by tournament stage. */
 export const selectMatchesByStage = createSelector(
   selectAllMatches,
@@ -151,7 +153,7 @@ export const selectMatchesByStage = createSelector(
 );
 
 // ─── Score selectors (Phase 3+) ───────────────────────────────────────────────
-// TODO Phase 3: Implement once player data is loaded into Redux (playerSlice).
+// TODO Reevaluate but I think this can stay
 //
 // Intended shape:
 //

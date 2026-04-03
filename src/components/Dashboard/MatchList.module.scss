@@ -28,6 +28,11 @@
     color: $color-bg-tertiary;
   }
 
+  &:focus {
+    outline: 2px solid $color-bg-tertiary;
+    outline-offset: 2px;
+  }
+
   &.active {
     color: $color-bg-tertiary;
 
@@ -46,12 +51,26 @@
 .matchItems {
   display: flex;
   flex-direction: column;
+  gap: $spacing-24;
+}
+
+.dateHeader {
+  margin: 0 0 $spacing-16 0;
+  font-size: $font-size-20;
+  font-weight: $font-weight-bold;
+  color: $color-text-default;
+  text-align: left;
+}
+
+.matchGroup {
+  display: flex;
+  flex-direction: column;
   gap: $spacing-12;
 }
 
 .matchItem {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: $spacing-12;
   padding: $spacing-16;
   border: $border-width-1 solid $color-border-low;
@@ -59,10 +78,16 @@
   cursor: pointer;
   transition: $transition-all;
   background: $color-bg-primary;
+  position: relative;
 
   &:hover {
     border-color: $color-bg-tertiary;
     box-shadow: $shadow-low;
+  }
+
+  &:focus {
+    outline: 2px solid $color-bg-tertiary;
+    outline-offset: 2px;
   }
 
   &:focus-within {
@@ -87,6 +112,9 @@
 .rosterBadge {
   font-size: $font-size-20;
   flex-shrink: 0;
+  position: absolute;
+  top: $spacing-12;
+  right: $spacing-12;
 }
 
 .liveBadge {
@@ -101,6 +129,9 @@
   border-radius: $border-radius-2;
   flex-shrink: 0;
   animation: pulse 1s infinite;
+  position: absolute;
+  top: $spacing-12;
+  right: $spacing-12;
 }
 
 .matchContent {
@@ -110,21 +141,23 @@
 
 .matchHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: $spacing-12;
-  margin-bottom: $spacing-8;
+  gap: $spacing-16;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .teams {
   display: flex;
   align-items: center;
-  gap: $spacing-8;
+  gap: $spacing-12;
   flex-wrap: wrap;
   font-weight: $font-weight-semibold;
-  font-size: $font-size-14;
+  font-size: $font-size-16;
   color: $color-text-default;
   flex: 1;
+  justify-content: center;
   min-width: 0;
 }
 
@@ -132,6 +165,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.flag {
+  font-size: $font-size-20;
+  flex-shrink: 0;
 }
 
 .vs {
@@ -155,15 +193,17 @@
 .matchDetails {
   display: flex;
   align-items: center;
-  gap: $spacing-16;
-  font-size: $font-size-14;
+  justify-content: center;
+  gap: $spacing-12;
+  font-size: $font-size-12;
   color: $color-text-medium;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .score {
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-14;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-18;
   color: $color-text-default;
 }
 

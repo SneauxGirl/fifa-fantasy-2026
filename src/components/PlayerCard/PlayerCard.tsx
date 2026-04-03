@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import type { Player } from "../../types/player";
 import type { RosterPlayer } from "../../types/match";
-import { nationalColors, nationalFlags } from "../../lib/nationalColors";
+import { positionToFifa } from "../../lib/formatMapping";
 import styles from "./PlayerCard.module.scss";
+
+//ADD Name, number, and style. Photos??? Replace with Insight?? Go through this whole thing top to bottom. #TODO
 
 interface PlayerCardProps {
   player: Player | RosterPlayer;
@@ -18,6 +20,7 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus })
   const firstName = !isRosterPlayer(player) ? player.firstName : "";
   const lastName = !isRosterPlayer(player) ? player.lastName : "";
   const position = player.position;
+  const fifaPosition = positionToFifa(position);
   const nationalityCode = !isRosterPlayer(player) ? player.nationalityCode : player.code;
   const club = !isRosterPlayer(player) ? player.club : "—";
   const photoUrl = !isRosterPlayer(player) ? player.photoUrl : undefined;
@@ -25,8 +28,8 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus })
   const tournamentPerformance = !isRosterPlayer(player) ? player.tournamentPerformance : undefined;
   const isMvp = !isRosterPlayer(player) ? player.isMvp : false;
 
-  const flagColors = nationalColors[nationalityCode] ?? ["#888", "#ccc", "#888"];
-  const flagEmoji  = nationalFlags[nationalityCode] ?? "";
+  const flagColors = ["#888", "#ccc", "#888"];
+  const flagEmoji  = "";
 
   // Choose performance data: tournament if available and selected, else pre-tournament
   const performanceData = (showTournament && tournamentPerformance?.length) ? tournamentPerformance : recentPerformance;
@@ -47,8 +50,8 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus })
 
   // Shootout display (made/opportunities)
   const shootoutOpportunities = totalShootoutGoals + totalShootoutMisses;
-  const isGk = position === "GK";
-  const isDefensive = position === "GK" || position === "DEF";
+  const isGk = fifaPosition === "GK";
+  const isDefensive = fifaPosition === "GK" || fifaPosition === "DEF";
 
   const badgeClass =
     fantasyStatus === "starter"   ? styles.playerCardBadgeStarter   :
@@ -69,7 +72,7 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ player, fantasyStatus })
       <div className={styles.playerCardHeader}>
         <div className={styles.playerCardHeaderMeta}>
           <span className={styles.playerCardNationalityBadge}>{flagEmoji} {nationalityCode}</span>
-          <span className={styles.playerCardPositionLabel}>{position}</span>
+          <span className={styles.playerCardPositionLabel}>{fifaPosition}</span>
         </div>
         <div className={styles.playerCardName}>{firstName} {lastName}</div>
         {isMvp && (

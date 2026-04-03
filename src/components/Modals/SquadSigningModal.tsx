@@ -7,6 +7,7 @@ import type { RosterSquad } from "../../types/match";
 import { Modal } from "./Modal";
 import styles from "./SquadSigningModal.module.scss";
 
+//MAKE IT LESS COMPLICATED, ADD INSIGHTS FOR POINTS OF CONFLICT #TODO
 /**
  * SquadSigningModal Component
  * Confirmation dialog for signing a squad to the roster

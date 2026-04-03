@@ -29,9 +29,9 @@ export interface ScoringEvent {
     | "yellow_card"
     | "red_card"
     | "yellow_red_card"  // second yellow → counts as yellow (-3) + red (-7) = -10
-    | "penalty_scored"
-    | "penalty_missed"   // non-GK only; -2 points
-    | "penalty_saved"    // GK only; +5 on-field, +2 shootout
+  // REMOVE ALL PENALTY logic throughout  | "penalty_scored" #todo
+    // REMOVE ALL PENALTY logic throughout  | "penalty_missed"   // non-GK only; -2 points
+    // REMOVE ALL PENALTY logic throughout  | "penalty_saved"    // GK only; +5 on-field, +2 shootout
     | "shootout_goal"    // +1
     | "shootout_miss"    // -2 (all positions)
     | "shootout_save";   // GK only; +2

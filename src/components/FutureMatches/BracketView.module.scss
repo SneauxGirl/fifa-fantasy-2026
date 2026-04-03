@@ -1,5 +1,7 @@
 @use '../../styles/tokens.scss' as *;
 
+//Update to match FIFA and other pages #TODO
+
 .bracketView {
   display: flex;
   flex-direction: column;
@@ -69,8 +71,8 @@
 }
 
 .stageMatches {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: $spacing-12;
   padding: $spacing-16;
 }
@@ -78,36 +80,36 @@
 .matchItem {
   display: flex;
   flex-direction: column;
-  gap: $spacing-8;
-  padding: $spacing-12;
+  gap: $spacing-12;
+  padding: $spacing-16;
   background: $color-bg-primary;
   border: $border-width-1 solid $color-border-low;
   border-radius: $border-radius-4;
   cursor: pointer;
   transition: $transition-all;
-  text-align: center;
+  position: relative;
 
   &:hover {
     border-color: $color-bg-tertiary;
-    box-shadow: 0 2px 8px rgba(0, 85, 164, 0.1);
+    box-shadow: $shadow-low;
   }
 
   &:focus {
-    outline: $border-width-2 solid $color-bg-tertiary;
+    outline: 2px solid $color-bg-tertiary;
     outline-offset: 2px;
   }
 
   &.rosterMatch {
-    background: rgba(0, 85, 164, 0.04);
+    background: rgba($color-bg-tertiary, 0.04);
     border-color: $color-bg-tertiary;
     border-width: $border-width-2;
-    padding: 11px;
+    padding: $spacing-16;
   }
 
   &.liveMatch {
     border-color: $color-error-primary;
     border-width: $border-width-2;
-    padding: 11px;
+    padding: $spacing-16;
   }
 }
 

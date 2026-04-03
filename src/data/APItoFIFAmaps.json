@@ -1,0 +1,49 @@
+{
+  "description": "Mapping between API format and FIFA format for countries and positions",
+  "countryCodes": {
+    "fifaToApi": {
+      "NED": "NET",
+      "IRN": "IRA",
+      "KSA": "SAU",
+      "CRC": "COS",
+      "JPN": "JAP",
+      "ESP": "SPA",
+      "HRV": "CRO",
+      "MAR": "MOR",
+      "CMR": "CAM",
+      "SRB": "SER",
+      "SUI": "SWI",
+      "KOR": "SOU",
+      "URY": "URU"
+    },
+    "apiToFifa": {
+      "NET": "NED",
+      "IRA": "IRN",
+      "SAU": "KSA",
+      "COS": "CRC",
+      "JAP": "JPN",
+      "SPA": "ESP",
+      "CRO": "HRV",
+      "MOR": "MAR",
+      "CAM": "CMR",
+      "SER": "SRB",
+      "SWI": "SUI",
+      "SOU": "KOR",
+      "URU": "URY"
+    }
+  },
+  "positions": {
+    "apiToFifa": {
+      "Goalkeeper": "GK",
+      "Defender": "DEF",
+      "Midfielder": "MID",
+      "Attacker": "FWD"
+    },
+    "fifaToApi": {
+      "GK": "Goalkeeper",
+      "DEF": "Defender",
+      "MID": "Midfielder",
+      "FWD": "Attacker"
+    }
+  }
+}

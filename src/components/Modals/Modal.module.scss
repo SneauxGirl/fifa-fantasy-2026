@@ -1,5 +1,7 @@
 @use '../../styles/tokens.scss' as *;
 
+//Add padding for better X interactions #TODO
+
 .modalOverlay {
   position: fixed;
   top: 0;

@@ -17,6 +17,7 @@ export const BracketView: React.FC = () => {
   const matchesByStage = useAppSelector(selectMatchesByStage);
   const rosterSquads = useAppSelector(selectSignedSquadIds);
 
+  // EDIT STAGES And tie to API. Update Group Stage to Group Stage 1 & 2, remove Round of 32. #TODO
   const stages = [
     { id: "groups", name: "Group Stage", matches: matchesByStage["Group Stage"], count: matchesByStage["Group Stage"].length },
     { id: "round32", name: "Round of 32", matches: matchesByStage["Round of 32"], count: matchesByStage["Round of 32"].length },
@@ -42,12 +43,15 @@ export const BracketView: React.FC = () => {
         {stages.map((stage) => (
           <div key={stage.id} className={styles.stage}>
             <button
+              type="button"
               className={`${styles.stageHeader} ${
                 expandedStage === stage.id ? styles.expanded : ""
               }`}
               onClick={() =>
                 setExpandedStage(expandedStage === stage.id ? null : stage.id)
               }
+              aria-label={`${stage.name}, ${stage.count} matches`}
+              aria-expanded={expandedStage === stage.id}
             >
               <span className={styles.stageName}>{stage.name}</span>
               <span className={styles.stageCount}>{stage.count} matches</span>
@@ -81,6 +85,8 @@ export const BracketView: React.FC = () => {
   );
 };
 
+//REMOVE expandedStage logic - AND lock stages to play in order. #TODO
+
 /**
  * MatchBracketItem Component
  * Single match display in bracket.
@@ -91,6 +97,7 @@ interface MatchBracketItemProps {
   onClick: () => void;
 }
 
+//Remove isLive logic throughout. No longer valid. #TODO
 const MatchBracketItem: React.FC<MatchBracketItemProps> = ({
   match,
   isRoster,
@@ -103,21 +110,32 @@ const MatchBracketItem: React.FC<MatchBracketItemProps> = ({
   const getStatusDisplay = () => {
     if (isLive) return `${match.status.elapsed}'`;
     if (isFinished) return "Final";
-    if (match.status.short === "NS") {
-      return new Date(match.date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-    }
+    if (match.status.short === "NS") return "Upcoming";
     return match.status.short;
+  };
+
+  const getCountryFlag = (code: string): string => {
+    const codeUpper = code.toUpperCase();
+    if (codeUpper.length !== 3) return "";
+    return (
+      String.fromCodePoint(0x1f1e6 + codeUpper.charCodeAt(0) - 65) +
+      String.fromCodePoint(0x1f1e6 + codeUpper.charCodeAt(1) - 65)
+    );
   };
 
   return (
     <button
+      type="button"
       className={`${styles.matchItem} ${isRoster ? styles.rosterMatch : ""} ${
         isLive ? styles.liveMatch : ""
       }`}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onClick();
+        }
+      }}
+      aria-label={`${match.homeTeam.name} vs ${match.awayTeam.name}, ${getStatusDisplay()}`}
     >
       <div className={styles.matchHeader}>
         {isRoster && <span className={styles.rosterBadge}>📊</span>}

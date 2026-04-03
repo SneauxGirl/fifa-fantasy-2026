@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RosterSquad } from "../../types/match";
 
+//CONFIRM this filters to both Players and Squads. Keep. #TODO
+
 /**
  * National Teams Slice
  *

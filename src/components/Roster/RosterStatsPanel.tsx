@@ -38,7 +38,7 @@ export const RosterStatsPanel: React.FC = () => {
       {starters.length > 0 && (
         <div className={styles.section}>
           {starters.map((player) => (
-            <div key={player.id} className={styles.item}>
+            <div key={player.playerId} className={styles.item}>
               {player.name} <span className={styles.badge}>(starter)</span>
             </div>
           ))}
@@ -49,7 +49,7 @@ export const RosterStatsPanel: React.FC = () => {
       {bench.length > 0 && (
         <div className={styles.section}>
           {bench.map((player) => (
-            <div key={player.id} className={styles.item}>
+            <div key={player.playerId} className={styles.item}>
               {player.name} <span className={styles.badge}>(bench)</span>
             </div>
           ))}
@@ -68,7 +68,7 @@ export const RosterStatsPanel: React.FC = () => {
 
           {/* Eliminated Players */}
           {eliminatedPlayers.map((player) => (
-            <div key={player.id} className={styles.item}>
+            <div key={player.playerId} className={styles.item}>
               {player.name} <span className={styles.badge}>(eliminated)</span>
             </div>
           ))}

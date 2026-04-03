@@ -14,7 +14,7 @@ export const Header = ({ title, children, ticker }: HeaderProps) => {
         <div className={styles.headerLeft}>
           <img
             src="/fifa2026-wht.svg"
-            alt="FIFA 2026"
+            alt="FIFA Logo"
             className={styles.icon}
           />
         </div>

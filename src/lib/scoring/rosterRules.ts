@@ -30,7 +30,7 @@ type RosterSquadLike  = { teamId:   number };
 /**
  * Maps the current tournament round to a replacement type.
  *
- *   FULL       — Group Stage or Round of 32: addition permitted, scores at 100%
+ *   FULL       — Group Stage1 and 2: addition permitted, scores at 100%
  *   SUBSTITUTE — Round of 16: addition permitted, scores at 50%
  *   LOCKED     — Quarterfinals and beyond: no new additions permitted
  */
@@ -87,6 +87,7 @@ export function validateRosterPlayerAdd(
       reason:       "Player is already on the ROSTER.",
     };
   }
+  //Why are we using does not equal undefined in this instance
   if (position === "GK" && currentGkCount !== undefined && currentGkCount >= MAX_GK_IN_ROSTER) {
     return {
       allowed:      false,

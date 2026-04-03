@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { clearEliminationNotification } from "../../store/slices/uiSlice";
-import type { RosterPlayer, RosterSquad } from "../../types/match";
 import { Modal } from "./Modal";
 import styles from "./EliminationNotificationModal.module.scss";
 
@@ -9,6 +8,7 @@ import styles from "./EliminationNotificationModal.module.scss";
  * EliminationNotificationModal
  * Displays a notification when squads/players are eliminated from the tournament
  * Lists all newly eliminated members and allows user to dismiss
+ * KEEP - use at start of new turn #TODO
  */
 export const EliminationNotificationModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +64,7 @@ export const EliminationNotificationModal: React.FC = () => {
               </h3>
               <div className={styles.list}>
                 {notification.players.map((player) => (
-                  <div key={`player-${player.id}`} className={styles.item}>
+                  <div key={`player-${player.playerId}`} className={styles.item}>
                     <span className={styles.flag}>{player.flag}</span>
                     <span className={styles.name}>{player.name}</span>
                     <span className={styles.position}>{player.position}</span>

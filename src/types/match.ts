@@ -2,6 +2,8 @@
 // Matches
 // ==============================
 
+//REVIEW and update for turn play. Could probably whittle for finals  - is there anything else that needs this breakdown?? REveiw all this for turn-based play.
+
 // API-Football fixture status short codes (all 16 possible values)
 export type MatchStatusShort =
   | "NS"    // Not Started
@@ -23,6 +25,8 @@ export type MatchStatusShort =
 
 // API-Football fixture event type values
 export type MatchEventType = "Goal" | "Card" | "subst" | "Var";
+
+
 
 // API-Football fixture event detail values
 // Using string & {} to allow unknown API passthrough values without losing autocomplete
@@ -181,8 +185,7 @@ export interface RosterSquad {
  */
 export interface RosterPlayer {
   type: "player";
-  id: number;                          // Player ID
-  playerId: number;                    // same as id, for clarity
+  playerId: number | string | null;    // API-Football player ID (number), "missing" for known missing players, null for unmatched
 
   // Semantic model: pool (where) + role (what function)
   pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
@@ -190,7 +193,7 @@ export interface RosterPlayer {
 
   // Core data
   name: string;
-  position: "FWD" | "MID" | "DEF" | "GK"; // Standardized position
+  position: "Goalkeeper" | "Defender" | "Midfielder" | "Attacker"; // API format
   number: number;                      // Jersey number
   teamId: number;                      // National team ID
   code: string;                        // FIFA country code (e.g., "ARG", "BRA")

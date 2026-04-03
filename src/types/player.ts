@@ -1,6 +1,8 @@
 // ==============================
 // Players
 // ==============================
+//Where am I using this that requires exporting both rather than mapping? Why "not_expected" vs null? Remove all penalties and minutes logic #TODO
+
 
 export type Position = "GK" | "DEF" | "MID" | "FWD";
 export type PositionFull = "Goalkeeper" | "Defender" | "Midfielder" | "Forward";
@@ -34,7 +36,9 @@ export interface PlayerMatchStats {
   shootoutMisses: number | null;  // derived from fixture events — null if no shootout this match
 }
 
+//Do these match data? Remove player photo or call player photo?
 export interface Player {
+  playerId: number;
   id: number;
   firstName: string;              // API: player.firstname
   lastName: string;               // API: player.lastname

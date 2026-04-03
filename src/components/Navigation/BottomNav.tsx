@@ -39,7 +39,7 @@ const BottomNav = () => {
       </div>
 
       <div className={styles.copyright}>
-        © 2026 FIFA Fantasy. All rights reserved.
+        © 2026 Liyu Development. All rights reserved.
       </div>
     </nav>
   );

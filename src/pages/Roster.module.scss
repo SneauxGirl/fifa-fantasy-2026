@@ -107,6 +107,9 @@
 }
 
 .filterRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-16;
   padding: 12px 0;
 }
 

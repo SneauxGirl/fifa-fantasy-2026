@@ -163,6 +163,11 @@
     color: $color-neutral-dark;
   }
 
+  &:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+
   &.squadCardToggleBtnActive {
     color: $color-bg-tertiary;
     border-bottom-color: $color-bg-tertiary;

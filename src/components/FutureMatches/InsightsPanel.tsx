@@ -8,7 +8,7 @@ import styles from "./InsightsPanel.module.scss";
 interface InsightsPanelProps {
   match: Match | null;
 }
-
+// REEVALUATE LOGIC to compare roster members and point out multi-week ahead conflicts #TODO
 /**
  * InsightsPanel Component
  * Displays strategic insights and recommendations for a selected match.

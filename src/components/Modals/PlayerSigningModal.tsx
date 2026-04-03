@@ -27,7 +27,7 @@ export const PlayerSigningModal: React.FC = () => {
   const handleConfirm = () => {
     if (selectedPlayer) {
       // For now, default role is "bench" (can be "UpNext" if mid-week, handled in reducer)
-      // TODO: Add timing logic to determine if after Wed 23:59 ET → role: "UpNext"
+      // TODO: check for UpNext Logic and remove. Add conflict warnings. Why on this green earth is styling INSIDE this modal?!?!?
       dispatch(
         movePlayerToSigned({
           player: selectedPlayer,
@@ -42,7 +42,7 @@ export const PlayerSigningModal: React.FC = () => {
     return null;
   }
 
-  const isGoalkeeper = selectedPlayer.position === "GK";
+  const isGoalkeeper = selectedPlayer.position === "Goalkeeper";
 
   // Check if player can be added (validator function from selector)
   const playerCanBeAdded = canAddToRoster(selectedPlayer);

@@ -69,7 +69,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }
         >
           ✕
         </button>
-        {title && <h2 id="modal-title" style={{ position: "absolute", left: "-9999px" }}>{title}</h2>}
+        {title && <h2 id="modal-title" style={{ position: "absolute", left: "-9999px" }}>{title}</h2>} #TODO
         {children}
       </div>
     </div>

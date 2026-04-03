@@ -101,7 +101,6 @@ const { _addSquad, _addRosterPlayer, _setWeeklyStarters } = lineupSlice.actions;
 // Validation logic lives in lib/scoring/rosterRules.ts (game engine, not Redux).
 //
 // Using local partial state type to avoid circular import with store/index.ts.
-// TODO Phase 2: extract AppThunk into store/storeTypes.ts and use throughout.
 
 type GetLineupState = () => { lineup: LineupState };
 type DispatchFn     = (action: unknown) => void;
@@ -154,6 +153,7 @@ export function tryAddRosterPlayer(
   };
 }
 
+//REVIEW once Turnbased is enacted but should work as is #TODO
 /**
  * Validated weekly STARTER selection.
  * Rejects ELIMINATED Players, non-roster Players, and selections over 11.

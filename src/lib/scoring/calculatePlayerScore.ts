@@ -6,7 +6,7 @@
 import type { Player, PlayerMatchStats } from "../../types/player";
 import type { PlayerScore, PlayerScoreBreakdown } from "../../types/fantasyScore";
 import {
-  calcMinutesPoints,
+  //REMOVE calcMinutesPoints, //REMOVE #TODO
   calcGoalPoints,
   calcCleanSheetPoints,
   calcHatTrickBonus,
@@ -19,8 +19,8 @@ import { applySubstitutionModifier } from "./applySubstitutionModifier";
  * Data contract (enforced by null semantics in PlayerMatchStats):
  *   - `goals`             includes on-field penalty goals; excludes shootout goals
  *   - `saves`             null for outfield players (not applicable)
- *   - `penaltiesSaved`    null for outfield players
- *   - `penaltiesMissed`   null for GK (rule only applies to non-GK)
+   // REMOVE ALL PENALTY logic throughout *   - `penaltiesSaved`    null for outfield players #TODO
+   // REMOVE ALL PENALTY logic throughout *   - `penaltiesMissed`   null for GK (rule only applies to non-GK)  #TODO
  *   - `shootoutSaves`     null for outfield players OR if match had no shootout
  *   - `shootoutGoals/Misses` null if match had no shootout (0 = shootout happened, none scored/missed)
  *
@@ -34,17 +34,17 @@ export function calculatePlayerScore(
 ): PlayerScore {
   const { position } = player;
 
-  const minutesPoints    = calcMinutesPoints(stats.minutesPlayed);
+//REMOVE  const minutesPoints    = calcMinutesPoints(stats.minutesPlayed);  #TODO
   const goalPoints       = calcGoalPoints(position, stats.goals);
   const assistPoints     = stats.assists * 2;
   const cleanSheetPoints = calcCleanSheetPoints(position, stats.cleanSheet);
 
   // GK only — null for outfield (null → 0)
   const savePoints        = (stats.saves         ?? 0) * 1;
-  const penaltySavePoints = (stats.penaltiesSaved ?? 0) * 5;
+  //REMOVE const penaltySavePoints = (stats.penaltiesSaved ?? 0) * 5;   #TODO
 
   // non-GK only — null for GK (null → 0)
-  const penaltyMissPoints = (stats.penaltiesMissed ?? 0) * -2;
+  // REMOVE const penaltyMissPoints = (stats.penaltiesMissed ?? 0) * -2; #TODO
 
   // Hat trick: goals includes on-field penalties, excludes shootout
   const hatTrickBonus = calcHatTrickBonus(stats.goals);
@@ -61,13 +61,13 @@ export function calculatePlayerScore(
   const shootoutMissPoints = (stats.shootoutMisses ?? 0) * -2;
 
   const breakdown: PlayerScoreBreakdown = {
-    minutesPoints,
+    //REMOVE minutesPoints, #TODO
     goalPoints,
     assistPoints,
     cleanSheetPoints,
     savePoints,
-    penaltySavePoints,
-    penaltyMissPoints,
+    //REMOVE penaltySavePoints, #TODO
+    //REMOVE penaltyMissPoints, #TODO
     hatTrickBonus,
     yellowCardPoints,
     redCardPoints,
@@ -78,13 +78,13 @@ export function calculatePlayerScore(
   };
 
   const rawTotal =
-    minutesPoints     +
+    // REMOVE minutesPoints     +. #TODO
     goalPoints        +
     assistPoints      +
     cleanSheetPoints  +
     savePoints        +
-    penaltySavePoints +
-    penaltyMissPoints +
+    //REMOVE penaltySavePoints + #TODO
+    //REMOVE penaltyMissPoints + #TODO
     hatTrickBonus     +
     yellowCardPoints  +
     redCardPoints     +
@@ -95,5 +95,5 @@ export function calculatePlayerScore(
 
   const totalPoints = applySubstitutionModifier(rawTotal, isSubstitute);
 
-  return { playerId: player.id, matchId, totalPoints, isSubstitute, breakdown };
+  return { playerId: player.playerId, matchId, totalPoints, isSubstitute, breakdown };
 }

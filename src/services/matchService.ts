@@ -1,29 +1,59 @@
 /**
  * Match Service
  * Handles REST API calls for match data.
- * Currently uses mock data; will integrate with API-Football in Phase 3.
+ * Integrates with API-Football service for live data.
+ * Checks Redux/localStorage for data source preference (mock vs live).
  */
 
 import type { Match } from "../types/match";
 import mockMatches from "../data/matches.json";
+import {
+  fetchQualifierMatches,
+  fetchMatchDetails as fetchMatchDetailsAPI,
+} from "./apiFootball";
+
+//REWORK FOR 2022 #TODO
+/**
+ * Get the current data source preference from localStorage
+ * Falls back to 'mock' if not set or API not available
+ */
+function getDataSource(): "mock" | "live" {
+  const saved = localStorage.getItem("ff26_dataSource");
+  const hasApiKey = !!import.meta.env.VITE_API_FOOTBALL_KEY;
+
+  // If we saved 'live' but API key is missing, fall back to mock
+  if (saved === "live" && !hasApiKey) {
+    console.warn("API key not configured. Using mock data.");
+    return "mock";
+  }
+
+  return (saved as "mock" | "live") || "mock";
+}
 
 /**
- * Fetch all matches from API or mock data
- * In production: calls API-Football /fixtures endpoint
+ * Fetch all matches from selected data source (mock or live API)
  */
 export const fetchAllMatches = async (): Promise<Match[]> => {
-  try {
-    // TODO: Replace with API-Football call
-    // const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=1&season=2026`);
-    // const data = await response.json();
-    // return normalizeMatches(data.response);
+  const source = getDataSource();
 
-    // Mock implementation
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(mockMatches as Match[]), 500);
-    });
+  try {
+    if (source === "live") {
+      return await fetchQualifierMatches();
+    } else {
+      // Mock data
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(mockMatches as Match[]), 500);
+      });
+    }
   } catch (error) {
-    console.error("Error fetching matches:", error);
+    console.error(`Error fetching matches from ${source} source:`, error);
+    // Graceful fallback to mock if live fails
+    if (source === "live") {
+      console.warn("Live API failed, falling back to mock data");
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(mockMatches as Match[]), 500);
+      });
+    }
     throw error;
   }
 };
@@ -49,20 +79,30 @@ export const fetchRosterMatches = async (teamIds: number[]): Promise<Match[]> =>
  * Used for expanded MatchCard view
  */
 export const fetchMatchDetails = async (matchId: number): Promise<Match> => {
+  const source = getDataSource();
+
   try {
-    // TODO: Replace with API-Football /fixtures endpoint with matchId
-    // const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?id=${matchId}`);
-    // const data = await response.json();
-    // return normalizeMatch(data.response[0]);
-
-    const match = mockMatches.find((m) => m.id === matchId);
-    if (!match) throw new Error(`Match ${matchId} not found`);
-
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(match as Match), 300);
-    });
+    if (source === "live") {
+      return await fetchMatchDetailsAPI(matchId);
+    } else {
+      // Mock data
+      const match = mockMatches.find((m) => m.id === matchId);
+      if (!match) throw new Error(`Match ${matchId} not found`);
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(match as Match), 300);
+      });
+    }
   } catch (error) {
-    console.error("Error fetching match details:", error);
+    console.error(`Error fetching match ${matchId} from ${source} source:`, error);
+    // Fallback to mock if live fails
+    if (source === "live") {
+      const match = mockMatches.find((m) => m.id === matchId);
+      if (match) {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(match as Match), 300);
+        });
+      }
+    }
     throw error;
   }
 };

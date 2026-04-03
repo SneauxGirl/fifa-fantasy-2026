@@ -4,6 +4,8 @@ import { movePlayerToEliminated, markPlayerAsEliminated, moveSquadToEliminated }
 import { setEliminationNotification } from "../slices/uiSlice";
 import type { RosterPlayer, RosterSquad } from "../../types/match";
 
+//MODERNIZE ANY ACTION, set to run onClick for turn and pop notifications
+
 /**
  * Elimination Middleware
  *

@@ -1,7 +1,7 @@
-# FIFA Fantasy 2026 — Design Standards
+# FIFA Fantasy 2022 — Design Standards
 
 ## Overview
-Design principles and technical standards to maintain consistency, accessibility, and performance across the FIFA Fantasy 2026 application.
+Design principles and technical standards to maintain consistency, accessibility, and performance across the FIFA Fantasy 2022 application.
 
 ---
 
@@ -13,52 +13,6 @@ Design principles and technical standards to maintain consistency, accessibility
   - Standard gap values: 8px, 12px, 16px, 20px, 24px
   - Avoid arbitrary padding/margin values
 - **No Wrapper Padding**: Full-width containers should have zero padding; internal content handles its own spacing
-
----
-
-## Design Aesthetic
-
-- **Flat Design**: No gradients unless explicitly present on FIFA.com
-- **Minimal Borders**: Only use borders where they provide meaningful visual separation
-- **FIFA Brand Blue**: #304FFE as primary color for all interactive elements
-  - Primary Dark: #1F3FBB (hover/active states)
-  - Primary Light: #EDF0FF (backgrounds/subtle accents)
-- **National Team Colors**: Only applied to team-specific elements (jersey colors, badges)
-- **Clean, Minimal UI**: Match FIFA.com's aesthetic—professional and uncluttered
-
----
-
-## Typography
-
-- **Font Family**: Poppins (weights: 300, 400, 500, 600, 700)
-  - 300 = Light (rare, reserved accents)
-  - 400 = Regular (body text, default)
-  - 500 = Medium (slightly emphasized text)
-  - 600 = Semibold (subheadings, secondary emphasis)
-  - 700 = Bold (headings, primary emphasis)
-- **Font Size Scale**:
-  - sm: 0.875rem (12px) — labels, captions
-  - base: 1rem (16px) — body text
-  - lg: 1.125rem (18px) — section titles
-  - xl: 1.5rem (24px) — page headings
-- **Line Height**: Maintain readability with appropriate spacing between lines
-
----
-
-## Colors & Theme
-
-- **No Hardcoded Colors in Components**: All colors must use CSS custom properties
-  - ✅ `color: var(--color-primary);`
-  - ❌ `color: #304FFE;` (hardcoded in component code)
-  - Hardcoding prevents centralized theme management and makes maintenance difficult
-- **CSS Custom Properties (Tokens)**:
-  - All color values defined in `/src/styles/tokens.css`
-  - Update tokens once; changes apply globally
-  - Maintains single source of truth for theming
-- **Dark/Light Mode Support**:
-  - Tokens automatically adjust based on system preference
-  - Override via `data-theme="dark"` or `data-theme="light"` attribute
-  - All new components must respect theme tokens
 
 ---
 
@@ -133,8 +87,8 @@ Design principles and technical standards to maintain consistency, accessibility
 ## Summary Checklist
 
 Before committing changes, verify:
-- [ ] All content extends edge-to-edge (no unnecessary padding)
-- [ ] No hardcoded colors—all use CSS custom properties
+- [ ] All AI created content extends edge-to-edge (no unnecessary padding)
+- [ ] All AI generated content uses Global colors
 - [ ] Responsive design tested on mobile, tablet, desktop
 - [ ] Keyboard navigation works (Tab, Enter, Escape)
 - [ ] Focus states visible on all interactive elements

@@ -1,7 +1,6 @@
 // src/components/SquadCard/SquadCard.tsx
 import React, { useState } from "react";
 import type { Squad } from "../../types/squad";
-import { nationalColors } from "../../lib/nationalColors";
 import styles from "./SquadCard.module.scss";
 
 interface SquadCardProps {
@@ -26,8 +25,22 @@ export const SquadCard: React.FC<SquadCardProps> = ({ team, fantasyStatus }) => 
   // Choose performance data: tournament if available and selected, else squad
   const performanceData = (showTournament && tournamentPerformance) ? tournamentPerformance : squadPerformance;
 
-  const colors = nationalColors[code] ?? ["#888", "#ccc", "#888"];
+  const colors = ["#888", "#ccc", "#888"];
   const [primary, secondary] = colors;
+
+  const handleToggleKeyDown = (e: React.KeyboardEvent, isSquad: boolean) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setShowTournament(!isSquad);
+    }
+  };
+
+  const handleAiKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      // TODO Phase 4: wire onClick to AI insight dispatch
+    }
+  };
 
   const badgeClass =
     fantasyStatus === "active"     ? styles.squadCardBadgeActive     :
@@ -70,14 +83,22 @@ export const SquadCard: React.FC<SquadCardProps> = ({ team, fantasyStatus }) => 
         {tournamentPerformance ? (
           <div className={styles.squadCardToggle}>
             <button
+              type="button"
+              aria-label="Show squad stats"
+              aria-pressed={!showTournament}
               className={`${styles.squadCardToggleBtn} ${!showTournament ? styles.squadCardToggleBtnActive : ""}`}
               onClick={() => setShowTournament(false)}
+              onKeyDown={(e) => handleToggleKeyDown(e, true)}
             >
               Players Last 10
             </button>
             <button
+              type="button"
+              aria-label="Show tournament stats"
+              aria-pressed={showTournament}
               className={`${styles.squadCardToggleBtn} ${showTournament ? styles.squadCardToggleBtnActive : ""}`}
               onClick={() => setShowTournament(true)}
+              onKeyDown={(e) => handleToggleKeyDown(e, false)}
             >
               Tournament
             </button>
@@ -146,7 +167,14 @@ export const SquadCard: React.FC<SquadCardProps> = ({ team, fantasyStatus }) => 
         </table>
 
         {/* TODO Phase 4: wire onClick to AI insight dispatch */}
-        <button className={styles.squadCardAiBtn}>💡 AI Insights</button>
+        <button
+          type="button"
+          className={styles.squadCardAiBtn}
+          aria-label="Get AI insights about this squad"
+          onKeyDown={handleAiKeyDown}
+        >
+          💡 AI Insights
+        </button>
       </div>
     </div>
   );

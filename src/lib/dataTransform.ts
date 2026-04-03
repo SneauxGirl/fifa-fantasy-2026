@@ -92,11 +92,11 @@ export function enrichPlayerForDisplay(
  */
 export function enrichPlayersForDisplay(
   rosterPlayers: RosterPlayer[],
-  playerStatsMap: Map<number, Player>
+  playerStatsMap: Map<number | string | null, Player>
 ): DisplayPlayer[] {
   return rosterPlayers
     .map((rosterPlayer) => {
-      const playerStats = playerStatsMap.get(rosterPlayer.id);
+      const playerStats = playerStatsMap.get(rosterPlayer.playerId);
       if (!playerStats) {
         // Fallback: create minimal display player if stats not found
         return {

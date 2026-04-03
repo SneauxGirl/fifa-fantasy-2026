@@ -5,6 +5,7 @@ import {
 } from "../../store/slices/rosterSlice";
 import { openPlayerSigningModal } from "../../store/slices/uiSlice";
 import { selectUnsignedPlayers } from "../../store/selectors/rosterSelectors";
+import { positionToFifa } from "../../lib/formatMapping";
 import type { RosterPlayer } from "../../types/match";
 import styles from "./RosterDragZone.module.scss";
 
@@ -21,7 +22,7 @@ export const RosterDragZone: React.FC = () => {
   // Get unsigned players (pending contracts)
   const unsignedPlayers = useAppSelector(selectUnsignedPlayers);
 
-  // Organize unsigned players by position
+  // Organize unsigned players by position, sorted by country then number
   const positionGroups = useMemo(() => {
     const positions: Record<Position, RosterPlayer[]> = {
       GK: [],
@@ -31,7 +32,18 @@ export const RosterDragZone: React.FC = () => {
     };
 
     unsignedPlayers.forEach((player) => {
-      positions[player.position as Position].push(player);
+      const fifaPosition = positionToFifa(player.position) as Position;
+      positions[fifaPosition].push(player);
+    });
+
+    // Sort each position group by country code, then by number
+    Object.keys(positions).forEach((position) => {
+      positions[position as Position].sort((a, b) => {
+        if (a.code !== b.code) {
+          return a.code.localeCompare(b.code);
+        }
+        return (a.number || 0) - (b.number || 0);
+      });
     });
 
     return positions;
@@ -64,7 +76,7 @@ export const RosterDragZone: React.FC = () => {
               ) : (
                 positionGroups[position].map((player) => (
                   <BenchPlayerCard
-                    key={player.id}
+                    key={player.playerId}
                     player={player}
                     onSign={() => handleSignPlayer(player)}
                     onRemove={() => handleRemovePlayer(player)}

@@ -86,7 +86,7 @@ const rosterSlice = createSlice({
      */
     movePlayerToUnsigned: (state, action: PayloadAction<RosterPlayer>) => {
       const player = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
       if (index !== -1) {
         state.players[index] = {
           ...state.players[index],
@@ -101,7 +101,7 @@ const rosterSlice = createSlice({
      */
     movePlayerToAvailable: (state, action: PayloadAction<RosterPlayer>) => {
       const player = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
       if (index !== -1) {
         state.players[index] = {
           ...state.players[index],
@@ -121,17 +121,17 @@ const rosterSlice = createSlice({
       action: PayloadAction<{ player: RosterPlayer; role?: RosterRole }>
     ) => {
       const { player, role } = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
         const signedPlayers = state.players.filter(
           p => p.pool === "signed" && !p.isEliminated
         );
-        const gkCount = signedPlayers.filter(p => p.position === "GK").length;
+        const gkCount = signedPlayers.filter(p => p.position === "Goalkeeper").length;
 
         // Validate roster capacity using current state
-        if (signedPlayers.length < 18 && (statePlayer.position !== "GK" || gkCount < 3)) {
+        if (signedPlayers.length < 18 && (statePlayer.position !== "Goalkeeper" || gkCount < 3)) {
           state.players[index] = {
             ...state.players[index],
             pool: "signed",
@@ -148,7 +148,7 @@ const rosterSlice = createSlice({
      */
     movePlayerToStarter: (state, action: PayloadAction<RosterPlayer>) => {
       const player = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
@@ -157,10 +157,10 @@ const rosterSlice = createSlice({
           const starters = state.players.filter(
             p => (p.role === "starter" || p.role === "UpNext") && p.pool === "signed"
           );
-          const gkStarters = starters.filter(p => p.position === "GK").length;
+          const gkStarters = starters.filter(p => p.position === "Goalkeeper").length;
 
           // Validate starter capacity using current state
-          if (starters.length < 11 && (statePlayer.position !== "GK" || gkStarters < 1)) {
+          if (starters.length < 11 && (statePlayer.position !== "Goalkeeper" || gkStarters < 1)) {
             // Determine role based on timing (UpNext if mid-week, starter if after Thu 00:00)
             const newRole: RosterRole = "starter"; // TODO: Check current time, use "UpNext" if mid-week
 
@@ -181,7 +181,7 @@ const rosterSlice = createSlice({
      */
     movePlayerToBench: (state, action: PayloadAction<RosterPlayer>) => {
       const player = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
@@ -206,7 +206,7 @@ const rosterSlice = createSlice({
       action: PayloadAction<{ player: RosterPlayer; reason: string }>
     ) => {
       const { player, reason } = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
@@ -236,7 +236,7 @@ const rosterSlice = createSlice({
       action: PayloadAction<{ player: RosterPlayer; newPool?: "available"; reason: string }>
     ) => {
       const { player, newPool = "available", reason } = action.payload;
-      const index = state.players.findIndex(p => p.id === player.id);
+      const index = state.players.findIndex(p => p.playerId === player.playerId);
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
@@ -385,7 +385,7 @@ const rosterSlice = createSlice({
       const { memberId, memberType } = action.payload;
 
       if (memberType === "player") {
-        const index = state.players.findIndex(p => p.id === memberId);
+        const index = state.players.findIndex(p => p.playerId === memberId);
         if (index !== -1) {
           const games = state.players[index].playerGames || [];
           const allComplete = games.every(g => g.isComplete);
@@ -434,7 +434,7 @@ const rosterSlice = createSlice({
       const { memberId, memberType, basePoints } = action.payload;
 
       if (memberType === "player") {
-        const index = state.players.findIndex(p => p.id === memberId);
+        const index = state.players.findIndex(p => p.playerId === memberId);
         if (index !== -1) {
           const multiplier = state.players[index].substitute ? 0.5 : 1;
           state.players[index].totalPoints =
@@ -521,7 +521,7 @@ const rosterSlice = createSlice({
       state,
       action: PayloadAction<{ playerId: number; games: Game[] }>
     ) => {
-      const index = state.players.findIndex(p => p.id === action.payload.playerId);
+      const index = state.players.findIndex(p => p.playerId === action.payload.playerId);
       if (index !== -1) {
         state.players[index].playerGames = action.payload.games;
         // Recalculate based on actual game data
@@ -585,7 +585,7 @@ export const selectPlayerWithGamesComplete = (
   state: { roster: ReturnType<typeof rosterSlice.reducer> },
   playerId: number
 ) => {
-  const player = state.roster.players.find(p => p.id === playerId);
+  const player = state.roster.players.find(p => p.playerId === playerId);
   if (!player) return null;
 
   return {

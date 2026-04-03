@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AvailableSquadsList } from "../components/Roster/AvailableSquadsList";
 import { SquadsSection } from "../components/Roster/SquadsSection";
 import { PositionFilter } from "../components/Roster/PositionFilter";
+import { SearchPlayers } from "../components/Roster/SearchPlayers";
 import { AvailablePlayersList } from "../components/Roster/AvailablePlayersList";
 import { RosterDragZone } from "../components/Roster/RosterDragZone";
 import { StartersLineup } from "../components/Roster/StartersLineup";
@@ -23,6 +24,7 @@ type TabType = "roster" | "starters";
 
 const Roster = () => {
   const [selectedPosition, setSelectedPosition] = useState<PositionType>("ALL");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeTab, setActiveTab] = useState<TabType>("roster");
 
   return (
@@ -66,8 +68,12 @@ const Roster = () => {
                 selectedPosition={selectedPosition}
                 onPositionChange={setSelectedPosition}
               />
+              <SearchPlayers
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+              />
             </div>
-            <AvailablePlayersList selectedPosition={selectedPosition} />
+            <AvailablePlayersList selectedPosition={selectedPosition} searchQuery={searchQuery} />
           </section>
 
           {/* Pending Contracts Section */}

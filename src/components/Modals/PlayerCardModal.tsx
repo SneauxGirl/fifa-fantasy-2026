@@ -29,16 +29,16 @@ export const PlayerCardModal: React.FC = () => {
   const fantasyStatus: "available" | "starter" | "bench" | "eliminated" = React.useMemo(() => {
     if (!selectedPlayer) return "available";
 
-    if (starters.some((p) => p.id === selectedPlayer.id)) {
+    if (starters.some((p) => p.playerId === selectedPlayer.playerId)) {
       return "starter";
     }
-    if (bench.some((p) => p.id === selectedPlayer.id)) {
+    if (bench.some((p) => p.playerId === selectedPlayer.playerId)) {
       return "bench";
     }
-    if (eliminatedSigned.some((p) => p.id === selectedPlayer.id)) {
+    if (eliminatedSigned.some((p) => p.playerId === selectedPlayer.playerId)) {
       return "eliminated";
     }
-    if (availablePlayers.some((p) => p.id === selectedPlayer.id)) {
+    if (availablePlayers.some((p) => p.playerId === selectedPlayer.playerId)) {
       return "available";
     }
     return "available"; // Default to available

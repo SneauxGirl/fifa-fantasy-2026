@@ -21,6 +21,8 @@ export const BracketDropdown: React.FC = () => {
     }
   };
 
+//SHOULD be fine? Confirm logic based on dates and figure out how that plays with match.id. Should be the same functionally? #TODO
+
   return (
     <div className={styles.bracketDropdown}>
       <label htmlFor="match-select" className={styles.label}>

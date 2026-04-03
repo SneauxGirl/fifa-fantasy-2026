@@ -22,7 +22,7 @@ export const AvailableSquadsList: React.FC = () => {
   const activeAvailableSquads = useAppSelector(selectActiveAvailableSquads);
   const eliminatedAvailableSquads = useAppSelector(selectEliminatedAvailableSquads);
   const allAvailableSquads = [...activeAvailableSquads, ...eliminatedAvailableSquads];
-  const unsignedSquads = useAppSelector(selectUnsignedSquads);
+  const unsignedSquads = useAppSelector(selectUnsignedSquads); //CHECK INTO THIS #TODO
   const signedSquads = useAppSelector(selectSignedSquads);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -108,7 +108,7 @@ export const AvailableSquadsList: React.FC = () => {
         <div className={styles.squadGrid}>
           {allAvailableSquads.map((squad, index) => {
             const isEliminated = squad.isEliminated;
-            return (
+            return ( //REVIEW #TODO
               <button
                 type="button"
                 key={squad.teamId}

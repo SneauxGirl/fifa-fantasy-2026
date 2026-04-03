@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { TopNav, MidNav, BottomNav } from "../components/Navigation";
+import { TopNav, MidNav, BottomNav, DataSourceToggle } from "../components/Navigation";
 import { Header } from "../components/Shared/Header";
 import { SummaryTicker } from "../components/Dashboard/SummaryTicker";
 import { MatchCardModal, PlayerCardModal, SquadCardModal, SquadSigningModal, PlayerSigningModal } from "../components/Modals";
@@ -15,6 +15,11 @@ const AppLayout = () => {
 
   return (
     <div className={styles.appLayout}>
+      {/* Data Source Indicator (Phase 3) */}
+      <div style={{ padding: "8px 16px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
+        <DataSourceToggle />
+      </div>
+
       {/* FIFA Links Navigation (always visible) */}
       <TopNav />
 

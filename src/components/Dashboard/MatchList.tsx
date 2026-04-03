@@ -72,6 +72,16 @@ export const MatchList: React.FC = () => {
     }
   };
 
+  // Convert country code to flag emoji (e.g., "ARG" → 🇦🇷)
+  const getCountryFlag = (code: string): string => {
+    const codeUpper = code.toUpperCase();
+    if (codeUpper.length !== 3) return "";
+    return (
+      String.fromCodePoint(0x1f1e6 + codeUpper.charCodeAt(0) - 65) +
+      String.fromCodePoint(0x1f1e6 + codeUpper.charCodeAt(1) - 65)
+    );
+  };
+
   const handleMatchClick = (match: Match) => {
     dispatch(openMatchModal(match));
   };
@@ -81,26 +91,42 @@ export const MatchList: React.FC = () => {
       {/* Filter Tabs */}
       <div className={styles.filterTabs}>
         <button
+          type="button"
           className={`${styles.tab} ${filterStatus === "all" ? styles.active : ""}`}
           onClick={() => setFilterStatus("all")}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFilterStatus("all"); }}
+          aria-label="Filter matches by All"
+          aria-current={filterStatus === "all" ? "page" : undefined}
         >
           All
         </button>
         <button
+          type="button"
           className={`${styles.tab} ${filterStatus === "upcoming" ? styles.active : ""}`}
           onClick={() => setFilterStatus("upcoming")}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFilterStatus("upcoming"); }}
+          aria-label="Filter matches by Upcoming"
+          aria-current={filterStatus === "upcoming" ? "page" : undefined}
         >
           Upcoming
         </button>
         <button
+          type="button"
           className={`${styles.tab} ${filterStatus === "live" ? styles.active : ""}`}
           onClick={() => setFilterStatus("live")}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFilterStatus("live"); }}
+          aria-label="Filter matches by Live"
+          aria-current={filterStatus === "live" ? "page" : undefined}
         >
           Live
         </button>
         <button
+          type="button"
           className={`${styles.tab} ${filterStatus === "finished" ? styles.active : ""}`}
           onClick={() => setFilterStatus("finished")}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFilterStatus("finished"); }}
+          aria-label="Filter matches by Finished"
+          aria-current={filterStatus === "finished" ? "page" : undefined}
         >
           Finished
         </button>
@@ -124,69 +150,90 @@ export const MatchList: React.FC = () => {
             <p>No matches found for this filter</p>
           </div>
         )}
-        {filteredMatches.map((match) => {
-          const isRoster = isRosterMatch(match);
-          const isLive = ["1H", "2H", "ET", "HT", "P"].includes(match.status.short);
+        {!isLoading && !error && filteredMatches.length > 0 && (() => {
+          // Group matches by date
+          const groupedByDate = filteredMatches.reduce((acc, match) => {
+            const dateKey = new Date(match.date).toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            });
+            if (!acc[dateKey]) {
+              acc[dateKey] = [];
+            }
+            acc[dateKey].push(match);
+            return acc;
+          }, {} as Record<string, Match[]>);
 
-          return (
-            <div
-              key={match.id}
-              className={`${styles.matchItem} ${isRoster ? styles.rosterMatch : ""} ${
-                isLive ? styles.liveMatch : ""
-              }`}
-              onClick={() => handleMatchClick(match)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleMatchClick(match);
-                }
-              }}
-            >
-              {isRoster && <div className={styles.rosterBadge}>📊</div>}
-              {isLive && <div className={styles.liveBadge}>🔴 LIVE</div>}
+          return Object.entries(groupedByDate).map(([dateKey, matches]) => (
+            <div key={dateKey}>
+              <h3 className={styles.dateHeader}>{dateKey}</h3>
+              <div className={styles.matchGroup}>
+                {matches.map((match) => {
+                  const isRoster = isRosterMatch(match);
+                  const isLive = ["1H", "2H", "ET", "HT", "P"].includes(match.status.short);
 
-              <div className={styles.matchContent}>
-                <div className={styles.matchHeader}>
-                  <div className={styles.teams}>
-                    <span className={styles.team}>{match.homeTeam.name}</span>
-                    <span className={styles.vs}>vs</span>
-                    <span className={styles.team}>{match.awayTeam.name}</span>
-                  </div>
-                  <div className={styles.status}>{getStatusDisplay(match)}</div>
-                </div>
+                  return (
+                    <button
+                      key={match.id}
+                      type="button"
+                      className={`${styles.matchItem} ${isRoster ? styles.rosterMatch : ""} ${
+                        isLive ? styles.liveMatch : ""
+                      }`}
+                      onClick={() => handleMatchClick(match)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleMatchClick(match);
+                        }
+                      }}
+                      aria-label={`${match.homeTeam.name} vs ${match.awayTeam.name}, ${getStatusDisplay(match)}`}
+                    >
+                      {isRoster && <div className={styles.rosterBadge}>📊</div>}
+                      {isLive && <div className={styles.liveBadge}>🔴 LIVE</div>}
 
-                <div className={styles.matchDetails}>
-                  {(() => {
-                    const displayMatch = transformMatch(match);
-                    return (
-                      <>
-                        {(match.status.short === "FT" || match.status.short === "AET") ? (
-                          <span className={styles.score}>
-                            {displayMatch.score.home} - {displayMatch.score.away}
-                          </span>
-                        ) : match.status.short === "NS" ? (
-                          <span className={styles.dateTime}>
-                            {new Date(match.date).toLocaleDateString()} ·{" "}
-                            {new Date(match.date).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </span>
-                        ) : (
-                          <span className={styles.score}>
-                            {displayMatch.score.home} - {displayMatch.score.away}
-                          </span>
-                        )}
-                        {match.venue && <span className={styles.venue}>{match.venue.name}</span>}
-                      </>
-                    );
-                  })()}
-                </div>
+                      <div className={styles.matchContent}>
+                        <div className={styles.matchHeader}>
+                          <div className={styles.teams}>
+                            <span className={styles.team}>{match.homeTeam.name}</span>
+                            <span className={styles.flag}>{getCountryFlag(match.homeTeam.code)}</span>
+                            <span className={styles.score}>
+                              {(() => {
+                                const displayMatch = transformMatch(match);
+                                return match.status.short === "FT" || match.status.short === "AET"
+                                  ? displayMatch.score.home
+                                  : match.status.short === "NS"
+                                  ? "--"
+                                  : displayMatch.score.home;
+                              })()}
+                            </span>
+                            <span className={styles.status}>{getStatusDisplay(match)}</span>
+                            <span className={styles.score}>
+                              {(() => {
+                                const displayMatch = transformMatch(match);
+                                return match.status.short === "FT" || match.status.short === "AET"
+                                  ? displayMatch.score.away
+                                  : match.status.short === "NS"
+                                  ? "--"
+                                  : displayMatch.score.away;
+                              })()}
+                            </span>
+                            <span className={styles.flag}>{getCountryFlag(match.awayTeam.code)}</span>
+                            <span className={styles.team}>{match.awayTeam.name}</span>
+                          </div>
+                        </div>
+
+                        <div className={styles.matchDetails}>
+                          {match.venue && <span className={styles.venue}>{match.venue.name}</span>}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-          );
-        })}
+          ));
+        })()}
       </div>
     </div>
   );

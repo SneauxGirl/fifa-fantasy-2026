@@ -188,10 +188,6 @@ src/
        - AIInsights
          - Optional per-match or per-player insights
 
----------------------------------------------------------
-### COMPLETE TO THIS POINT (3/20/26)
-_________________________________________________________
-
 ## Phase 2.5 — Architecture & Implementation Plan for Dashboard/Roster/FutureMatches
 
 // ====== Goal: Plan full page structure, routing, state management, and data models before implementation. =====
@@ -296,12 +292,28 @@ src/
     SquadCard/
       SquadCard.tsx
 
+    MatchCard/
+      MatchCard.tsx
+      MatchCard.module.scss
+
+    Dashboard/
+      MatchList.tsx
+      MatchList.module.scss
+      SummaryTicker.tsx
+      SummaryTicker.module.scss
+      RosterSidebar.tsx
+
+    Shared/
+      RosterSidebar.tsx
+
   store/
     index.ts
     slices/
       rosterSlice.ts               # Players: available, unsigned, signed, starters, bench, eliminated
       matchesSlice.ts              # Match data + live scores
       uiSlice.ts                   # Modal state, sidebar visibility
+    middleware/
+      eliminationMiddleware.ts      # Team elimination cascade logic
 
   services/
     matchService.ts                # getMatches(), normalizeData()
@@ -322,25 +334,31 @@ src/
 
   layouts/
     AppLayout.tsx
+    AppLayout.module.scss
 
   hooks/
     useTheme.ts                    # Light/dark/system theme management
 
   styles/
-    tokens.css                     # CSS custom properties (light/dark mode)
+    tokens.scss                    # Sass design tokens (spacing, colors, fonts, shadows)
     THEME_GUIDE.md                 # Theme system documentation
 
   types/
     match.ts                       # RosterPlayer, RosterSquad, Match
+    squad.ts                       # Squad types with pool states
+    player.ts                      # Player types with elimination tracking
 ```
 
 **Key Consolidations:**
 - ✅ players.json + teams.json → squads.json officialRoster
 - ✅ Layout/ → Navigation/
-- ✅ Store uses slices/ subfolder
-- ✅ Theme system: CSS variables + useTheme hook
+- ✅ Store uses slices/ subfolder + middleware for side effects
+- ✅ Theme system: Sass design tokens + useTheme hook
 - ✅ Modal confirmations: PlayerSigningModal, SquadSigningModal
 - ✅ Available players: 3-row fixed height grid, scrollable
+- ✅ Elimination logic: Redux middleware with three-path cascade (signed→eliminatedSigned, unsigned→available, available→stays)
+- ✅ Responsive design: Tab-based mobile/tablet layout with 768px/767px breakpoints
+- ✅ SCSS modules: Component-scoped styling with Sass tokens
 
 ---
 
@@ -368,7 +386,9 @@ src/
 
 // ===== Checkpoint: all mock data should be renderable in the dashboard. ===== //
 
----
+---------------------------------------------------------
+### COMPLETE TO THIS POINT (3/27/26) 
+_________________________________________________________
 
 ## Phase 3 — REST API Integration (MVP)
 
@@ -380,69 +400,21 @@ src/
    - Map all fields to TypeScript interfaces
    - Handle missing/null values
    - Retain short codes (country, position, etc.) for both UI and internal logic
-   - Add supplemental fields with full names (e.g., `countryFullName`, `positionFullName`) for tooltips, AI insights, or reports
+   - Add supplemental fields with full names (e.g., `countryFullName`, `positionFullName`) for tooltips, etc.
 
-3. Replace mock data in components with live API data.
+3. Replace mock data in gameplay with API calls by tournament round.
 
 4. Loading/error states for all components.
 
-5. Historical caching:
-   - Last 10 matches per player/team in memory
-   - Make it accessible for AI insights and scoring calculations
+5. Clean up - polish and deploy
 
 ---
 
-## Phase 4 — AI Integration
-
-// ====== Goal: Generate player and lineup insights dynamically. =====
-
-1. Setup AI REST integration (Claude/OpenAI):
-   - Define request payload (filtered subset of stats per player/team)
-   - Caching strategy (per session)
-   - Batch strategy (small batches per interaction)
-
-2. Connect AI outputs to UI:
-   - PlayerCard tooltips / insights
-   - Insights panel (team / position / pre-selection strategy)
-
-3. Pass scoring system + historical trends context to AI so recommendations are meaningful.
-
-4. Ensure AI response caching prevents repeated calls for same player/team.
-
-5. Test with mock AI responses first before connecting live API.
-
--------------------------------------------
-
-## Phase 5 — GraphQL (Learning Module)
-
-// ====== Goal: Practice selective querying and API flexibility. =====
-
-1. Create mock GraphQL server:
-   - Serve a subset of player fields
-
-2. Fetch player data via GraphQL in one React component
-
-3. Compare performance / developer experience vs REST
+// ===== Problems for Future Me =====//
 
 ---
 
-## Phase 6 — WebSocket Live Match Feed
-
-// ====== Goal: Add real-time updates to dashboard. =====
-
-1. Set up dummy WebSocket server (ws):
-   - Emits mock match events every few seconds
-
-2. Frontend:
-   - Create LiveFeed component
-   - Subscribe to events and update dashboard dynamically
-
-3. Optional:
-   - Update scoreboard or lineup performance in real time
-
----
-
-## Phase 7 — Auth / Database Integration
+## Phase 4 — Auth / Database Integration
 
 // ====== Goal: Allow users to save their fantasy teams. =====
 
@@ -461,27 +433,7 @@ src/
 
 ---
 
-## Phase 8 — Optimizer Logic
-
-// ====== Goal: Implement fantasy team optimization. =====
-
-1. Define constraints:
-   - Budget limit
-   - Formation rules
-   - Max players per team
-
-2. Build algorithm:
-   - Input: player stats + AI recommendations
-   - Output: optimal lineup
-
-3. Connect optimizer to:
-   - Dashboard
-   - Insights panel
-   - Player selection UI
-
----
-
-## Phase 9 — Final UI Polish
+## Phase 5 — Final UI Polish
 
 // ====== Goal: Clean and shiny. =====
 
@@ -495,7 +447,7 @@ src/
 
 ---
 
-## Phase 10 — Documentation / README / Notes
+## Phase 6 — Documentation / README / Notes
 
 // ====== Goal: Make your project self-explanatory. =====
 

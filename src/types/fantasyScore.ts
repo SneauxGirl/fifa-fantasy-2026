@@ -3,6 +3,9 @@
 // All point values defined in docs/rules/rules.md
 // ==============================
 
+//Clean up - remove minutes, penalties, and adjust tournament rounds #TODO
+
+
 // Tournament rounds — used to enforce substitution eligibility rules:
 //   Group / R32:  SUBSTITUTE additions allowed, score at 100%
 //   R16:          SUBSTITUTE additions allowed, score at 50%

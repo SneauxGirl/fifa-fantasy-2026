@@ -1,7 +1,6 @@
 // src/components/MatchCard/MatchCard.tsx
 import React from "react";
 import type { Match, Roster, RosterMember, RosterPlayer } from "../../types/match";
-import { nationalColors } from "../../lib/nationalColors";
 import styles from "./MatchCard.module.scss";
 
 interface MatchCardProps {
@@ -68,7 +67,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, roster, onMemberCli
       // Only show events from roster members
       return rosterMembersInMatch.some(m => {
         if (m.type === "player") {
-          return m.id === event.player.id;
+          return m.id === event.player.playerId;
         }
         return false; // squad events not directly tracked yet
       });
@@ -146,8 +145,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, roster, onMemberCli
                 role="button"
                 tabIndex={0}
                 style={{
-                  "--primary-color": nationalColors[member.code]?.[0] || '#fff',
-                  "--secondary-color": nationalColors[member.code]?.[1] || '#fff',
+                  "--primary-color": '#fff',
+                  "--secondary-color": '#fff',
                 } as React.CSSProperties}
               >
                 <div className={styles.matchCardImpactMember}>

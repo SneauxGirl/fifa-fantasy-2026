@@ -2,6 +2,8 @@
 // Redux Store
 // ==============================
 
+//REMOVE AI logic and links throughout #TODO
+
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -12,6 +14,7 @@ import uiReducer from "./slices/uiSlice";
 import nationTeamsReducer from "./slices/nationTeamsSlice";
 import lineupReducer from "./slices/lineupSlice";
 import aiReducer from "./slices/aiSlice";
+import dataSourceReducer from "./slices/dataSourceSlice";
 import { eliminationMiddleware } from "./middleware/eliminationMiddleware";
 import type { RootState } from "./types";
 
@@ -23,6 +26,7 @@ export const store = configureStore({
     nationTeams: nationTeamsReducer,
     lineup: lineupReducer,
     ai: aiReducer,
+    dataSource: dataSourceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(eliminationMiddleware),

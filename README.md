@@ -1,12 +1,16 @@
-# FIFA Fantasy 2026
+# FIFA Fantasy 2022
 
-FF26 is a work-in-progress fantasy team optimizer for the upcoming FIFA World Cup.
+FF22 is a work-in-progress turn-based futbol fantasy game
 
 This is a portfolio piece to practice working with real-world APIs, modern frontend tooling, brand matching, and data-driven UI.
 
- Phase 2.5 Primary components are complete with logic - one known issue. Styling lightly started.
+Originally planned as a 2026 live game, undisclosed API league season constraints made it more practical to refactor as a turn-based game pulling 2022 data. Rules now weight heavier toward player performance, countering easy-to-find squad results.
 
-![Current Desktop - needs styling](/docs/photos/FF26Desktop-phase2.5.png)
+UI maintains the more modern FIFA World Cup 2026 styling throughout.
+
+Current commit is non-functional and preserved as a reference point for refactor plans.
+
+![Phase 2.5 Desktop - prior to refactor and styling](/docs/photos/FF26Desktop-phase2.5.png)
 
 ## Tech Stack
 - Vite
@@ -16,9 +20,6 @@ This is a portfolio piece to practice working with real-world APIs, modern front
 
 ## APIs (planned)
 - REST: API-Football for player, team, and match data  
-- REST / AI: Claude/OpenAI for player insights and recommendations  
-- GraphQL: Mock GraphQL server for selective queries of player stats during development  
-- WebSocket: Dummy live match feed for testing real-time updates to the dashboard  
 - Auth/OAuth: Firebase Authentication for user login
 
 ## React Compiler

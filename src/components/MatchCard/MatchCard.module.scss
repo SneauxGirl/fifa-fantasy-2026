@@ -2,6 +2,8 @@
 
 @use '../../styles/tokens.scss' as *;
 
+//TO MATCH FIFA #TODO
+
 .matchCard {
   position: relative;
   border-radius: $border-radius-8;
@@ -10,6 +12,7 @@
   width: 100%;
   box-shadow: $shadow-low;
   font-family: inherit;
+  border: $border-width-2 solid $color-border-low;
 
   @media (min-width: 480px) {
     max-width: 37.5rem;
@@ -122,7 +125,7 @@
 .matchCardImpact {
   padding: $spacing-16;
   background: $color-bg-primary;
-  border-bottom: $border-width-1 solid $color-border-low;
+  border-bottom: $border-width-2 solid $color-border-low;
 }
 
 .matchCardImpactHeader {

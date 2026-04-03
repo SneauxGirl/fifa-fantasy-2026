@@ -7,7 +7,6 @@ import {
   selectSignedSquads,
 } from "../../store/selectors/rosterSelectors";
 import type { RosterSquad } from "../../types/match";
-import { nationalColors } from "../../lib/nationalColors";
 import styles from "./SquadsSection.module.scss";
 
 /**
@@ -88,7 +87,7 @@ export const SquadsSection: React.FC = () => {
         {allSquads.map((squad) => {
           const isUnsigned = squad.pool === "unsigned";
           const isEliminated = squad.isEliminated;
-          const colors = nationalColors[squad.code] ?? ["#888", "#ccc", "#888"];
+          const colors = ["#888", "#ccc", "#888"];
           const [primary] = colors;
 
           return (

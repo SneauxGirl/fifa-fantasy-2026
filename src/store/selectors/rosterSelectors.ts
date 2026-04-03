@@ -82,7 +82,8 @@ export const selectBenchPlayers = createSelector(
   (players: RosterPlayer[]) => players.filter(p => p.role === "bench")
 );
 
-/**
+ //REMOVE #TODO
+ /**
  * Players with role: "UpNext" (newly signed/swapped, locked until Thu 00:00)
  */
 export const selectUpNextPlayers = createSelector(
@@ -152,17 +153,27 @@ export const selectScoringSquads = createSelector(
 // ─── POSITION-BASED SELECTORS ──────────────────────────────────────────────────────
 
 /**
- * All scoring players (starter + UpNext) grouped by position
+ * All scoring players (starter + UpNext) grouped by position, sorted by country then number
  * Used by formation display to show active and pending players
  */
 export const selectScoringPlayersGroupedByPosition = createSelector(
   selectScoringPlayers,
-  (scoringPlayers: RosterPlayer[]) => ({
-    gk: scoringPlayers.filter(p => p.position === "GK"),
-    def: scoringPlayers.filter(p => p.position === "DEF"),
-    mid: scoringPlayers.filter(p => p.position === "MID"),
-    fwd: scoringPlayers.filter(p => p.position === "FWD"),
-  })
+  (scoringPlayers: RosterPlayer[]) => {
+    const sortByCountryThenNumber = (players: RosterPlayer[]) =>
+      [...players].sort((a, b) => {
+        if (a.code !== b.code) {
+          return a.code.localeCompare(b.code);
+        }
+        return (a.number || 0) - (b.number || 0);
+      });
+
+    return {
+      gk: sortByCountryThenNumber(scoringPlayers.filter(p => p.position === "Goalkeeper")),
+      def: sortByCountryThenNumber(scoringPlayers.filter(p => p.position === "Defender")),
+      mid: sortByCountryThenNumber(scoringPlayers.filter(p => p.position === "Midfielder")),
+      fwd: sortByCountryThenNumber(scoringPlayers.filter(p => p.position === "Attacker")),
+    };
+  }
 );
 
 /**
@@ -170,7 +181,7 @@ export const selectScoringPlayersGroupedByPosition = createSelector(
  */
 export const selectStarterGKCount = createSelector(
   selectStarterPlayers,
-  (starters: RosterPlayer[]) => starters.filter(p => p.position === "GK").length
+  (starters: RosterPlayer[]) => starters.filter(p => p.position === "Goalkeeper").length
 );
 
 /**
@@ -178,7 +189,7 @@ export const selectStarterGKCount = createSelector(
  */
 export const selectRosterGKCount = createSelector(
   selectSignedPlayers,
-  (players: RosterPlayer[]) => players.filter(p => p.position === "GK").length
+  (players: RosterPlayer[]) => players.filter(p => p.position === "Goalkeeper").length
 );
 
 /**
@@ -198,10 +209,10 @@ export const selectRosterBenchPlayers = createSelector(
 export const selectSignedPlayersGroupedByPosition = createSelector(
   selectSignedPlayers,
   (signed: RosterPlayer[]) => ({
-    gk: signed.filter(p => p.position === "GK"),
-    def: signed.filter(p => p.position === "DEF"),
-    mid: signed.filter(p => p.position === "MID"),
-    fwd: signed.filter(p => p.position === "FWD"),
+    gk: signed.filter(p => p.position === "Goalkeeper"),
+    def: signed.filter(p => p.position === "Defender"),
+    mid: signed.filter(p => p.position === "Midfielder"),
+    fwd: signed.filter(p => p.position === "Attacker"),
   })
 );
 
@@ -295,7 +306,7 @@ export const selectCanPromoteToStarter = createSelector(
   selectStarterPlayers,
   selectStarterGKCount,
   (starters: RosterPlayer[], gkCount: number) => (player: RosterPlayer) => {
-    const canFitPosition = player.position === "GK" ? gkCount < 1 : true;
+    const canFitPosition = player.position === "Goalkeeper" ? gkCount < 1 : true;
     return starters.length < 11 && canFitPosition;
   }
 );
@@ -307,7 +318,7 @@ export const selectCanAddToSignedRoster = createSelector(
   selectSignedPlayers,
   selectRosterGKCount,
   (signed: RosterPlayer[], gkCount: number) => (player: RosterPlayer) => {
-    const canFitPosition = player.position === "GK" ? gkCount < 3 : true;
+    const canFitPosition = player.position === "Goalkeeper" ? gkCount < 3 : true;
     return signed.length < 18 && canFitPosition;
   }
 );
@@ -346,6 +357,8 @@ export const selectActiveAvailableSquads = createSelector(
   (squads: RosterSquad[]) => squads.filter(s => !s.isEliminated)
 );
 
+
+//REVIEW THIS. Why so dramatic? what was I solving for differently than Players? Make better notes #TODO
 /**
  * Eliminated available squads (tournament-eliminated available/unsigned squads)
  * Includes:
@@ -360,6 +373,8 @@ export const selectEliminatedAvailableSquads = createSelector(
 );
 
 // ─── TEAM-BASED SELECTORS ──────────────────────────────────────────────────────────
+
+//REVIEW - where do I use this in current logic? Is this leftover Claude spam? Or do I use it for more efficient elimination logic? #TODO
 
 /**
  * Get all signed players from a specific team
@@ -390,7 +405,7 @@ export const selectPromotableBenchPlayers = createSelector(
   (bench: RosterPlayer[], gkCount: number, starters: RosterPlayer[]) => {
     const canAddMore = starters.length < 11;
     return bench.filter(p => {
-      const canFitPosition = p.position === "GK" ? gkCount < 1 : true;
+      const canFitPosition = p.position === "Goalkeeper" ? gkCount < 1 : true;
       return canAddMore && canFitPosition;
     });
   }
@@ -404,7 +419,7 @@ export const selectLockedStarterPlayers = createSelector(
   selectStarterPlayersEligibleToDemote,
   selectStarterPlayers,
   (eligible: RosterPlayer[], all: RosterPlayer[]) => {
-    const eligibleIds = new Set(eligible.map(p => p.id));
-    return all.filter(p => !eligibleIds.has(p.id));
+    const eligibleIds = new Set(eligible.map(p => p.playerId));
+    return all.filter(p => !eligibleIds.has(p.playerId));
   }
 );

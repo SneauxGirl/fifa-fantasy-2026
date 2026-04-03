@@ -52,7 +52,7 @@ export const RosterSidebar: React.FC = () => {
 
   const handleMoveToStarter = (player: RosterPlayer) => {
     console.log("Moving to starter:", {
-      playerId: player.id,
+      playerId: player.playerId,
       playerName: player.name,
       pool: player.pool,
       role: player.role,
@@ -79,7 +79,7 @@ export const RosterSidebar: React.FC = () => {
               return (
                 <button
                   type="button"
-                  key={player.id}
+                  key={player.playerId}
                   className={styles.playerItem}
                   draggable
                   onDragStart={(e) => handleDragStart(e, player)}
@@ -123,7 +123,7 @@ export const RosterSidebar: React.FC = () => {
 
             {/* Eliminated Players */}
             {eliminatedPlayers.map((player) => (
-              <div key={`player-${player.id}`} className={`${styles.rosterItem} ${styles.eliminated}`}>
+              <div key={`player-${player.playerId}`} className={`${styles.rosterItem} ${styles.eliminated}`}>
                 <span className={styles.playerName}>{player.name}</span>
                 <span className={styles.playerPosition}>{player.position}</span>
               </div>
