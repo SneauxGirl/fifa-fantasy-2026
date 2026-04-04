@@ -11,15 +11,14 @@ import styles from "./StartersLineup.module.scss";
 
 /**
  * StartersLineup Component
- * Display 11-player formation (includes both Starter and UpNext players)
+ * Display 11-player formation with starter players
  * Players can be removed to bench via button click
- * UpNext players show with muted colors (locked until Thu 00:00)
  */
 export const StartersLineup: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isDragOver, setIsDragOver] = React.useState(false);
 
-  // Show both Starter and UpNext players in formation
+  // Show starter players in formation
   const scoringPlayers = useAppSelector(selectScoringPlayers);
   const positionGroups = useAppSelector(
     selectScoringPlayersGroupedByPosition

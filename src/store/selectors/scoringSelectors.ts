@@ -50,7 +50,7 @@ export const selectActiveRosterPlayers = createSelector(
   (roster: RosterPlayer[]) => roster
 );
 
-/** Active SCORER Player IDs (starter or UpNext). */
+/** Active SCORER Player IDs (starters). */
 export const selectActiveScorerIds = createSelector(
   selectScoringPlayers,
   selectActiveSignedPlayers,

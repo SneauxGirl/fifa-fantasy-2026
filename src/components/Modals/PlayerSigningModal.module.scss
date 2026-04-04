@@ -1,0 +1,97 @@
+@use "../../styles/tokens.scss" as *;
+@use "sass:color";
+
+.container {
+  padding: 32px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $color-action-default;
+}
+
+.rosterCountText {
+  color: $color-neutral-text;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.warningText {
+  color: $color-error-primary;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.reminderText {
+  color: $color-neutral-text;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.buttonBase {
+  padding: 8px 20px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-bg-tertiary;
+    outline-offset: 2px;
+  }
+}
+
+.cancelButton {
+  @extend .buttonBase;
+  background-color: $color-neutral-light;
+  color: $color-neutral-darker;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($color-neutral-light, $lightness: -5%);
+  }
+
+  &:focus-visible {
+    border-color: $color-bg-tertiary;
+  }
+}
+
+.confirmButton {
+  @extend .buttonBase;
+  background-color: $color-bg-tertiary;
+  color: $color-neutral-white;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($color-bg-tertiary, $lightness: -5%);
+  }
+
+  &:disabled {
+    background-color: $color-action-disabled;
+    color: $color-action-text-disabled;
+    cursor: not-allowed;
+
+    &:focus-visible {
+      outline: none;
+      border-color: transparent;
+    }
+  }
+
+  &:focus-visible:not(:disabled) {
+    border-color: $color-neutral-white;
+  }
+}

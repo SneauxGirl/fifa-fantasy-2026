@@ -9,6 +9,7 @@ import {
 } from "../../store/selectors/rosterSelectors";
 import type { RosterPlayer } from "../../types/match";
 import { Modal } from "./Modal";
+import styles from "./PlayerSigningModal.module.scss";
 
 export const PlayerSigningModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +27,6 @@ export const PlayerSigningModal: React.FC = () => {
 
   const handleConfirm = () => {
     if (selectedPlayer) {
-      // For now, default role is "bench" (can be "UpNext" if mid-week, handled in reducer)
-      // TODO: check for UpNext Logic and remove. Add conflict warnings. Why on this green earth is styling INSIDE this modal?!?!?
       dispatch(
         movePlayerToSigned({
           player: selectedPlayer,
@@ -56,42 +55,43 @@ export const PlayerSigningModal: React.FC = () => {
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={`Sign ${selectedPlayer.name}?`}>
-      <div style={{ padding: "32px", textAlign: "center" }}>
-        <h2 style={{ marginBottom: "12px", fontSize: "1.3rem", fontWeight: 700 }}>
+      <div className={styles.container}>
+        <h2 className={styles.title}>
           Sign {selectedPlayer.name}?
         </h2>
 
-        <p style={{ color: "#666", marginBottom: "8px" }}>
+        <p className={styles.rosterCountText}>
           This will be player <strong>{totalRosterCount}</strong> of 18 on your roster.
         </p>
 
         {rosterFullReached && (
-          <p style={{ color: "#d32f2f", marginBottom: "24px", fontSize: "0.9rem", fontWeight: 600 }}>
+          <div className={styles.warningText} role="alert">
             ⚠ Signed roster full (18/18). Cannot sign additional players.
-          </p>
+          </div>
         )}
 
         {!rosterFullReached && goalieCapReached && (
-          <p style={{ color: "#d32f2f", marginBottom: "24px", fontSize: "0.9rem", fontWeight: 600 }}>
+          <div className={styles.warningText} role="alert">
             ⚠ Goalkeeper cap reached (3/3). Cannot sign additional goalkeepers.
-          </p>
+          </div>
         )}
 
         {!rosterFullReached && isGoalkeeper && !goalieCapReached && (
-          <p style={{ color: "#666", marginBottom: "24px", fontSize: "0.9rem" }}>
+          <p className={styles.reminderText}>
             (Reminder: you have filled {rosterGKCount} of 3 goalkeeper slots, min. 1)
           </p>
         )}
 
         {!rosterFullReached && !isGoalkeeper && rosterGKCount < 3 && (
-          <p style={{ color: "#666", marginBottom: "24px", fontSize: "0.9rem" }}>
+          <p className={styles.reminderText}>
             (Reminder: you have filled {rosterGKCount} of 3 goalkeeper slots, min. 1)
           </p>
         )}
 
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+        <div className={styles.buttonGroup}>
           <button
             type="button"
+            className={styles.cancelButton}
             onClick={handleClose}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -99,32 +99,13 @@ export const PlayerSigningModal: React.FC = () => {
                 handleClose();
               }
             }}
-            style={{
-              padding: "8px 20px",
-              backgroundColor: "#e0e0e0",
-              color: "#333",
-              border: "2px solid transparent",
-              borderRadius: "6px",
-              cursor: "pointer",
-              fontSize: "0.95rem",
-              fontWeight: 600,
-              transition: "all 0.2s ease",
-              outline: "none",
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = "#0055a4";
-              e.currentTarget.style.outline = "2px solid #0055a4";
-              e.currentTarget.style.outlineOffset = "2px";
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.outline = "none";
-            }}
+            aria-label="Cancel signing this player"
           >
             Cancel
           </button>
           <button
             type="button"
+            className={styles.confirmButton}
             onClick={handleConfirm}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -135,38 +116,7 @@ export const PlayerSigningModal: React.FC = () => {
               }
             }}
             disabled={!playerCanBeAdded || rosterFullReached || goalieCapReached}
-            style={{
-              padding: "8px 20px",
-              backgroundColor:
-                !playerCanBeAdded || rosterFullReached || goalieCapReached
-                  ? "#ccc"
-                  : "#0055a4",
-              color:
-                !playerCanBeAdded || rosterFullReached || goalieCapReached
-                  ? "#999"
-                  : "white",
-              border: "2px solid transparent",
-              borderRadius: "6px",
-              cursor:
-                !playerCanBeAdded || rosterFullReached || goalieCapReached
-                  ? "not-allowed"
-                  : "pointer",
-              fontSize: "0.95rem",
-              fontWeight: 600,
-              transition: "all 0.2s ease",
-              outline: "none",
-            }}
-            onFocus={(e) => {
-              if (!(!playerCanBeAdded || rosterFullReached || goalieCapReached)) {
-                e.currentTarget.style.borderColor = "white";
-                e.currentTarget.style.outline = "2px solid #0055a4";
-                e.currentTarget.style.outlineOffset = "2px";
-              }
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "transparent";
-              e.currentTarget.style.outline = "none";
-            }}
+            aria-label={`Confirm signing ${selectedPlayer.name}`}
           >
             Yes, Sign Player
           </button>

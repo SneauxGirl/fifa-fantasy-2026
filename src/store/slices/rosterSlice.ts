@@ -2,32 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RosterPlayer, RosterSquad, RosterPool, RosterRole, Game } from "../../types/match";
 
-// ────────────────────────────────────────────────────────────────
-// HELPER: Calculate gamesComplete dynamically
-// ────────────────────────────────────────────────────────────────
-/**
- * Calculate whether all games for a member are complete
- *
- * Logic:
- * 1. If games array exists and has games: gamesComplete = all games complete
- * 2. Otherwise (no games loaded yet): use tournament date as fallback
- *    - Before June 11 2026: true (no games have been played yet)
- *    - After June 11 2026: false (games are active, need to wait for completion)
- */
-function calculateGamesComplete(
-  games: Game[] | undefined,
-  now: Date = new Date()
-): boolean {
-  // If games are loaded, check actual completion
-  if (games && games.length > 0) {
-    return games.every(g => g.isComplete);
-  }
-
-  // Fallback: use tournament date
-  // Tournament starts Thu June 11 2026 at 00:00 EST
-  const TOURNAMENT_START = new Date('2026-06-11T04:00:00Z'); // June 11 00:00 EST = June 11 04:00 UTC
-  return now < TOURNAMENT_START;
-}
+//Review one more time. Should be current to 2022 logic #TODO 
 
 /**
  * New Roster Model (Pool + Role Separation):
@@ -42,12 +17,10 @@ function calculateGamesComplete(
  * - null: No role yet (pool: "available" or "unsigned")
  * - "starter": In formation, scoring actively
  * - "bench": In roster, not in formation, no scoring
- * - "UpNext": In formation but locked until Thu 00:00 (newly signed/swapped mid-week), muted visual
  * - "eliminatedSigned": Was starter/bench, now tournament-eliminated
  *
  * Additional flags:
  * - isEliminated: Tournament elimination status (independent of pool)
- * - gamesComplete: All games for this week finished? (determines when swaps allowed)
  * - substitute: Signed during R16? Scores at 50% for entire tournament
  * - playerGames/squadGames: Scheduled games with isComplete flag
  */
@@ -112,9 +85,8 @@ const rosterSlice = createSlice({
     },
 
     /**
-     * Move player from unsigned → signed with role "bench" (or "UpNext" if mid-week)
+     * Move player from unsigned → signed with role "bench"
      * Validates: <18 roster players, <3 goalkeepers
-     * If signed after Wed 23:59 ET, role becomes "UpNext" (locked until Thu 00:00)
      */
     movePlayerToSigned: (
       state,
@@ -144,7 +116,7 @@ const rosterSlice = createSlice({
 
     /**
      * Move player from bench → starter (or promote from bench)
-     * Validates: <11 starters, (<1 GK if player is GK), gamesComplete: true
+     * Validates: <11 starters, (<1 GK if player is GK)
      */
     movePlayerToStarter: (state, action: PayloadAction<RosterPlayer>) => {
       const player = action.payload;
@@ -152,22 +124,19 @@ const rosterSlice = createSlice({
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
-        // Check pool and gamesComplete from current state
-        if (statePlayer.pool === "signed" && statePlayer.gamesComplete) {
+        // Check pool from current state
+        if (statePlayer.pool === "signed") {
           const starters = state.players.filter(
-            p => (p.role === "starter" || p.role === "UpNext") && p.pool === "signed"
+            p => p.role === "starter" && p.pool === "signed"
           );
           const gkStarters = starters.filter(p => p.position === "Goalkeeper").length;
 
           // Validate starter capacity using current state
           if (starters.length < 11 && (statePlayer.position !== "Goalkeeper" || gkStarters < 1)) {
-            // Determine role based on timing (UpNext if mid-week, starter if after Thu 00:00)
-            const newRole: RosterRole = "starter"; // TODO: Check current time, use "UpNext" if mid-week
-
             state.players[index] = {
               ...state.players[index],
               pool: "signed",
-              role: newRole,
+              role: "starter",
             };
           }
         }
@@ -176,7 +145,6 @@ const rosterSlice = createSlice({
 
     /**
      * Move player from starter → bench
-     * Prerequisites: role: "starter" or "UpNext"
      * Removes starter icon, keeps in roster
      */
     movePlayerToBench: (state, action: PayloadAction<RosterPlayer>) => {
@@ -185,7 +153,7 @@ const rosterSlice = createSlice({
 
       if (index !== -1) {
         const statePlayer = state.players[index]; // Use current state, not payload
-        if (statePlayer.role === "starter" || statePlayer.role === "UpNext") {
+        if (statePlayer.role === "starter") {
           state.players[index] = {
             ...state.players[index],
             pool: "signed",
@@ -371,51 +339,6 @@ const rosterSlice = createSlice({
     },
 
     // ────────────────────────────────────────────────────────────────
-    // GAME COMPLETION & SCORING LOCKS
-    // ────────────────────────────────────────────────────────────────
-
-    /**
-     * Update gamesComplete for a player/squad when all their games are done
-     * Triggered when match result comes in
-     */
-    updateGameComplete: (
-      state,
-      action: PayloadAction<{ memberId: number; memberType: "player" | "squad" }>
-    ) => {
-      const { memberId, memberType } = action.payload;
-
-      if (memberType === "player") {
-        const index = state.players.findIndex(p => p.playerId === memberId);
-        if (index !== -1) {
-          const games = state.players[index].playerGames || [];
-          const allComplete = games.every(g => g.isComplete);
-          state.players[index].gamesComplete = allComplete;
-        }
-      } else {
-        const index = state.squads.findIndex(s => s.id === memberId);
-        if (index !== -1) {
-          const games = state.squads[index].squadGames || [];
-          const allComplete = games.every(g => g.isComplete);
-          state.squads[index].gamesComplete = allComplete;
-        }
-      }
-    },
-
-    /**
-     * Automatic promotion: UpNext → Starter at Thu 00:00 EST
-     * All players/squads with role "UpNext" automatically become "starter"
-     * Visual update: Remove muted colors, add ⭐ badge
-     * Points are applied retroactively if games played Thu
-     */
-    promoteUpNextToStarter: (state) => {
-      state.players.forEach((player, index) => {
-        if (player.role === "UpNext" && player.pool === "signed") {
-          state.players[index].role = "starter";
-        }
-      });
-    },
-
-    // ────────────────────────────────────────────────────────────────
     // SCORING & POINTS CALCULATION
     // ────────────────────────────────────────────────────────────────
 
@@ -472,8 +395,6 @@ const rosterSlice = createSlice({
         pool: "available" as RosterPool,
         role: null,
         totalPoints: 0,
-        // Calculate gamesComplete dynamically (games not loaded yet, so use tournament date)
-        gamesComplete: calculateGamesComplete(p.playerGames),
         substitute: false,
       }));
 
@@ -482,8 +403,6 @@ const rosterSlice = createSlice({
         pool: "available" as RosterPool,
         role: null,
         totalPoints: 0,
-        // Calculate gamesComplete dynamically (games not loaded yet, so use tournament date)
-        gamesComplete: calculateGamesComplete(s.squadGames),
         substitute: false,
       }));
     },
@@ -505,8 +424,6 @@ const rosterSlice = createSlice({
 
     /**
      * Lock/unlock roster for round
-     * Wed 23:59 ET: Lock roster, no more edits
-     * Thu 00:00 ET: Unlock after UpNext → Starter promotion
      */
     setRoundLocked: (state, action: PayloadAction<boolean>) => {
       state.validation.roundLocked = action.payload;
@@ -515,7 +432,6 @@ const rosterSlice = createSlice({
     /**
      * Load game schedules for a player
      * Called when fetching player game data from API
-     * Recalculates gamesComplete based on actual game completion
      */
     loadPlayerGames: (
       state,
@@ -524,15 +440,12 @@ const rosterSlice = createSlice({
       const index = state.players.findIndex(p => p.playerId === action.payload.playerId);
       if (index !== -1) {
         state.players[index].playerGames = action.payload.games;
-        // Recalculate based on actual game data
-        state.players[index].gamesComplete = calculateGamesComplete(action.payload.games);
       }
     },
 
     /**
      * Load game schedules for a squad
      * Called when fetching squad game data from API
-     * Recalculates gamesComplete based on actual game completion
      */
     loadSquadGames: (
       state,
@@ -541,8 +454,6 @@ const rosterSlice = createSlice({
       const index = state.squads.findIndex(s => s.id === action.payload.squadId);
       if (index !== -1) {
         state.squads[index].squadGames = action.payload.games;
-        // Recalculate based on actual game data
-        state.squads[index].gamesComplete = calculateGamesComplete(action.payload.games);
       }
     },
   },
@@ -561,8 +472,6 @@ export const {
   moveSquadToSigned,
   moveSquadToEliminated,
   resolveNewEliminations,
-  updateGameComplete,
-  promoteUpNextToStarter,
   updateMemberPoints,
   initializeRoster,
   setTournamentRound,
@@ -570,44 +479,5 @@ export const {
   loadPlayerGames,
   loadSquadGames,
 } = rosterSlice.actions;
-
-// ────────────────────────────────────────────────────────────────
-// SELECTORS: Dynamically calculated values
-// ────────────────────────────────────────────────────────────────
-
-/**
- * Get a player with dynamically calculated gamesComplete
- * Recalculates on every call to ensure fresh value based on:
- * 1. Actual game completion (if games are loaded)
- * 2. Tournament date (if games not loaded yet)
- */
-export const selectPlayerWithGamesComplete = (
-  state: { roster: ReturnType<typeof rosterSlice.reducer> },
-  playerId: number
-) => {
-  const player = state.roster.players.find(p => p.playerId === playerId);
-  if (!player) return null;
-
-  return {
-    ...player,
-    gamesComplete: calculateGamesComplete(player.playerGames),
-  };
-};
-
-/**
- * Get a squad with dynamically calculated gamesComplete
- */
-export const selectSquadWithGamesComplete = (
-  state: { roster: ReturnType<typeof rosterSlice.reducer> },
-  squadId: number
-) => {
-  const squad = state.roster.squads.find(s => s.id === squadId);
-  if (!squad) return null;
-
-  return {
-    ...squad,
-    gamesComplete: calculateGamesComplete(squad.squadGames),
-  };
-};
 
 export default rosterSlice.reducer;

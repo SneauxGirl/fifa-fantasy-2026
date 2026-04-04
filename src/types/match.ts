@@ -2,7 +2,7 @@
 // Matches
 // ==============================
 
-//REVIEW and update for turn play. Could probably whittle for finals  - is there anything else that needs this breakdown?? REveiw all this for turn-based play.
+//REVIEW and update for turn play. Could probably whittle for finals  - is there anything else that need #TODO
 
 // API-Football fixture status short codes (all 16 possible values)
 export type MatchStatusShort =
@@ -106,7 +106,7 @@ export interface Match {
 
 // New semantic model: pool (where) + role (what function)
 export type RosterPool = "available" | "unsigned" | "signed" | "eliminated";
-export type RosterRole = "starter" | "bench" | "UpNext" | "eliminatedSigned" | null;
+export type RosterRole = "starter" | "bench" | "eliminatedSigned" | null;
 
 /**
  * Represents a single game a squad/player participates in
@@ -156,7 +156,7 @@ export interface RosterSquad {
 
   // Semantic model: pool (where) + role (what function)
   pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
-  role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
+  role: RosterRole;                    // What: starter | eliminatedSigned | null
 
   // Core data
   name: string;
@@ -170,7 +170,6 @@ export interface RosterSquad {
   // Game tracking
   isEliminated: boolean;               // Tournament eliminated status
   rosterElimination: null | "new" | "resolved"; // Elimination state: null=not eliminated, new=just happened, resolved=processed
-  gamesComplete: boolean;              // All games for this week completed?
   substitute: boolean;                 // Signed during R16? Scores at 50% forever
   squadGames?: Game[];                 // Games scheduled for this squad with isComplete flag
 
@@ -189,7 +188,7 @@ export interface RosterPlayer {
 
   // Semantic model: pool (where) + role (what function)
   pool: RosterPool;                    // Where: available | unsigned | signed | eliminated
-  role: RosterRole;                    // What: starter | bench | UpNext | eliminatedSigned | null
+  role: RosterRole;                    // What: starter | bench | eliminatedSigned | null
 
   // Core data
   name: string;
@@ -206,7 +205,6 @@ export interface RosterPlayer {
   // Game tracking
   isEliminated: boolean;               // Tournament eliminated status (from national team data)
   rosterElimination: null | "new" | "resolved"; // Elimination state: null=not eliminated, new=just happened, resolved=processed
-  gamesComplete: boolean;              // All games for this week completed?
   substitute: boolean;                 // Signed during R16? Scores at 50% forever
   playerGames?: Game[];                // Games scheduled for this player with isComplete flag
 

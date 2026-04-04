@@ -23,7 +23,7 @@ function App() {
       (s.players || []).map((p: any) => {
         const isEliminated = p.isEliminated;
         const playerCode = p.code || s.countryCode;
-        // Generate synthetic ID for unmatched players: COUNTRY-NN (e.g., NED-01)
+        //REMOVE? THis should be complete for all players: Generate synthetic ID for unmatched players: COUNTRY-NN (e.g., NED-01) #TODO
         const playerId = p.playerId || `${playerCode}-${String(p.number).padStart(2, '0')}`;
         return {
           type: "player" as const,
@@ -40,7 +40,6 @@ function App() {
           flag: s.flag,
           matchPoints: {},
           totalPoints: 0,
-          gamesComplete: false,
           substitute: false,
           playerGames: [],
           injury: { status: false, type: undefined },
@@ -63,7 +62,6 @@ function App() {
         flag: s.flag,
         matchPoints: {},
         totalPoints: 0,
-        gamesComplete: false,
         substitute: false,
         squadGames: [],
         coaches: s.coaches,
@@ -91,7 +89,6 @@ function App() {
         flag: s.flag,
         matchPoints: {},
         totalPoints: 0,
-        gamesComplete: false,
         substitute: false,
         squadGames: [],
         coaches: s.coaches,

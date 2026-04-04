@@ -82,14 +82,6 @@ export const selectBenchPlayers = createSelector(
   (players: RosterPlayer[]) => players.filter(p => p.role === "bench")
 );
 
- //REMOVE #TODO
- /**
- * Players with role: "UpNext" (newly signed/swapped, locked until Thu 00:00)
- */
-export const selectUpNextPlayers = createSelector(
-  selectSignedPlayers,
-  (players: RosterPlayer[]) => players.filter(p => p.role === "UpNext")
-);
 
 /**
  * Squads with role: "starter" (all signed squads are starters by default)
@@ -134,12 +126,11 @@ export const selectActiveSignedSquads = createSelector(
 );
 
 /**
- * Players currently scoring (starter or UpNext)
+ * Players currently scoring (starters only)
  */
 export const selectScoringPlayers = createSelector(
   selectStarterPlayers,
-  selectUpNextPlayers,
-  (starters: RosterPlayer[], upNext: RosterPlayer[]) => [...starters, ...upNext]
+  (starters: RosterPlayer[]) => starters
 );
 
 /**
@@ -153,8 +144,8 @@ export const selectScoringSquads = createSelector(
 // ─── POSITION-BASED SELECTORS ──────────────────────────────────────────────────────
 
 /**
- * All scoring players (starter + UpNext) grouped by position, sorted by country then number
- * Used by formation display to show active and pending players
+ * All scoring players grouped by position, sorted by country then number
+ * Used by formation display to show active players
  */
 export const selectScoringPlayersGroupedByPosition = createSelector(
   selectScoringPlayers,
@@ -193,14 +184,14 @@ export const selectRosterGKCount = createSelector(
 );
 
 /**
- * All signed players for roster bench display (bench + starter + UpNext)
+ * All signed players for roster bench display (bench + starter)
  * Used by RosterSidebar to show all roster members
- * Players with role: "starter" remain visible with a ⚽ icon
+ * Players with role: "starter" remain visible with a ⭐ icon
  */
 export const selectRosterBenchPlayers = createSelector(
   selectSignedPlayers,
   (players: RosterPlayer[]) =>
-    players.filter(p => p.role === "bench" || p.role === "starter" || p.role === "UpNext")
+    players.filter(p => p.role === "bench" || p.role === "starter")
 );
 
 /**
@@ -214,40 +205,6 @@ export const selectSignedPlayersGroupedByPosition = createSelector(
     mid: signed.filter(p => p.position === "Midfielder"),
     fwd: signed.filter(p => p.position === "Attacker"),
   })
-);
-
-// ─── GAME COMPLETION SELECTORS ──────────────────────────────────────────────────────
-
-/**
- * Signed players whose games are complete this week
- */
-export const selectPlayersWithCompleteGames = createSelector(
-  selectSignedPlayers,
-  (players: RosterPlayer[]) => players.filter(p => p.gamesComplete)
-);
-
-/**
- * Signed players whose games are NOT yet complete this week
- */
-export const selectPlayersWithIncompleteGames = createSelector(
-  selectSignedPlayers,
-  (players: RosterPlayer[]) => players.filter(p => !p.gamesComplete)
-);
-
-/**
- * Bench players eligible to promote (games complete)
- */
-export const selectBenchPlayersEligibleToPromote = createSelector(
-  selectBenchPlayers,
-  (bench: RosterPlayer[]) => bench.filter(p => p.gamesComplete)
-);
-
-/**
- * Starter players eligible to demote (games complete)
- */
-export const selectStarterPlayersEligibleToDemote = createSelector(
-  selectStarterPlayers,
-  (starters: RosterPlayer[]) => starters.filter(p => p.gamesComplete)
 );
 
 // ─── SUBSTITUTE SELECTORS ──────────────────────────────────────────────────────────
@@ -396,10 +353,10 @@ export const selectStarterPlayersFromTeam = (teamId: number) =>
 
 /**
  * Players that can be moved from bench to starter
- * (games complete + starter capacity + position constraints)
+ * (starter capacity + position constraints)
  */
 export const selectPromotableBenchPlayers = createSelector(
-  selectBenchPlayersEligibleToPromote,
+  selectBenchPlayers,
   selectStarterGKCount,
   selectStarterPlayers,
   (bench: RosterPlayer[], gkCount: number, starters: RosterPlayer[]) => {
@@ -408,18 +365,5 @@ export const selectPromotableBenchPlayers = createSelector(
       const canFitPosition = p.position === "Goalkeeper" ? gkCount < 1 : true;
       return canAddMore && canFitPosition;
     });
-  }
-);
-
-/**
- * Players that are ineligible to be demoted from starter
- * (games incomplete - must wait for week to complete)
- */
-export const selectLockedStarterPlayers = createSelector(
-  selectStarterPlayersEligibleToDemote,
-  selectStarterPlayers,
-  (eligible: RosterPlayer[], all: RosterPlayer[]) => {
-    const eligibleIds = new Set(eligible.map(p => p.playerId));
-    return all.filter(p => !eligibleIds.has(p.playerId));
   }
 );

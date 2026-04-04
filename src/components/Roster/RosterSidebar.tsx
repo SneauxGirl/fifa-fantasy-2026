@@ -6,7 +6,7 @@ import {
   selectEliminatedSignedPlayers,
   selectEliminatedSignedSquads,
 } from "../../store/selectors/rosterSelectors";
-import type { RosterPlayer, RosterSquad } from "../../types/match";
+import type { RosterPlayer } from "../../types/match";
 import styles from "./RosterSidebar.module.scss";
 
 /**
@@ -56,7 +56,6 @@ export const RosterSidebar: React.FC = () => {
       playerName: player.name,
       pool: player.pool,
       role: player.role,
-      gamesComplete: player.gamesComplete,
     });
     dispatch(movePlayerToStarter(player));
   };

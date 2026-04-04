@@ -16,7 +16,7 @@ New Gameplay will be turn-based rather than realtime with weekly reset, requirin
 **Final model** (pool + role separation — **semantically distinct**, plus R16+ dynamics):
 ```typescript
 type RosterPool = "available" | "unsigned" | "signed" | "eliminated"
-type RosterRole = "starter" | "bench" | REMOVE: "UpNext" | "eliminatedSigned" | null #TODO
+type RosterRole = "starter" | "bench" | "eliminatedSigned" | null
 
 // Pool: WHERE the member is in the pipeline
 // Role: HOW they function (only meaningful when signed/eliminated)
@@ -40,7 +40,6 @@ type RosterRole = "starter" | "bench" | REMOVE: "UpNext" | "eliminatedSigned" | 
 // pool: "unsigned"   → role: null (staging, awaiting sign confirmation)
 // pool: "signed"     → role: "starter" (squads always; players in formation, scoring)
 //                   OR role: "bench" (players in roster, not in formation, no scoring)
-//                   REMOVED: OR role: "UpNext" (newly signed/swapped mid-week, in formation but locked out of scoring until new turn begins)
 // pool: "eliminated" → role: "eliminatedSigned" (historical: was signed, then eliminated)
 ```
 
@@ -74,29 +73,29 @@ squads: {
 **State Machine Notes:**
 - **role: null** — Member has no functional role (available/unsigned pools): unselected or awaiting sign confirmation. No visual badge.
 
-- **role: "starter"** — Member is in starting formation and scoring (pool: signed only). Visual: ⭐ starter badge on card.
+- **role: "starter"** — Member is in starting formation and scoring (pool: signed only). Visual: ⚽ starter badge on card.
   - Squads: auto-assigned "starter" when signed (all 4 signed squads are starters)
-  - Players: user-assigned when dragged to formation grid (max 11, max 1 GK)
-  - **REMOVE** Prerequisites: `gamesComplete !== relevant` (scorable regardless of week progress) #TODO
-
------
-**REMOVE all UP NEXT - NO LONGER APPLIES**#TODO
-- **role: "UpNext"** — Member is in starting formation but LOCKED OUT of scoring until Thu 00:00 EST (pool: signed only). Visual: muted colors, "UpNext" badge.
-  - Occurs when: newly signed mid-week OR promoted from bench after games complete
-  - Automatic transition: **Thu 00:00 EST** → role changes to "starter" (automatic, no user action)
-  - Can be moved back to bench anytime while in UpNext state
-  - Applies to: regular swaps AND eliminatedSigned replacements
-_____
+  - Players: user-assigned when dragged to formation grid (max 11, max 1 GK, before QF lock)
 
 - **role: "bench"** — Member is in roster but NOT in starting formation, no scoring (pool: signed only). Visual: no badge.
-  - **REMOVE: Can only promote to "starter" or "UpNext" if `gamesComplete === true` (must wait for all games to finish) #TODO
 
 - **role: "eliminatedSigned"** — Member was signed, then eliminated during tournament (pool: eliminated only). Visual: "eliminatedSigned" badge for historical record.
 
-- **Scoring multiplier**: If `substitute === true`, all points earned × 0.5 for entire tournament (R16 signings only)
+- **Scoring multiplier**: If `substitute === true`, all points earned × 0.5 for entire tournament (new signings in substitute window only)
 
 - Role is ONLY meaningful when pool is "signed" or "eliminated"; check pool first before checking role
-- **Visual indicators**: ⭐ = "starter" (scoring), **REMOVE: muted = "UpNext" (locked)**, no badge = "bench" (no scoring) #TODO
+- **Visual indicators**: ⚽ = "starter" (scoring), no badge = "bench" (no scoring)
+
+**Lock States** (new):
+- **Roster Lock** (activates at Quarterfinals "Play" click):
+  - ❌ Cannot add/remove players from roster (pool changes frozen)
+  - ❌ Cannot add/remove squads
+  - ✅ CAN move players between bench ↔ starter (tactical flexibility remains)
+  - Applies through Final
+
+- **Minimum Requirements** (only before Roster Lock):
+  - Before QF "Play": Must have 4 signed squads + 11 starters to proceed
+  - After QF "Play": No minimums enforced (eliminations naturally degrade roster)
 
 **Squad state machine**:
 ```
@@ -232,8 +231,6 @@ _____
   - `initializeRoster` (respects isEliminated from JSON, initializes all pools, sets substitute flag for R16+ signings)
   - `setRoundLocked` (unchanged)
   - `validateSquadCapacity` (helper: checks if signed squad count < 4)
-  - `updateGamesComplete` (triggered by match result, sets gamesComplete on affected squads/players)
-  **REMOVE-No Longer Relavent**- `promoteUpNextToStarter` (automatic, Thu 00:00 EST: role "UpNext" → role "starter") #TODO
   - `calculateSubstitutePoints` (scoring: if substitute === true, multiply all earned points by 0.5)
 
 ---
@@ -253,10 +250,8 @@ _____
      role: RosterRole;                    // Mapping:
                                           // - null when pool: "available" or "unsigned"
                                           // - "starter" when pool: "signed" and scoring
-                            **REMOVE**// - "UpNext" when pool: "signed" but locked out (newly signed/swapped, muted visual until Thu 00:00) #TODO
                                           // - "eliminatedSigned" when pool: "eliminated"
      isEliminated: boolean;               // Parallel flag: true if tournament-eliminated
-     gamesComplete: boolean;              // All games for this week completed? (allows bench↔starter swaps)
      substitute: boolean;                 // Signed following R16. Scores at 50% for entire tournament
      name: string;
      code: string;
@@ -277,10 +272,8 @@ _____
                                           // - null when pool: "available" or "unsigned" (no role)
                                           // - "starter" when pool: "signed", in formation, scoring
                                           // - "bench" when pool: "signed", in roster, no scoring
-                          **REMOVE**// - "UpNext" when pool: "signed", in formation, locked until Thu 00:00 (muted visual) #TODO
                                           // - "eliminatedSigned" when pool: "eliminated" (historical)
      isEliminated: boolean;               // Parallel flag: true if tournament-eliminated
-     gamesComplete: boolean;              // All games for this week completed? (allows bench↔starter swaps)
      substitute: boolean;                 // Signed folowing R16. Scores at 50% for entire tournament
      name: string;
      position: "FWD" | "MID" | "DEF" | "GK";
@@ -348,45 +341,76 @@ const rosterPlayers: RosterPlayer[] = mockSquadsData.flatMap((s: any) =>
 
 ### 7. Component Updates
 
-**Squads Section:**
-- **SquadsSection.tsx** (unified component):
-  - Display: all squads organized in four subsections:
-    1. **Available Squads** — `pool === "available"`, active first, eliminated at bottom (greyed out)
-    2. **Unsigned Squads** (staging bench) — `pool === "unsigned"`
-    3. **Signed Squads** ** (remove from staging bench and immediately populate ROSTER Squad section and Starter) — `pool === "signed"` (capped at 4)
-    4. **EliminatedSigned Squads** — `pool === "eliminated"` (below signed)
+**Left Panel — Players & Squads Selection:**
 
+- **AvailableSquadsList.tsx**:
+  - Display: squads with `pool === "available"` (active first, eliminated greyed out at bottom)
+  - Add/Sign buttons **disabled when `isRosterLocked === true`**
+  - Eliminated squads: disabled, no actions
 
-**ROSTER Component (Right Panel):**
+- **AvailablePlayersList.tsx**:
+  - Display: players with `pool === "available"` (active first, eliminated greyed out)
+  - Add to Roster button **disabled when `isRosterLocked === true`**
+  - Eliminated players: disabled, no actions
 
-- **SignedSquadsSection.tsx**
+**Right Panel — ROSTER (Current Team):**
 
-- **EliminatedSquadsSection.tsx**
-
-- **StartersLineup.tsx** (update):
-  - **REMOVE - NO longer applicable:**Automatic transitions: Thu 00:00 EST, all UpNext → Starter (automatic, visual update, muted colors removed) #TODO
-
+- **SignedSquadsSection.tsx**:
+  - Display: squads with `pool === "signed"` (all have role: "starter", capped at 4)
+  - Remove/Deselect button **disabled when `isRosterLocked === true`**
+  - Shows ⚽ starter badge always
+  - Confirmation popup on sign (commitment for duration)
 
 - **RosterPlayersBench.tsx**:
   - Display: players with `pool === "signed" && role === "bench"`
-  - **Constraints shown**: Max 18 roster players total (current count), max 3 Goalkeepers (current count)
+  - "Add to Roster" button **disabled when `isRosterLocked === true`**
+  - "Remove from Roster" button **disabled when `isRosterLocked === true`**
+  - "Move to Starter" button **always enabled** (no lock on formation adjustments)
+  - Constraints shown: "Roster (X/18)" + "GK (X/3)"
 
-- **EliminatedPlayersSection.tsx**
+- **StartersLineup.tsx**:
+  - Display: players with `pool === "signed" && role === "starter"`
+  - **Before QF Lock**: Fixed 11-slot grid with empty placeholders for unfilled slots
+  - **After QF Lock**: Dynamic grid showing only filled slots (no empty placeholders)
+  - Drag to Bench button **always enabled** (no lock on formation adjustments)
+  - "Move to Bench" button **always enabled**
+  - Shows ⚽ starter badge always
 
-**Players Selection (Left Panel):**
-- **AvailablePlayersList.tsx**:
-  - Display: all players with `pool === "available"` AND `pool==="eliminated"`
-`
+- **EliminatedSquadsSection.tsx**:
+  - Display: squads with `pool === "eliminated"` (role: "eliminatedSigned")
+  - Informational only, no actions
+  - Greyed out, shows elimination history
+
+- **EliminatedPlayersSection.tsx**:
+  - Display: players with `pool === "eliminated"` (role: "eliminatedSigned")
+  - Informational only, no actions
+  - Greyed out, shows elimination history
+
+**Lock-Aware UI Summary**:
+| Action | Before QF Lock | After QF Lock |
+|--------|--------------|---------------|
+| Add player to roster | ✅ Enabled | ❌ Disabled |
+| Add squad to roster | ✅ Enabled | ❌ Disabled |
+| Remove player from roster | ✅ Enabled | ❌ Disabled |
+| Remove squad from roster | ✅ Enabled | ❌ Disabled |
+| Move player to starter | ✅ Enabled | ✅ Enabled |
+| Move player to bench | ✅ Enabled | ✅ Enabled |
+| Formation grid style | 11 fixed slots | Dynamic (filled only) |
 
 ---
 
-### 8. Selector Updates (Unchanged from original)
+### 8. Selector Updates
 
 **File**: `/src/store/selectors/scoringSelectors.ts`
 
 Update selectors to use new pool/role model:
 ```typescript
-// Squad Selectors
+// ===== LOCK STATE SELECTOR =====
+selectIsRosterLocked = (state) => state.roster.isRosterLocked
+  // true when user clicks "Play" for Quarterfinals (roster locked through end)
+  // false before QF Play click (roster editable)
+
+// ===== SQUAD SELECTORS =====
 selectAvailableSquads = squads.filter(s => s.pool === "available" && !s.isEliminated)  // role: null
 selectEliminatedAvailableSquads = squads.filter(s => s.pool === "available" && s.isEliminated)  // role: null
 selectUnsignedSquads = squads.filter(s => s.pool === "unsigned")  // role: null (staging)
@@ -394,25 +418,29 @@ selectSignedSquads = squads.filter(s => s.pool === "signed")  // All have role: 
 selectEliminatedSquads = squads.filter(s => s.pool === "eliminated")  // role: "eliminatedSigned"
 selectRemainingSquadSlots = 4 - selectSignedSquads.length
 
-// Player Selectors
+// ===== PLAYER SELECTORS =====
 selectAvailablePlayers = players.filter(p => p.pool === "available" && !p.isEliminated)  // role: null
 selectEliminatedAvailablePlayers = players.filter(p => p.pool === "available" && p.isEliminated)  // role: null
 selectUnsignedPlayers = players.filter(p => p.pool === "unsigned")  // role: null (staging)
 selectSignedPlayers = players.filter(p => p.pool === "signed")  // All roster members (role: "starter" or "bench")
-selectStarterPlayers = players.filter(p => p.pool === "signed" && p.role === "starter")  // In formation (11 max)
+selectStarterPlayers = players.filter(p => p.pool === "signed" && p.role === "starter")  // In formation
 selectBenchPlayers = players.filter(p => p.pool === "signed" && p.role === "bench")  // In roster, not formation
 selectEliminatedPlayers = players.filter(p => p.pool === "eliminated")  // role: "eliminatedSigned"
-selectRemainingStarterSlots = 11 - selectStarterPlayers.length
+selectRemainingStarterSlots = 11 - selectStarterPlayers.length  // Useful before QF lock
 selectRemainingRosterSlots = 18 - selectSignedPlayers.length
+
+// ===== SCORING RULE =====
+canScorePoints = (member: RosterSquad | RosterPlayer) => member.role === "starter"
+  // Only starters score. Role: "starter" implies pool: "signed", so no need to check pool.
 ```
 
 ---
 
 ### 9. CRITICAL: Starters Formation Grid (Empty Slots)
 
-**Current**:
+**Before Quarterfinals Lock** (enforced 11-starter requirement):
 ```typescript
-// StartersLineup should render:
+// StartersLineup should render fixed 11-slot grid:
 const totalStarterSlots = 11;
 const filledSlots = selectStarterPlayers;  // pool: "signed" && role: "starter"
 const emptySlotCount = totalStarterSlots - filledSlots.length;
@@ -427,11 +455,22 @@ const emptySlotCount = totalStarterSlots - filledSlots.length;
 ))}
 ```
 
+**After Quarterfinals Lock** (no minimum, grid adjusts dynamically):
+```typescript
+// StartersLineup shows only filled slots (no empty placeholders):
+const filledSlots = selectStarterPlayers;  // pool: "signed" && role: "starter"
+
+// Render only filled positions:
+{filledSlots.map(player => <PlayerCard key={player.id} player={player} />)}
+
+// Can still drag between bench ↔ starter, but no UI pressure to fill 11
+```
+
 **Why this matters**:
-- Users need to see formation at a glance
-- Drag-and-drop from bench becomes intuitive (drag to empty slot vs dragging to another player)
-- Visual feedback that formation is incomplete until all 11 filled
-- No min/max on positions, so keep ?/11 in total, and display one open slot per position until all 11 slots are full
+- **Early game (pre-QF)**: Fixed 11-slot grid gives visual feedback of formation completeness; users see what they need to fill
+- **Late game (post-QF)**: Dynamic grid reflects reality of eliminations; users can see actual formation without "empty slot guilt"
+- **Always**: Users can drag players between bench ↔ starter freely (no lock on formation adjustments)
+- Drag-and-drop is intuitive: drop to empty slot (early game) or directly swap with bench player (late game)
 
 ---
 
@@ -442,227 +481,273 @@ const emptySlotCount = totalStarterSlots - filledSlots.length;
 Validation logic to match new pool/role state model:
 
 ```typescript
-// Squad Validation
-canAddSquadToUnsigned = (squad: RosterSquad) => !squad.isEliminated && squad.pool === "available"
-canSignSquad = () => selectSignedSquads.length < 4
-validateSignedSquadCount = () => selectSignedSquads.length === 4  // Required to start tournament
+// ===== ROSTER LOCK STATE =====
+isRosterLocked = false  // Set to true when user clicks "Play" for Quarterfinals
+  // When true: no add/remove players or squads allowed
+  // When true: can still move players between bench ↔ starter (tactical flexibility)
 
-// Player Validation
-//Goalkeepers Signed
+// ===== SQUAD VALIDATION =====
+canAddSquadToUnsigned = (squad: RosterSquad) =>
+  !squad.isEliminated &&
+  squad.pool === "available" &&
+  !isRosterLocked
+
+canSignSquad = () => selectSignedSquads.length < 4 && !isRosterLocked
+
+// Minimum requirement: only enforced before Quarterfinals
+validateSignedSquadCount = () => {
+  if (currentTurn < "Quarterfinals") {
+    return selectSignedSquads.length === 4  // Required to play earlier rounds
+  }
+  return true  // No minimum after roster lock
+}
+
+// ===== PLAYER VALIDATION (ROSTER ADDITIONS) =====
+// Only allowed when roster is NOT locked
 canAddPlayerToRoster = (player: RosterPlayer) =>
   !player.isEliminated &&
   player.pool === "available" &&
   selectSignedPlayers.length < 18 &&
-  (player.position !== "GK" || selectSignedPlayers.filter(p => p.position === "GK").length < 3)
+  (player.position !== "GK" || selectSignedPlayers.filter(p => p.position === "GK").length < 3) &&
+  !isRosterLocked
 
-//Goalkeeper Starter
-canPromoteToStarter = (player: RosterPlayer) =>
-  selectStarterPlayers.length < 11 &&
-  (player.position !== "GK" || selectStarterPlayers.filter(p => p.position === "GK").length < 1) &&
-  player.gamesComplete === true  // Can only promote from bench after all games complete
+canRemovePlayerFromRoster = (player: RosterPlayer) =>
+  player.pool === "signed" &&
+  !isRosterLocked
 
-//Player Roster
-validateRosterCount = () => selectSignedPlayers.length >= 11 && selectSignedPlayers.length <= 18
-validateRosterPositions = () => {
-  const gkCount = selectSignedPlayers.filter(p => p.position === "GK").length
-  return gkCount <= 3 && gkCount >= 0  // No GK requirement, max 3
+// ===== PLAYER VALIDATION (STARTER ADJUSTMENTS) =====
+// NO LOCK required - players can adjust formation through entire tournament
+canPromoteToStarter = (player: RosterPlayer) => {
+  // Before QF: enforce 11-starter limit
+  if (currentTurn < "Quarterfinals") {
+    return selectStarterPlayers.length < 11 &&
+           (player.position !== "GK" || selectStarterPlayers.filter(p => p.position === "GK").length < 1)
+  }
+  // After QF: no limits, just fill available slots
+  return player.pool === "signed" && player.role === "bench"
 }
 
-//Player Starter
-validateStarterCount = () => selectStarterPlayers.length === 11  // Required to start tournament
+canPromoveToBench = (player: RosterPlayer) =>
+  player.pool === "signed" && player.role === "starter"
+  // Always allowed, no lock
+
+// ===== ROSTER COMPOSITION VALIDATION =====
+validateRosterCount = () => {
+  if (currentTurn < "Quarterfinals") {
+    return selectSignedPlayers.length >= 11 && selectSignedPlayers.length <= 18
+  }
+  return true  // No limits after roster lock
+}
+
+validateRosterPositions = () => {
+  const gkCount = selectSignedPlayers.filter(p => p.position === "GK").length
+  return gkCount <= 3  // Max 3 GK, no GK requirement
+}
+
+// ===== STARTER COMPOSITION VALIDATION =====
+validateStarterCount = () => {
+  if (currentTurn < "Quarterfinals") {
+    return selectStarterPlayers.length === 11  // Required to start tournament
+  }
+  return true  // No minimum after roster lock (naturally degraded by eliminations)
+}
+
 validateStarterPositions = () => {
   const gkCount = selectStarterPlayers.filter(p => p.position === "GK").length
   return gkCount <= 1  // Max 1 GK in starters, GK not required
 }
 
-**REVISE for turn-based play** #TODO
-// Tournament Rules
-canModifyRoster = (roundLocked: boolean) => !roundLocked  // No changes once round/tournament locked
-
+// ===== ELIMINATION LOGIC =====
 // Squad elimination: exclusive to squads (separate from player elimination)
+// Triggered when National Team is eliminated
 canEliminateSquad = (squad: RosterSquad) => squad.pool === "signed" && squad.isEliminated === false
 moveSquadToEliminated = (squad: RosterSquad) => {
   // Updates squad.pool to "eliminated" and role to "eliminatedSigned"
   // Does NOT automatically eliminate players on that squad
+  // Triggered by National Team elimination, independent of Player elimination
 }
 
-// Player elimination: based on national team status (pulls exclusively from player.isEliminated)
+// Player elimination: based on national team status
+// Triggered when National Team is eliminated OR player has individual incident (red card, injury)
 canEliminatePlayer = (player: RosterPlayer) =>
   player.pool === "signed" &&
-  player.isEliminated === true  // Eliminated by national team, not squad selection
+  player.isEliminated === true
 
 movePlayerToEliminated = (player: RosterPlayer) => {
   // Updates player.pool to "eliminated" and role to "eliminatedSigned"
   // Triggered when player.isEliminated becomes true during tournament
   // Independent of squad elimination status
+  // Independent of isRosterLocked (eliminations bypass roster lock)
 }
 
-**REMOVE THIS LOGIC** #TODO
-// R16+ Game Completion Rules
-canMoveFromBenchToStarter = (player: RosterPlayer) =>
-  player.gamesComplete === true && selectStarterPlayers.length < 11
-  // Must wait for all games to complete this week before swapping
-
-canMoveFromStarterToBench = (player: RosterPlayer) =>
-  player.gamesComplete === true
-  // Can only bench a player after all their games are complete
-
-**REMOVE THIS LOGIC** #TODO
-// UpNext State Rules (Automatic Promotion & Scoring Lock)
-autoPromoteUpNextToStarter = (timestamp: Date) =>
-  timestamp.toUTCString().includes("Thursday 00:00 EST")
-  // Automatic: role "UpNext" → role "starter" at Thu 00:00 EST
-  // No user action required, all UpNext members transition simultaneously
-
-canScorePoints = (member: RosterSquad | RosterPlayer) =>
-  (member.role === "starter" || member.role === "UpNext") &&
-  member.pool === "signed"
-  // Only "starter" and "UpNext" members can score
-  // BUT: UpNext members are locked out until Thu 00:00 (points applied retroactively)
-
-// R16 Substitutes (Last Round to Add New Members)
+// ===== SUBSTITUTE WINDOW (50% POINTS) =====
+// Window: Between R16 "Play" click and Quarterfinals "Play" click
 canSignNewMember = (tournament: Tournament) =>
-  tournament.currentRound !== "R16_COMPLETE" &&
-  tournament.currentRound !== "Quarterfinals"
-  // Can sign new members only through R16 Wed 23:59 - update to end of turn #TODO
+  !isRosterLocked  // Can sign until QF "Play" click locks roster
 
 markAsSubstitute = (tournament: Tournament): boolean =>
-  tournament.currentRound === "Round16" &&
-  tournament.currentWeek === "R16_week"
-  // Only members signed during R16 get substitute flag
+  tournament.currentTurn === "R16" &&
+  !isRosterLocked
+  // Only members signed after R16 "Play" (in substitute window) get substitute flag
+  // Substitute window closes when QF "Play" is clicked
 
 applySubstituteMultiplier = (points: number, substitute: boolean): number =>
   substitute ? points * 0.5 : points
-  // All points × 0.5 for substitute members throughout entire tournament
+  // All points × 0.5 for substitute members throughout entire tournament (from QF onward)
 ```
 
 ---
 
-## Files to Modify
+## 11. Turn Completion Async Thunk (Phase 3 API Integration)
 
-### UpNext and Time-Based Turn Logic
+**File**: `/src/store/thunks/rosterThunks.ts` (new) or `/src/store/slices/rosterSlice.ts`
 
-## Verification - remove and test, then add turn play logic
+**Purpose**: When user clicks "Play", execute turn completion sequence in strict order:
+1. Fetch match results from API
+2. Update all scores (Scoring Record displayed first)
+3. Lock turn scores
+4. Update eliminated status (cascade from National Team)
+5. Show elimination popup
+6. Move eliminated members to eliminated pool
 
-1. **Type safety**: TypeScript compiles without errors using new pool/role model
+**Implementation** (async thunk with redux-thunk):
 
-2. **Initialization**:
-   - Load `squads.json` and `players.json`
-   - All squads initialize to `pool: "available"` with proper `isEliminated` status, `role: null`
-   - Eliminated squads show at bottom of available list, greyed out, no actions
-   - Pre-eliminated players initialize to `pool: "eliminated"`, `role: "eliminatedSigned"`
-   - Active players initialize to `pool: "available"`, `role: null`
+```typescript
+export const playTurn = (turnId: string) => async (dispatch, getState) => {
+  try {
+    // Step 0: Fetch match results from API (happens first, outside Redux)
+    const matchResults = await matchService.getMatchResults(turnId);
 
-3. **Squad Workflow - Unsigned (Staging)**:
-   - Click "Add to Bench" on available squad → `pool: "unsigned"`, `role: null`
-   - Squad appears in Unsigned Squads section
-   - "Remove" button → squad returns to `pool: "available"`, `role: null`
-   - "Sign" button → confirmation dialog with squad details (flag, name, code, coach)
-   - Confirm → `pool: "signed"`, `role: "starter"` (auto-assigned)
-   - Squad immediately appears in ROSTER SignedSquadsSection with ⭐ starter badge
+    // Step 1: Update all scores (Scoring Record component displays immediately)
+    dispatch(updateScores(matchResults));
 
-4. **Squad Workflow - Signed (Locked)**:
-   - Can have max 4 squads with `pool: "signed"`, `role: "starter"`
-   - All Squads `pool: "signed"`are`role: "starter"`no else
-   - If attempting 5th signature when cap is reached → popup: "Squad cap reached. Consider adding this Squad if one of your current selections is eliminated in tournament play"
-   - Signed squads cannot be removed (locked for tournament)
-   - Squad elimination is independent: if squad's `isEliminated` becomes true during tournament → `pool: "eliminated"`, `role: "eliminatedSigned"`
-   - **Important**: Squad elimination does NOT automatically eliminate players on that squad
-   - Players are eliminated exclusively based on their national team `isEliminated` status
+    // Step 2: Lock turn scores (points are now final for this turn)
+    dispatch(lockTurnScores(turnId));
 
-5. **Squad Workflow - Eliminated**:
-   - When squad `isEliminated` becomes true → moves to EliminatedSquadsSection (below signed)
-   - Displays for historical record
-   - Does NOT cascade elimination to players on that squad
-   - Players remain in roster/starters unless their own national team is eliminated
+    // Step 3: Update eliminated status based on National Team eliminations
+    // - Cascade: National Team eliminated → Squad marked eliminated
+    // - Cascade: National Team eliminated → All its Players marked eliminated
+    // - Independent: Individual Player incidents (red card, injury) mark that Player eliminated
+    dispatch(updateEliminationStatus(matchResults));
 
-6. **Player Workflow - Available to Roster**:
-   - Click "Add to Roster" on available player → `pool: "signed"`, `role: "bench"` (default)
-   - Player appears in RosterPlayersBench section
-   - **Roster constraints**:
-     - Max 18 roster players total (any position mix)
-     - Max 3 Goalkeepers (no GK requirement)
-     - Can add 0-18 of any position combination (18 FWD valid, 0 GK valid, etc.)
-   - "Remove" button → player returns to `pool: "available"`, `role: null`
+    // Step 4: Show elimination popup with squads and players eliminated this turn
+    const eliminatedThisTurn = getState().roster.justEliminated;
+    if (eliminatedThisTurn.squads.length > 0 || eliminatedThisTurn.players.length > 0) {
+      dispatch(showEliminationModal(eliminatedThisTurn));
+    }
 
-7. **Player Workflow - Bench to Starters**:
-   - Drag player from bench to empty formation slot → `pool: "signed"`, `role: "starter"`
-   - Player card shows ⚽ starter badge
-   - **Starter constraints**:
-     - Max 11 starters total
-     - Max 1 Goalkeeper among starters (GK not required)
-     - No FWD/MID/DEF position limits
-   - Drag back to bench → `role: "bench"`, ⚽ badge removed
+    // Step 5: Move all eliminated members to eliminated pool
+    dispatch(moveEliminatedToPool());
 
-8. **Player Workflow - Eliminated**:
-   - Player's national team is eliminated (based on `player.isEliminated` from JSON/tournament data)
-   - Player automatically moves: `pool: "eliminated"`, `role: "eliminatedSigned"`
-   - Moves to EliminatedPlayersSection (below bench)
-   - Remains visible as historical record
-   - **Independent of squad elimination**: A player on a signed squad can be eliminated without the squad being eliminated, and vice versa
+    // Step 6: Advance turn counter (ready for roster edits before next Play click)
+    dispatch(advanceTurn());
 
------
-**REMOVE** 9. **UpNext Workflow - Mid-Week Swaps (R16+)**: #TODO
-   - When promoted from bench after Wed 23:59 ET:
-     - Drag bench player to starter slot → `pool: "signed"`, `role: "UpNext"` (muted visual)
-     - Player appears in starters formation with 🔒 muted badge
-     - Player CANNOT score points until Thu 00:00
-   - Automatic promotion (Thu 00:00 EST):
-     - System automatically: role "UpNext" → role "starter" (visual: muted colors removed, ⭐ added)
-     - Points earned retroactively applied (if any games played Thu)
-   - Can move back to bench anytime while UpNext: `movePlayerToBench()` → role: "bench"
------
+  } catch (error) {
+    dispatch(handlePlayTurnError(error));
+  }
+}
+```
 
-**REVISE** for turn based play. 10. **Game Completion & Roster Locks**:
-   - Tracking: Each squad/player has `gamesComplete: boolean` and `squadGames[]/playerGames[]` array with match results
-   - Workflow:
-     - Week Thu-Wed: Games play, results come in, `gamesComplete` updates when all matches finished
-     - Once `gamesComplete === true`: starter can move to bench, bench can move to starter
-     - Before Wed 23:59: User can swap players if games are complete
-     - Wed 23:59: Roster locks, no more swaps allowed until next week
-   - Display: Bench shows 🟢 (complete) or ⏳ (in-progress) indicator per player
------
+**User Experience Flow**:
+1. User clicks "Play" button
+2. Loading state shown (API call in progress)
+3. API returns results
+4. Scoring Record updates immediately (Step 1)
+5. Points locked (Step 2)
+6. Elimination status calculated (Step 3)
+7. Popup shows who was eliminated (Step 4 - user must acknowledge)
+8. Eliminated members moved out of roster (Step 5)
+9. Turn advances, user can now edit roster for next turn
 
-11. **R16 Substitutes - 50% Scoring Rule**:
-   - R16 eligibility: Thu 00:00 through Wed 23:59 of R16 week only
-   - Activation: Any new squad/player signed during this window gets `substitute: true`
-   - Scoring: `totalPoints = basePoints × 0.5` for entire tournament (not just R16)
-   - Display: Shows "50% points" badge in roster/bench sections
-   - Verification:
-     - Substitute signed in R16 scores 10 pts in QF → counts as 5 pts
-     - Substitute signed in R16 scores in SF → still counts as 50% (not 100%)
-   **REVISE** for turn based play - After R16 Wed 23:59: No new squads/players can be signed (roster fully locked) #TODO
+**Critical Ordering Notes**:
+- Step 1 (updateScores) must be first so Scoring Record displays immediately
+- Step 2 (lockScores) must be before Step 3 so points don't change during elimination processing
+- Step 3 (updateEliminationStatus) must be before Step 4 so modal knows who to show
+- Step 4 (showEliminationModal) may require user acknowledgment before Step 5 (x to close)
+- Step 5 (moveToEliminated) must happen after modal dismissed to avoid UI thrashing
 
-12. **UI Consistency & Visual Indicators**:
-   - **Eliminated items** in available pools: greyed out, disabled, no actions
-   - **Unsigned squads** in staging section: Remove (X) + Sign buttons only
-   - **Signed squads** in ROSTER: no actions (locked), ⭐ starter badge visible
-   - **Starter players** in formation grid:
-     - ⭐ badge = active, scoring
-     - Drag to bench enabled
-     - Show 11-slot grid with empty placeholders for unfilled positions
-   - **UpNext players** in formation grid:
-     - 🔒 muted colors/badge = locked, no scoring until Thu 00:00
-     - Drag to bench enabled (can cancel UpNext anytime)
-   - **Bench players**:
-     - No badge (neither ⭐ nor 🔒)
-    **REMOVE**- Shows game completion status: 🟢 (complete, eligible to promote) or ⏳ (in-progress, locked) #TODO
-     **REMOVE**- Drag to starters enabled ONLY if `gamesComplete === true` #TODO
-     - Shows position, GK count (X/3), roster count (X/18)
-     - R16 substitutes show "50% points" indicator
-   - **Eliminated section**: informational only, no actions, "eliminatedSigned" badge
+---
 
-13. **Validation & Constraints Display**:
-   - Roster section shows: "Signed Players (X/18)" with GK count (X/3), game completion summary
-   - Starters section shows: "Starters (X/11)" with GK count (X/1), includes both Starter and UpNext counts
-   - Add button disabled when:
-     - Roster is full (18 players) OR
-     - Trying to add GK and already have 3 GK in roster
-   - Promote to starters disabled when:
-     - Already have 11 starters OR
-     - Player is GK and already have 1 GK starter OR
-   **REMOVE**- `gamesComplete === false` (player's games not yet finished this week) #TODO
-   **REMOVE**- Thu 00:00 transition shows notification: "All UpNext players promoted to Starter" #TODO
+## 12. Database Persistence & Game State Restoration (Phase 4+)
+
+**Context**: Currently, game state initializes fresh from `squads.json` and `players.json` on every load. When Phase 4 (Auth/Database) is implemented, the app will need to restore saved game state mid-tournament.
+
+### Game State to Persist
+
+When a user saves/closes a game, the following must be stored in the database:
+
+**Roster State**:
+- All players: `pool`, `role`, `isEliminated`, `substitute`, `matchPoints`, `totalPoints`
+- All squads: `pool`, `role`, `isEliminated`, `substitute`, `matchPoints`, `totalPoints`
+- Current roster counts (signed, starters, bench, eliminated)
+- `isRosterLocked` flag (true if QF "Play" has been clicked)
+
+**Tournament State**:
+- Current round/turn (e.g., "Group Stage 1", "R16", "Quarterfinals")
+- Current week/day within turn (if sub-turn granularity needed)
+- List of matches played (marked `isComplete`)
+- List of matches remaining
+
+**Scoring State**:
+- Cumulative points per turn (turn-by-turn breakdown)
+- Running total (all turns combined)
+- Individual match points by player/squad
+- Scoring Record history (all completed turns)
+
+**UI State** (optional but helpful):
+- Sidebar visibility toggle state
+- Current page/view (Dashboard, Roster, FutureMatches)
+- Modal state if interrupted mid-action
+
+### Initialization on Reload (Future)
+
+When a user returns to a saved game:
+
+1. **Load user data** from database (not JSON)
+2. **Restore all pools** with correct `pool` and `role` values
+3. **Restore elimination status** (`isEliminated` for squads/players/individuals)
+4. **Restore scoring** (all `matchPoints`, `totalPoints`, `substitute` flags)
+5. **Restore lock state** (`isRosterLocked` flag)
+6. **Resume from last turn** (show Dashboard for current turn, not Group Stage 1)
+7. **Preserve match history** (Finished matches remain visible)
+
+### Key Differences from Fresh Init
+
+| Aspect | Fresh Init (Current) | Resumed Game (Future) |
+|--------|---------------------|----------------------|
+| Data source | `squads.json`, `players.json` | Database (user doc) |
+| Elimination status | From JSON `status` field | From saved `isEliminated` flag |
+| Player pool | All available (except pre-eliminated) | Restore exact pool/role state |
+| Squad pool | All available | Restore exact pool/role state |
+| Scoring | Empty (`matchPoints: {}`) | Restore all historical points |
+| Tournament round | Always Group Stage 1 | Resume from saved round |
+| Roster assignments | None (user starts fresh) | Restore exact selections + lock state |
+| Formation | None (empty grid) | Restore starters/bench assignments |
+
+### Implementation Notes for Phase 4
+
+- **Do NOT modify current App.tsx initialization** — keep JSON-based init for local games / dev
+- **Create separate initialization flow** for database-loaded games:
+  - `initializeFromJSON()` (current) — for fresh games
+  - `initializeFromDatabase()` (new) — for resumed games
+- **Use Redux dispatch** to populate store from database snapshot
+- **Validate persisted state before restoring**:
+  - Check pool/role transitions are valid
+  - Verify no data corruption
+  - Ensure isRosterLocked makes sense with current turn
+- **Handle version migration** — if game logic changes between sessions, may need to re-normalize old saves
+- **Determine storage key** — use userId + gameId or similar to support multiple games per user
+
+### Critical for Phase 4: isRosterLocked Persistence
+
+- `isRosterLocked` must be persisted in database
+- On reload, if `isRosterLocked === true`:
+  - Disable all "add/remove" buttons in roster UI
+  - Enable all "move to starter/bench" buttons
+  - Update StartersLineup grid style to dynamic (filled slots only)
+- If `isRosterLocked === false`:
+  - All roster edit buttons enabled
+  - StartersLineup grid shows 11 fixed slots with empty placeholders
 
 ---
 
